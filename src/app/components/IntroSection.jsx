@@ -103,7 +103,7 @@ export default function IntroSection() {
   };
 
   return (
-    <section className="bg-[#fbf8ef] px-4 py-14 sm:px-6 sm:py-20 lg:px-10 lg:py-24">
+    <section className="bg-[#fff] px-4 py-14 sm:px-6 sm:py-20 lg:px-10 lg:py-24">
       <div className="mx-auto max-w-[1300px]">
         <div className="grid items-center gap-5 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           <div className="relative min-h-[650px] lg:min-h-[760px]">
@@ -136,9 +136,8 @@ export default function IntroSection() {
                   return (
                     <div
                       key={feature.title}
-                      className={`flex flex-col items-center gap-2 text-center ${
-                        index < features.length - 1 ? "sm:border-r sm:border-[#d9d2bc]" : ""
-                      }`}
+                      className={`flex flex-col items-center gap-2 text-center ${index < features.length - 1 ? "sm:border-r sm:border-[#d9d2bc]" : ""
+                        }`}
                     >
                       <Icon className="h-8 w-8 text-[#6b8444]" strokeWidth={1.7} />
                       <p className="max-w-[140px] text-sm leading-snug text-[#334039]">
@@ -154,7 +153,7 @@ export default function IntroSection() {
           <div className="px-1 lg:px-6">
             <div className="flex items-center justify-center gap-3 text-[#6b8444]">
               <span className="h-px w-10 bg-[#d9d2bc]" />
-              <span className="text-[12px] font-semibold uppercase tracking-[0.45em] text-[#6b8444] sm:text-sm">
+              <span className="font-subheading text-[12px] font-semibold uppercase tracking-[0.45em] text-[#6b8444] sm:text-sm">
                 Welcome to The Native Place
               </span>
               <span className="h-px w-10 bg-[#d9d2bc]" />
@@ -166,13 +165,19 @@ export default function IntroSection() {
               in the Heart of Shirdi
             </h2>
 
-            <div className="mx-auto mt-7 flex items-center justify-center gap-4">
-              <span className="h-px w-12 bg-[#e2ddcf]" />
-              <span className="text-[#6b8444]">*</span>
-              <span className="h-px w-12 bg-[#e2ddcf]" />
+            <div className="mx-auto mt-3 flex items-center justify-center gap-4">
+              <div className="w-[170px]">
+                <Image
+                  src="/images/svg/nativeplacevector.png"
+                  width={220}
+                  height={60}
+                  alt="Villas and Cottages"
+                  className="h-auto w-full object-contain"
+                />
+              </div>
             </div>
 
-            <div className="mx-auto mt-8 max-w-[680px] space-y-6 text-[17px] leading-8 text-[#5c6b64] sm:text-lg">
+            <div className="mx-auto mt-3 max-w-[680px] space-y-6 text-[17px] leading-8 text-[#5c6b64] sm:text-lg">
               <p>
                 Tucked away in the calm surroundings of Shirdi, The Native Place is more than
                 just a stay - it is an experience of nature, comfort, and mindful living.
@@ -193,9 +198,8 @@ export default function IntroSection() {
               {stats.map((stat, index) => (
                 <div
                   key={stat.label}
-                  className={`rounded-2xl bg-[#fbf8ef] px-3 py-5 text-center ${
-                    index < stats.length - 1 ? "sm:border-r sm:border-[#e2ddcf]" : ""
-                  }`}
+                  className={`rounded-2xl bg-[#fbf8ef] px-3 py-5 text-center ${index < stats.length - 1 ? "sm:border-r sm:border-[#e2ddcf]" : ""
+                    }`}
                 >
                   <div className="text-3xl font-semibold text-[#23312a] sm:text-[2.1rem]">
                     {formatCount(counts[index], stat)}
@@ -222,3 +226,4 @@ export default function IntroSection() {
     </section>
   );
 }
+

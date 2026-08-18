@@ -62,3 +62,12 @@ button {
 .animate-banner-heading {
   animation: bannerHeadingIn 800ms ease-out both;
 }
+
+.font-script {
+  font-family: var(--font-script), cursive;
+}
+
+.font-subheading {
+  font-family: var(--font-subheading), sans-serif;
+}
+

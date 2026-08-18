@@ -1,4 +1,4 @@
-import { Cormorant_Garamond, Manrope } from "next/font/google";
+import { Allura, Cormorant_Garamond, DM_Sans, Montserrat } from "next/font/google";
 import "./globals.css";
 
 const headingFont = Cormorant_Garamond({
@@ -7,10 +7,22 @@ const headingFont = Cormorant_Garamond({
   weight: ["400", "500", "600", "700"],
 });
 
-const bodyFont = Manrope({
+const subheadingFont = Montserrat({
+  variable: "--font-subheading",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
+});
+
+const bodyFont = DM_Sans({
   variable: "--font-body",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "700"],
+});
+
+const scriptFont = Allura({
+  variable: "--font-script",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata = {
@@ -23,7 +35,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${headingFont.variable} ${bodyFont.variable} h-full antialiased`}
+      className={`${headingFont.variable} ${subheadingFont.variable} ${bodyFont.variable} ${scriptFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
