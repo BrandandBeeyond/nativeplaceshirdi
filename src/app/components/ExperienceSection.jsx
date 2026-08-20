@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Coffee,
+  Pause,
   Mountain,
   Play,
   Sparkles,
@@ -38,7 +39,32 @@ function FeaturePill({ icon: Icon, label }) {
 }
 
 export default function ExperienceSection() {
+  const videoRef = useRef(null);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+
+  const closeVideo = () => {
+    videoRef.current?.pause();
+    setIsPlaying(false);
+    setIsVideoOpen(false);
+  };
+
+  const toggleVideo = () => {
+    const video = videoRef.current;
+
+    if (!video) {
+      return;
+    }
+
+    if (video.paused) {
+      video.play();
+      setIsPlaying(true);
+      return;
+    }
+
+    video.pause();
+    setIsPlaying(false);
+  };
 
   useEffect(() => {
     if (!isVideoOpen) {
@@ -51,6 +77,18 @@ export default function ExperienceSection() {
     return () => {
       document.body.style.overflow = previousOverflow;
     };
+  }, [isVideoOpen]);
+
+  useEffect(() => {
+    if (!isVideoOpen || !videoRef.current) {
+      return;
+    }
+
+    setIsPlaying(true);
+    videoRef.current.currentTime = 0;
+    videoRef.current.play().catch(() => {
+      setIsPlaying(false);
+    });
   }, [isVideoOpen]);
 
   return (
@@ -86,20 +124,9 @@ export default function ExperienceSection() {
               ))}
             </div>
 
-            <div className="mt-10 flex flex-wrap items-center gap-5">
-              <button
-                type="button"
-                onClick={() => setIsVideoOpen(true)}
-                className="group inline-flex items-center gap-4 rounded-full bg-[#1f5b31] px-7 py-4 text-[13px] font-semibold uppercase tracking-[0.22em] text-white shadow-[0_16px_35px_rgba(31,91,49,0.22)] transition-transform duration-300 hover:-translate-y-0.5"
-              >
-                Experience The Resort
-                <span className="flex h-7 w-7 items-center justify-center rounded-full border border-white/35">
-                  <Play className="ml-0.5 h-3.5 w-3.5 fill-current" />
-                </span>
-              </button>
-
-              <p className="text-sm text-[#5b655d]">A glimpse of serenity and unforgettable moments</p>
-            </div>
+            <p className="mt-10 text-sm text-[#5b655d]">
+              A glimpse of serenity and unforgettable moments
+            </p>
           </div>
         </div>
 
@@ -130,8 +157,8 @@ export default function ExperienceSection() {
         </div>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 z-10 px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8">
-        <div className="mx-auto max-w-[1600px] rounded-[22px] bg-white/82 p-4 shadow-[0_12px_32px_rgba(36,46,32,0.06)] backdrop-blur-sm sm:p-5">
+      <div className="relative z-10 mx-auto mt-8 max-w-[1600px] px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8">
+        <div className="rounded-[22px] bg-white/82 p-4 shadow-[0_12px_32px_rgba(36,46,32,0.06)] sm:p-5">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {stats.map((stat) => {
               const Icon = stat.icon;
@@ -142,7 +169,9 @@ export default function ExperienceSection() {
                     <Icon className="h-7 w-7" strokeWidth={1.6} />
                   </span>
                   <div>
-                    <div className="text-3xl font-semibold text-[#20342b]">{stat.value}</div>
+                    <div className="font-heading text-4xl leading-none text-[#20342b]">
+                      {stat.value}
+                    </div>
                     <div className="text-[13px] leading-5 text-[#5a645d]">{stat.label}</div>
                   </div>
                 </div>
@@ -153,24 +182,50 @@ export default function ExperienceSection() {
       </div>
 
       {isVideoOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/80 px-4 py-6 backdrop-blur-sm">
-          <div className="relative w-full max-w-5xl overflow-hidden rounded-[1.5rem] bg-black shadow-[0_30px_90px_rgba(0,0,0,0.45)]">
+        <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/75 px-4 py-4">
+          <div className="relative w-full max-w-4xl overflow-hidden rounded-[1.25rem] bg-black shadow-[0_24px_70px_rgba(0,0,0,0.45)]">
             <button
               type="button"
               aria-label="Close video"
-              onClick={() => setIsVideoOpen(false)}
+              onClick={closeVideo}
               className="absolute right-4 top-4 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur-md transition-colors duration-300 hover:bg-white/25"
             >
               <X className="h-5 w-5" />
             </button>
 
-            <video className="block h-auto w-full" controls autoPlay playsInline>
+            <video
+              ref={videoRef}
+              className="block h-auto max-h-[68vh] w-full object-contain bg-black"
+              controls
+              autoPlay
+              playsInline
+              onPlay={() => setIsPlaying(true)}
+              onPause={() => setIsPlaying(false)}
+            >
               <source src="/videos/property_full.mp4" type="video/mp4" />
             </video>
+
+            <div className="flex items-center justify-between gap-3 border-t border-white/10 bg-black px-4 py-3 text-white">
+              <button
+                type="button"
+                onClick={toggleVideo}
+                className="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-2 text-sm font-medium transition-colors duration-300 hover:bg-white/20"
+              >
+                {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                {isPlaying ? "Pause" : "Play"}
+              </button>
+
+              <button
+                type="button"
+                onClick={closeVideo}
+                className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium text-[#18352A] transition-colors duration-300 hover:bg-[#dff1bf]"
+              >
+                Close
+              </button>
+            </div>
           </div>
         </div>
       )}
     </section>
   );
 }
-

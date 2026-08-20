@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Coffee, Mountain, Sprout, Users } from "lucide-react";
+import { ArrowRight, ChevronRight, Coffee, Mountain, Sprout, Users } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 const features = [
@@ -214,10 +214,12 @@ export default function IntroSection() {
             <div className="mt-10 flex justify-center">
               <a
                 href="/contact"
-                className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-[#1f5e33] to-[#2f7b44] px-8 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white shadow-[0_18px_40px_rgba(34,88,49,0.28)] transition-transform duration-300 hover:-translate-y-0.5"
+                className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-[#154725] to-[#184826] px-8 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white shadow-[0_18px_40px_rgba(34,88,49,0.28)] transition-transform duration-300 hover:-translate-y-0.5"
               >
-                Discover Our Villas
-                <span className="text-lg">-&gt;</span>
+                Why Native place
+                <span className="relative z-10 inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#fff]/20 text-[#18352A] transition-all duration-300 group-hover:translate-x-1 group-hover:bg-white">
+                  <ChevronRight className="h-4 w-4 text-white" strokeWidth={2.4} />
+                </span>
               </a>
             </div>
           </div>

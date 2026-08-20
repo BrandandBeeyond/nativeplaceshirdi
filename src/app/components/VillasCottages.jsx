@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { BedDouble, Armchair, Leaf, Trees, Flower2 } from "lucide-react";
+import { Armchair, BedDouble, Flower2, Leaf, Trees } from "lucide-react";
 
 const villaFeatures = [
   { icon: BedDouble, label: "2 Bedrooms" },
@@ -57,7 +57,11 @@ function StayBlock({
         reverse ? "lg:[direction:rtl]" : ""
       }`}
     >
-      <div className={`relative min-h-[420px] lg:min-h-[560px] ${reverse ? "lg:[direction:ltr]" : ""}`}>
+      <div
+        className={`relative min-h-[420px] lg:min-h-[560px] ${
+          reverse ? "lg:[direction:ltr]" : ""
+        }`}
+      >
         <Image
           src={image}
           alt={imageAlt}
@@ -67,19 +71,20 @@ function StayBlock({
         />
       </div>
 
-      <div className={`flex items-center px-6 py-10 sm:px-8 lg:px-10 xl:px-12 ${reverse ? "lg:[direction:ltr]" : ""}`}>
+      <div
+        className={`flex items-center px-6 py-10 sm:px-8 lg:px-10 xl:px-12 ${
+          reverse ? "lg:[direction:ltr]" : ""
+        }`}
+      >
         <div className="w-full max-w-[520px]">
-          <p className="text-[12px] font-medium uppercase tracking-[0.28em] text-[#6b8444]">
-            {number}
-          </p>
-
-          <h3 className="mt-2 font-heading text-4xl uppercase leading-[1.02] text-[#18352A] sm:text-[3.05rem]">
+          
+          <h3 className="mt-2 font-heading font-[500] text-5xl uppercase leading-[1.02] text-[#18352A] sm:text-[2.7rem]">
             {title}
           </h3>
 
           <div className="mt-4 h-px w-12 bg-[#d9d2c4]" />
 
-          <p className="mt-5 max-w-[360px] font-subheading text-[1.9rem] leading-[1.1] text-[#2a302d] sm:text-[2.2rem]">
+          <p className="mt-5 max-w-[380px] font-subheading text-[1.45rem] leading-[1.08] text-[#2a302d] sm:text-[1.6rem]">
             {subtitle}
           </p>
 
@@ -94,12 +99,15 @@ function StayBlock({
           <div className="mt-9">
             <a
               href={href}
-              className="group inline-flex items-center gap-4 border-b border-[#6b8444] pb-3 text-[16px] font-medium uppercase tracking-[0.18em] text-[#20342b] transition-colors duration-300 hover:text-[#4a6645]"
+              className="group inline-flex flex-col items-start gap-2 text-[16px] font-medium uppercase tracking-[0.18em] text-[#20342b] transition-colors duration-300 hover:font-semibold hover:text-[#4a6645]"
             >
-              {buttonLabel}
-              <span className="text-2xl leading-none transition-transform duration-300 group-hover:translate-x-1">
-                &rarr;
+              <span className="inline-flex items-center gap-4">
+                {buttonLabel}
+                <span className="text-2xl leading-none transition-transform duration-300 group-hover:translate-x-1">
+                  &rarr;
+                </span>
               </span>
+              <span className="h-px w-0 bg-[#6b8444] transition-all duration-300 ease-out group-hover:w-full" />
             </a>
           </div>
         </div>
@@ -117,13 +125,19 @@ export default function VillasCottages() {
             Stay With Us
           </p>
 
-          <div className="mt-3 flex items-center justify-center gap-4">
-            <span className="h-px w-16 bg-[#d8d2c4]" />
-            <Flower2 className="h-5 w-5 text-[#6b8444]" strokeWidth={1.7} />
-            <span className="h-px w-16 bg-[#d8d2c4]" />
+          <div className="mx-auto mt-3 flex items-center justify-center gap-4">
+            <div className="w-[170px]">
+              <Image
+                src="/images/svg/nativeplacevector.png"
+                width={220}
+                height={60}
+                alt="Villas and Cottages"
+                className="h-auto w-full object-contain"
+              />
+            </div>
           </div>
 
-          <h2 className="mt-4 font-heading text-4xl leading-tight text-[#20342b] sm:text-5xl lg:text-[3.3rem]">
+          <h2 className="mt-4 font-heading text-5xl leading-tight text-[#20342b] sm:text-6xl lg:text-[4rem]">
             Comfort in Every Stay
           </h2>
 
@@ -135,7 +149,7 @@ export default function VillasCottages() {
 
         <div className="mt-10 space-y-10">
           <StayBlock
-            number="2 BHK VILLAS"
+            number="01 / STAY"
             title="2 BHK VILLAS"
             subtitle="Spacious. Private. Surrounded by Nature."
             description="Thoughtfully designed 2 BHK Villas offering generous spaces, peaceful surroundings and the comfort of staying together."
@@ -146,14 +160,20 @@ export default function VillasCottages() {
             features={villaFeatures}
           />
 
-          <div className="flex items-center justify-center gap-4 py-1">
-            <span className="h-px w-24 bg-[#d8d2c4]" />
-            <Flower2 className="h-4 w-4 text-[#6b8444]" strokeWidth={1.7} />
-            <span className="h-px w-24 bg-[#d8d2c4]" />
+          <div className="mx-auto mt-3 flex items-center justify-center gap-4">
+            <div className="w-[170px]">
+              <Image
+                src="/images/svg/nativeplacevector.png"
+                width={220}
+                height={60}
+                alt="Villas and Cottages"
+                className="h-auto w-full object-contain"
+              />
+            </div>
           </div>
 
           <StayBlock
-            number="COTTAGES"
+            number="02 / STAY"
             title="COTTAGES"
             subtitle="Cozy. Charming. Close to Nature."
             description="Our charming Cottages offer a peaceful escape surrounded by greenery, created for slow mornings, quiet evenings and meaningful time together."
@@ -169,4 +189,3 @@ export default function VillasCottages() {
     </section>
   );
 }
-
