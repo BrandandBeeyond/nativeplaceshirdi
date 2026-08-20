@@ -94,7 +94,7 @@ export default function ExperienceSection() {
   return (
     <section className="relative isolate min-h-screen overflow-hidden bg-[#fbf8ef] px-4 py-14 sm:px-6 sm:py-16 lg:px-0 lg:py-0">
       <div className="mx-auto grid min-h-screen max-w-[1600px] items-stretch lg:grid-cols-[0.92fr_1.08fr]">
-        <div className="relative z-10 flex flex-col justify-center px-3 py-8 sm:px-6 lg:px-16 xl:px-20">
+        <div className="relative z-10 flex flex-col justify-center px-3 py-8 sm:px-6 lg:px-16 xl:px-20" data-aos="fade-right">
           <div className="max-w-[650px]">
             <div className="flex items-center gap-4 text-[#6b8444]">
               <span className="h-px w-10 bg-[#d9d2c4]" />
@@ -130,7 +130,7 @@ export default function ExperienceSection() {
           </div>
         </div>
 
-        <div className="relative min-h-[640px] lg:min-h-screen">
+        <div className="relative min-h-[640px] lg:min-h-screen" data-aos="fade-left">
           <Image
             src="/images/amenities/pool2.jpeg"
             alt="Resort experience"
@@ -157,7 +157,7 @@ export default function ExperienceSection() {
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto mt-8 max-w-[1600px] px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8">
+      <div className="relative z-10 mx-auto mt-8 max-w-[1600px] px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8" data-aos="fade-up">
         <div className="rounded-[22px] bg-white/82 p-4 shadow-[0_12px_32px_rgba(36,46,32,0.06)] sm:p-5">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
             {stats.map((stat) => {

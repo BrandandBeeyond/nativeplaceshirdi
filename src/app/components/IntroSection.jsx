@@ -106,7 +106,7 @@ export default function IntroSection() {
     <section className="bg-[#fff] px-4 py-14 sm:px-6 sm:py-20 lg:px-10 lg:py-24">
       <div className="mx-auto max-w-[1300px]">
         <div className="grid items-center gap-5 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-          <div className="relative min-h-[650px] lg:min-h-[760px]">
+          <div className="relative min-h-[650px] lg:min-h-[760px]" data-aos="fade-right">
             <div className="absolute left-0 top-0 h-[72%] w-[76%] overflow-hidden rounded-[2.5rem] shadow-[0_28px_70px_rgba(45,54,38,0.16)] sm:w-[78%]">
               <Image
                 src="/images/common/IMG_9114.JPG.jpeg"
@@ -150,7 +150,7 @@ export default function IntroSection() {
             </div>
           </div>
 
-          <div className="px-1 lg:px-6">
+          <div className="px-1 lg:px-6" data-aos="fade-left">
             <div className="flex items-center justify-center gap-3 text-[#6b8444]">
               <span className="h-px w-10 bg-[#d9d2bc]" />
               <span className="font-subheading text-[12px] font-semibold uppercase tracking-[0.45em] text-[#6b8444] sm:text-sm">
@@ -194,6 +194,7 @@ export default function IntroSection() {
             <div
               ref={statsRef}
               className="mx-auto mt-10 grid max-w-[720px] grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-0"
+              data-aos="fade-up"
             >
               {stats.map((stat, index) => (
                 <div
@@ -228,4 +229,3 @@ export default function IntroSection() {
     </section>
   );
 }
-

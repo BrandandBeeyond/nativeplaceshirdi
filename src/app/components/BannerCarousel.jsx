@@ -35,7 +35,7 @@ export default function BannerCarousel() {
   }, []);
 
   return (
-    <section className="relative isolate overflow-hidden bg-[#f7f5ec]">
+    <section className="relative isolate overflow-hidden bg-[#f7f5ec]" data-aos="fade-up">
       <div className="relative h-[calc(100vh-88px)] min-h-[520px] w-full">
         {banners.map((banner, index) => {
           const isActive = index === activeIndex;

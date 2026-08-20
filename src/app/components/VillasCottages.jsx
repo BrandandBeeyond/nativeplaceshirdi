@@ -118,9 +118,9 @@ function StayBlock({
 
 export default function VillasCottages() {
   return (
-    <section className="bg-[#fbf8ef] px-4 py-14 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+    <section className="bg-[#fbf8ef] px-4 py-14 sm:px-6 sm:py-20 lg:px-8 lg:py-24" data-aos="fade-up">
       <div className="mx-auto max-w-[1400px]">
-        <div className="text-center">
+        <div className="text-center" data-aos="fade-up">
           <p className="font-subheading text-[12px] font-semibold uppercase tracking-[0.45em] text-[#6b8444] sm:text-sm">
             Stay With Us
           </p>
@@ -148,7 +148,8 @@ export default function VillasCottages() {
         </div>
 
         <div className="mt-10 space-y-10">
-          <StayBlock
+          <div data-aos="fade-right">
+            <StayBlock
             number="01 / STAY"
             title="2 BHK VILLAS"
             subtitle="Spacious. Private. Surrounded by Nature."
@@ -158,7 +159,8 @@ export default function VillasCottages() {
             buttonLabel="Explore Villas"
             href="/villas"
             features={villaFeatures}
-          />
+            />
+          </div>
 
           <div className="mx-auto mt-3 flex items-center justify-center gap-4">
             <div className="w-[170px]">
@@ -172,7 +174,8 @@ export default function VillasCottages() {
             </div>
           </div>
 
-          <StayBlock
+          <div data-aos="fade-left">
+            <StayBlock
             number="02 / STAY"
             title="COTTAGES"
             subtitle="Cozy. Charming. Close to Nature."
@@ -183,7 +186,8 @@ export default function VillasCottages() {
             href="/cottages"
             features={cottageFeatures}
             reverse
-          />
+            />
+          </div>
         </div>
       </div>
     </section>

@@ -1,5 +1,7 @@
 import { Allura, Cormorant_Garamond, DM_Sans, Montserrat } from "next/font/google";
+import "aos/dist/aos.css";
 import "./globals.css";
+import AOSProvider from "./components/AOSProvider";
 
 const headingFont = Cormorant_Garamond({
   variable: "--font-heading",
@@ -37,7 +39,10 @@ export default function RootLayout({ children }) {
       lang="en"
       className={`${headingFont.variable} ${subheadingFont.variable} ${bodyFont.variable} ${scriptFont.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <AOSProvider />
+        {children}
+      </body>
     </html>
   );
 }
