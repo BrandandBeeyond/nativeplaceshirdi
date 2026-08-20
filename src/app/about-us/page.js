@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import PageBanner from "../components/PageBanner";
 
 export const metadata = {
   title: "About Us | The Native Place Shirdi",
@@ -15,18 +16,24 @@ export default function AboutPage() {
       <Navbar />
 
       <main className="overflow-x-hidden bg-[#fbf8ef]">
-        <section className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.75),transparent_42%),radial-gradient(circle_at_bottom_right,rgba(219,231,192,0.28),transparent_34%)]" />
+        <PageBanner
+          eyebrow="About Us"
+          title="About Us"
+          description="Welcome to The Native Place - where life slows down and nature takes over."
+          image="/images/common/IMG_9114.JPG.jpeg"
+          imageAlt="The Native Place banner"
+        />
 
+        <section className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
           <div className="relative mx-auto grid max-w-[1400px] gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
             <div data-aos="fade-right">
               <p className="font-subheading text-[12px] font-semibold uppercase tracking-[0.45em] text-[#6b8444] sm:text-sm">
                 About Us
               </p>
 
-              <h1 className="mt-4 font-heading text-5xl leading-[1.05] text-[#20342b] sm:text-6xl lg:text-[4.5rem]">
+              <h2 className="mt-4 font-heading text-5xl leading-[1.05] text-[#20342b] sm:text-6xl lg:text-[4.5rem]">
                 Welcome to The Native Place
-              </h1>
+              </h2>
 
               <p className="mt-6 max-w-2xl text-[18px] leading-8 text-[#56615a] sm:text-[19px]">
                 Welcome to The Native Place - where life slows down and nature takes over.
