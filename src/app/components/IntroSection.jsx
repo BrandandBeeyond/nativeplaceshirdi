@@ -109,7 +109,7 @@ export default function IntroSection() {
           <div className="relative min-h-[650px] lg:min-h-[760px]" data-aos="fade-right">
             <div className="absolute left-0 top-0 h-[72%] w-[76%] overflow-hidden rounded-[2.5rem] shadow-[0_28px_70px_rgba(45,54,38,0.16)] sm:w-[78%]">
               <Image
-                src="/images/common/IMG_9114.JPG.jpeg"
+                src="/images/cottages/ambience.WEBP"
                 alt="Resort exterior"
                 fill
                 sizes="(max-width: 1024px) 100vw, 58vw"

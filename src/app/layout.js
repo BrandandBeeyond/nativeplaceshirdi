@@ -1,12 +1,19 @@
-import { Allura, Cormorant_Garamond, DM_Sans, Montserrat } from "next/font/google";
+import { Allura, Anton, Cormorant_Garamond, DM_Sans, Montserrat } from "next/font/google";
 import "aos/dist/aos.css";
 import "./globals.css";
 import AOSProvider from "./components/AOSProvider";
+import LenisProvider from "./components/LenisProvider";
 
 const headingFont = Cormorant_Garamond({
   variable: "--font-heading",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+});
+
+const antonFont = Anton({
+  variable: "--font-anton",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 const subheadingFont = Montserrat({
@@ -37,9 +44,10 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
-      className={`${headingFont.variable} ${subheadingFont.variable} ${bodyFont.variable} ${scriptFont.variable} h-full antialiased`}
+      className={`${headingFont.variable} ${antonFont.variable} ${subheadingFont.variable} ${bodyFont.variable} ${scriptFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
+        <LenisProvider />
         <AOSProvider />
         {children}
       </body>

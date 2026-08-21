@@ -20,7 +20,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -68,7 +68,16 @@ button {
   font-family: var(--font-script), cursive;
 }
 
+.font-heading {
+  font-family: var(--font-heading), serif;
+}
+
 .font-subheading {
   font-family: var(--font-subheading), sans-serif;
+}
+
+.font-anton {
+  font-family: var(--font-anton), sans-serif;
+  letter-spacing: -0.02em;
 }
 
