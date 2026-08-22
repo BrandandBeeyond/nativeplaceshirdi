@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Leaf } from "lucide-react";
+import { Leaf, Star } from "lucide-react";
 
 const testimonials = [
   {
@@ -32,6 +32,34 @@ const testimonials = [
     quote:
       "A perfect retreat for anyone looking for comfort near nature. The Native Place is definitely among the best villas and cottages to unwind in peace.",
   },
+  {
+    name: "Pooja Patil",
+    role: "Family Guest",
+    location: "Pune",
+    quote:
+      "One of the best resort near Shirdi for a peaceful family stay. The greenery, comfort and warm service made everything feel effortless.",
+  },
+  {
+    name: "Nikhil Sharma",
+    role: "Traveller",
+    location: "Hyderabad",
+    quote:
+      "If you are searching for best villas and cottages with calm surroundings, this place is exactly what you need. It feels private, clean and relaxing.",
+  },
+  {
+    name: "Meera Joshi",
+    role: "Holiday Guest",
+    location: "Nagpur",
+    quote:
+      "Our stay was serene and memorable. The resort near Shirdi offers the right balance of nature, comfort and thoughtful hospitality.",
+  },
+  {
+    name: "Arjun Deshmukh",
+    role: "Weekend Traveller",
+    location: "Mumbai",
+    quote:
+      "A refreshing escape with beautiful spaces and great service. We found the best villas and cottages experience for a quiet break with family.",
+  },
 ];
 
 function getInitials(name) {
@@ -47,12 +75,15 @@ function TestimonialCard({ testimonial }) {
   const initials = getInitials(testimonial.name);
 
   return (
-    <article className="rounded-[30px] border border-[#f1eadc] bg-[#fffdf8] p-7 shadow-[0_18px_50px_rgba(36,31,21,0.08)] sm:p-8">
-      <div className="flex gap-1 text-[#d9ab2b]">
+    <article className="h-full rounded-[30px] border border-[#f1eadc] bg-[#fffdf8] p-7 shadow-[0_18px_50px_rgba(36,31,21,0.08)] sm:p-8">
+      <div className="flex gap-1 text-[#d9ab2b]" aria-label="5 star rating">
         {Array.from({ length: 5 }).map((_, index) => (
-          <span key={index} className="text-[18px] leading-none">
-            *
-          </span>
+          <Star
+            key={index}
+            className="h-4 w-4 fill-current text-[#d9ab2b]"
+            strokeWidth={1.8}
+            aria-hidden="true"
+          />
         ))}
       </div>
 
@@ -84,6 +115,8 @@ function TestimonialCard({ testimonial }) {
 }
 
 export default function TestimonialsSection() {
+  const sliderTestimonials = [...testimonials, ...testimonials];
+
   return (
     <section className="relative overflow-hidden bg-[#f7f2e4] py-16 sm:py-20 lg:py-24">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.94),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(184,220,79,0.12),transparent_26%),linear-gradient(180deg,rgba(248,244,234,1)_0%,rgba(255,254,250,1)_100%)]" />
@@ -138,21 +171,19 @@ export default function TestimonialsSection() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-3 xl:gap-6">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={testimonial.name}
-              className={index === 3 ? "xl:col-start-2" : ""}
-            >
-              <TestimonialCard testimonial={testimonial} />
-            </div>
-          ))}
-        </div>
+        <div className="mt-10 overflow-hidden">
+          <div className="group relative">
+            <div className="absolute inset-y-0 left-0 z-10 w-20 bg-gradient-to-r from-[#f7f2e4] to-transparent sm:w-28" />
+            <div className="absolute inset-y-0 right-0 z-10 w-20 bg-gradient-to-l from-[#f7f2e4] to-transparent sm:w-28" />
 
-        <div className="mt-4 flex justify-center gap-3">
-          <span className="h-2.5 w-2.5 rounded-full bg-[#d9dfc3]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#6f8342]" />
-          <span className="h-2.5 w-2.5 rounded-full bg-[#d9dfc3]" />
+            <div className="flex w-max gap-4 sm:gap-6 animate-testimonial-marquee group-hover:[animation-play-state:paused]">
+              {sliderTestimonials.map((testimonial, index) => (
+                <div key={`${testimonial.name}-${index}`} className="w-[86vw] flex-none sm:w-[420px] lg:w-[460px]">
+                  <TestimonialCard testimonial={testimonial} />
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="mt-6 flex justify-end">

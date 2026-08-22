@@ -3,7 +3,6 @@
 import Lenis from "lenis";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function LenisProvider() {
   const pathname = usePathname();
@@ -17,8 +16,6 @@ export default function LenisProvider() {
       touchMultiplier: 1.5,
     });
 
-    lenis.on("scroll", ScrollTrigger.update);
-
     let frameId;
 
     const raf = (time) => {
@@ -27,7 +24,6 @@ export default function LenisProvider() {
     };
 
     frameId = window.requestAnimationFrame(raf);
-    ScrollTrigger.refresh();
 
     return () => {
       window.cancelAnimationFrame(frameId);

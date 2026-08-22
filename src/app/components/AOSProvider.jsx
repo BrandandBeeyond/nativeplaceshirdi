@@ -12,7 +12,7 @@ export default function AOSProvider() {
       duration: 850,
       easing: "ease-out-cubic",
       once: true,
-      offset: 90,
+      offset: 5,
       mirror: false,
     });
   }, []);

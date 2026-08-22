@@ -21,9 +21,9 @@ const experienceFeatures = [
 ];
 
 const stats = [
-  { value: "15+", label: "Acres of Natural Beauty", icon: Trees },
-  { value: "20+", label: "Premium Amenities", icon: Sparkles },
-  { value: "1000+", label: "Happy Guests", icon: Users },
+  { target: 15, suffix: "+", label: "Acres of Natural Beauty", icon: Trees },
+  { target: 20, suffix: "+", label: "Premium Amenities", icon: Sparkles },
+  { target: 1000, suffix: "+", label: "Happy Guests", icon: Users, format: "compact" },
   { value: "Forever", label: "Memories That Last", icon: Sparkles },
 ];
 
@@ -40,8 +40,11 @@ function FeaturePill({ icon: Icon, label }) {
 
 export default function ExperienceSection() {
   const videoRef = useRef(null);
+  const statsRef = useRef(null);
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [counts, setCounts] = useState(stats.map(() => 0));
+  const [hasCounted, setHasCounted] = useState(false);
 
   const closeVideo = () => {
     videoRef.current?.pause();
@@ -90,6 +93,64 @@ export default function ExperienceSection() {
       setIsPlaying(false);
     });
   }, [isVideoOpen]);
+
+  useEffect(() => {
+    const node = statsRef.current;
+
+    if (!node || hasCounted) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) {
+          return;
+        }
+
+        setHasCounted(true);
+
+        const startTime = performance.now();
+        const duration = 1400;
+
+        const animate = (now) => {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+
+          setCounts(
+            stats.map((stat) =>
+              typeof stat.target === "number" ? Math.round(stat.target * eased) : 0,
+            ),
+          );
+
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          }
+        };
+
+        requestAnimationFrame(animate);
+        observer.disconnect();
+      },
+      {
+        threshold: 0.3,
+      },
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, [hasCounted]);
+
+  const formatCount = (value, stat) => {
+    if (stat.value) {
+      return stat.value;
+    }
+
+    if (stat.format === "compact") {
+      return `${Math.round(value / 1000)}K${stat.suffix ?? ""}`;
+    }
+
+    return `${value}${stat.suffix ?? ""}`;
+  };
 
   return (
     <section className="relative isolate min-h-screen overflow-hidden bg-[#fbf8ef] px-4 py-14 sm:px-6 sm:py-16 lg:px-0 lg:py-0">
@@ -157,10 +218,14 @@ export default function ExperienceSection() {
         </div>
       </div>
 
-      <div className="relative z-10 mx-auto mt-8 max-w-[1600px] px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8" data-aos="fade-up">
+      <div
+        ref={statsRef}
+        className="relative z-10 mx-auto mt-8 max-w-[1600px] px-4 pb-4 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8"
+        data-aos="fade-up"
+      >
         <div className="rounded-[22px] bg-white/82 p-4 shadow-[0_12px_32px_rgba(36,46,32,0.06)] sm:p-5">
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {stats.map((stat) => {
+            {stats.map((stat, index) => {
               const Icon = stat.icon;
 
               return (
@@ -170,7 +235,7 @@ export default function ExperienceSection() {
                   </span>
                   <div>
                     <div className="font-heading text-4xl leading-none text-[#20342b]">
-                      {stat.value}
+                      {formatCount(counts[index], stat)}
                     </div>
                     <div className="text-[13px] leading-5 text-[#5a645d]">{stat.label}</div>
                   </div>

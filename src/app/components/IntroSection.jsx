@@ -10,8 +10,9 @@ const features = [
     title: "Surrounded by Nature",
   },
   {
+    
     icon: Mountain,
-    title: "Scenic Hills of Coorg",
+    title: "Scenic Views of Shirdi",
   },
   {
     icon: Coffee,
@@ -193,19 +194,18 @@ export default function IntroSection() {
 
             <div
               ref={statsRef}
-              className="mx-auto mt-10 grid max-w-[720px] grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-0"
+              className="mx-auto mt-10 grid max-w-[920px] grid-cols-2 gap-4 sm:grid-cols-4"
               data-aos="fade-up"
             >
               {stats.map((stat, index) => (
                 <div
                   key={stat.label}
-                  className={`rounded-2xl bg-[#fbf8ef] px-3 py-5 text-center ${index < stats.length - 1 ? "sm:border-r sm:border-[#e2ddcf]" : ""
-                    }`}
+                  className="counter-card flex min-h-[180px] flex-col items-center justify-center rounded-[28px] bg-[#fbf8ef]/95 px-4 py-7 text-center shadow-[0_12px_30px_rgba(56,64,50,0.05)] sm:min-h-[230px] sm:px-6 sm:py-8"
                 >
-                  <div className="text-3xl font-semibold text-[#23312a] sm:text-[2.1rem]">
+                  <div className="text-4xl font-semibold tracking-[-0.04em] text-[#23312a] sm:text-[3.1rem]">
                     {formatCount(counts[index], stat)}
                   </div>
-                  <div className="mt-1 text-sm leading-6 text-[#5c6b64] sm:text-[15px]">
+                  <div className="mt-3 max-w-[10ch] text-base leading-7 text-[#5c6b64] sm:text-[1.1rem]">
                     {stat.label}
                   </div>
                 </div>
