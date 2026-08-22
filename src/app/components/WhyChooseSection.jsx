@@ -210,9 +210,7 @@ export default function WhyChooseSection() {
                   width={900}
                   height={280}
                   className="h-auto w-full object-contain"
-                  data-aos="zoom-in-up"
-                  data-aos-easing="ease-out-back"
-                  data-aos-duration="500"
+             
                   priority={false}
                 />
               </div>
