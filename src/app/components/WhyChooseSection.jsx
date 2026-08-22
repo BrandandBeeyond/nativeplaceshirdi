@@ -48,28 +48,36 @@ const highlights = [
   },
 ];
 
-function AnimatedText({ text, active }) {
-  return (
-    <span className="inline-flex flex-nowrap justify-center whitespace-nowrap">
-      {Array.from(text).map((char, index) => {
-        const isSpace = char === " ";
-        const spacing = isSpace ? "0.28em" : "0.07em";
+function AnimatedText({ text, active, reduceMotion }) {
+  const [visibleCount, setVisibleCount] = useState(0);
 
-        return (
-          <span
-            key={`${char}-${index}`}
-            className={`inline-block whitespace-pre transition-all duration-700 ease-out ${
-              active ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
-            }`}
-            style={{
-              transitionDelay: `${index * 48}ms`,
-              marginRight: spacing,
-            }}
-          >
-            {isSpace ? "\u00A0" : char}
-          </span>
-        );
-      })}
+  useEffect(() => {
+    if (!active || reduceMotion) {
+      return undefined;
+    }
+
+    let index = 0;
+    const intervalId = window.setInterval(() => {
+      index += 1;
+      setVisibleCount(index);
+
+      if (index >= text.length) {
+        window.clearInterval(intervalId);
+      }
+    }, 85);
+
+    return () => window.clearInterval(intervalId);
+  }, [active, reduceMotion, text]);
+
+  const visibleText = !active || reduceMotion ? text : text.slice(0, visibleCount);
+  const isComplete = visibleCount >= text.length;
+
+  return (
+    <span className="inline-flex items-center justify-center whitespace-nowrap">
+      <span className="inline-block">{visibleText}</span>
+      {!reduceMotion && active && !isComplete ? (
+        <span className="ml-1 inline-block h-[0.95em] w-[0.12em] translate-y-[0.08em] animate-pulse bg-current" />
+      ) : null}
     </span>
   );
 }
@@ -111,8 +119,6 @@ export default function WhyChooseSection() {
   const [textActive, setTextActive] = useState(false);
   const [cardsActive, setCardsActive] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
-  const textRevealDuration = animatedText.length * 48 + 700;
-
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
@@ -144,37 +150,71 @@ export default function WhyChooseSection() {
       return undefined;
     }
 
+    const activateSection = () => {
+      setTextActive(true);
+
+      if (reduceMotion) {
+        setCardsActive(true);
+        return;
+      }
+
+      if (!cardsTimerRef.current) {
+        cardsTimerRef.current = window.setTimeout(() => {
+          setCardsActive(true);
+          cardsTimerRef.current = null;
+        }, animatedText.length * 85 + 260);
+      }
+    };
+
+    const deactivateSection = () => {
+      setTextActive(false);
+      setCardsActive(false);
+
+      if (cardsTimerRef.current) {
+        window.clearTimeout(cardsTimerRef.current);
+        cardsTimerRef.current = null;
+      }
+    };
+
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            activateSection();
+          } else {
+            deactivateSection();
+          }
+        },
+        {
+          threshold: 0.35,
+        },
+      );
+
+      observer.observe(node);
+
+      return () => {
+        observer.disconnect();
+
+        if (cardsTimerRef.current) {
+          window.clearTimeout(cardsTimerRef.current);
+          cardsTimerRef.current = null;
+        }
+      };
+    }
+
     const updateState = () => {
       const rect = node.getBoundingClientRect();
       const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
       const isVisible = rect.top < viewportHeight * 0.72 && rect.bottom > viewportHeight * 0.18;
 
       if (isVisible) {
-        setTextActive(true);
-
-        if (reduceMotion) {
-          setCardsActive(true);
-          return;
-        }
-
-        if (!cardsTimerRef.current) {
-          cardsTimerRef.current = window.setTimeout(() => {
-            setCardsActive(true);
-            cardsTimerRef.current = null;
-          }, textRevealDuration + 240);
-        }
+        activateSection();
       } else {
-        setTextActive(false);
-        setCardsActive(false);
-
-        if (cardsTimerRef.current) {
-          window.clearTimeout(cardsTimerRef.current);
-          cardsTimerRef.current = null;
-        }
+        deactivateSection();
       }
     };
 
-    let rafId = window.requestAnimationFrame(updateState);
+    const rafId = window.requestAnimationFrame(updateState);
     window.addEventListener("scroll", updateState, { passive: true });
     window.addEventListener("resize", updateState);
 
@@ -188,7 +228,7 @@ export default function WhyChooseSection() {
         cardsTimerRef.current = null;
       }
     };
-  }, [reduceMotion, textRevealDuration]);
+  }, [reduceMotion]);
 
   return (
     <section
@@ -221,7 +261,12 @@ export default function WhyChooseSection() {
                 </p>
 
                 <h2 className="font-anton text-[clamp(2.15rem,5.6vw,5.1rem)] leading-[0.9] tracking-[0.18em] text-[#4f6f1d] drop-shadow-[0_8px_22px_rgba(61,80,31,0.12)] lg:text-[5.5rem]">
-                  <AnimatedText text={animatedText} active={textActive} />
+                  <AnimatedText
+                    key={textActive ? "typing" : "idle"}
+                    text={animatedText}
+                    active={textActive}
+                    reduceMotion={reduceMotion}
+                  />
                 </h2>
               </div>
             </div>

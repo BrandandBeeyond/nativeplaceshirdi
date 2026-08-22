@@ -2,25 +2,41 @@
 
 "use client";
 
-import { Menu, PhoneCallIcon, X } from "lucide-react";
+import { ChevronDown, Menu, PhoneCallIcon, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const navLinks = [
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about-us" },
-    { name: "Villas", href: "/villas" },
+    { name: "Villas & cottages", dropdown: true },
     { name: "Blogs", href: "/blogs" },
     { name: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [villasMenuOpen, setVillasMenuOpen] = useState(false);
+    const villasMenuRef = useRef(null);
+
+    useEffect(() => {
+        const handleOutsideClick = (event) => {
+            if (villasMenuRef.current && !villasMenuRef.current.contains(event.target)) {
+                setVillasMenuOpen(false);
+            }
+        };
+
+        document.addEventListener("mousedown", handleOutsideClick);
+
+        return () => {
+            document.removeEventListener("mousedown", handleOutsideClick);
+        };
+    }, []);
 
     return (
-        <header className="w-full border-t border-[#07552F]/20 bg-[#FCFBF5]">
-            <nav className="relative mx-auto flex h-[88px] max-w-[1400px] items-center px-4 sm:px-6 lg:px-8">
+        <header className="relative z-50 w-full border-t border-[#07552F]/20 bg-[#FCFBF5]">
+            <nav className="relative z-50 mx-auto flex h-[88px] max-w-[1400px] items-center overflow-visible px-4 sm:px-6 lg:px-8">
 
                 {/* Logo */}
                 <div className="flex-shrink-0">
@@ -38,18 +54,64 @@ export default function Navbar() {
 
                 {/* Center Navigation */}
                 <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-10 lg:flex">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className="group relative whitespace-nowrap text-[16px] font-medium tracking-[0.02em] text-[#18352A] transition-colors duration-300 hover:text-[#07552F]"
-                        >
-                            {link.name}
+                    {navLinks.map((link) =>
+                        link.dropdown ? (
+                            <div
+                                key={link.name}
+                                ref={villasMenuRef}
+                                className="relative"
+                                onMouseEnter={() => setVillasMenuOpen(true)}
+                                onMouseLeave={() => setVillasMenuOpen(false)}
+                            >
+                                <button
+                                    type="button"
+                                    onClick={() => setVillasMenuOpen((open) => !open)}
+                                    className="group inline-flex items-center gap-1 whitespace-nowrap text-[16px] font-medium tracking-[0.02em] text-[#18352A] transition-colors duration-300 hover:text-[#07552F]"
+                                    aria-expanded={villasMenuOpen}
+                                    aria-haspopup="menu"
+                                >
+                                    {link.name}
+                                    <ChevronDown
+                                        size={16}
+                                        className={`transition-transform duration-300 ${villasMenuOpen ? "rotate-180" : ""}`}
+                                    />
+                                    <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-[#B8DC4F] transition-all duration-300 group-hover:w-full" />
+                                </button>
 
-                            {/* Hover underline */}
-                            <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-[#B8DC4F] transition-all duration-300 group-hover:w-full" />
-                        </Link>
-                    ))}
+                                <div
+                                    className={`absolute left-1/2 top-[calc(100%+0.85rem)] z-[70] w-56 -translate-x-1/2 rounded-2xl border border-white/10 bg-[#05391f]/90 p-2 shadow-[0_22px_48px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-200 ${
+                                        villasMenuOpen
+                                            ? "pointer-events-auto translate-y-0 opacity-100"
+                                            : "pointer-events-none -translate-y-2 opacity-0"
+                                    }`}
+                                >
+                                    <Link
+                                        href="/villas"
+                                        onClick={() => setVillasMenuOpen(false)}
+                                        className="block rounded-xl px-4 py-3 text-[15px] font-medium text-white transition-colors duration-200 hover:bg-white/10 hover:text-white"
+                                    >
+                                        Villa
+                                    </Link>
+                                    <Link
+                                        href="/cottages"
+                                        onClick={() => setVillasMenuOpen(false)}
+                                        className="block rounded-xl px-4 py-3 text-[15px] font-medium text-white transition-colors duration-200 hover:bg-white/10 hover:text-white"
+                                    >
+                                        Cottages
+                                    </Link>
+                                </div>
+                            </div>
+                        ) : (
+                            <Link
+                                key={link.name}
+                                href={link.href}
+                                className="group relative whitespace-nowrap text-[16px] font-medium tracking-[0.02em] text-[#18352A] transition-colors duration-300 hover:text-[#07552F]"
+                            >
+                                {link.name}
+                                <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-[#B8DC4F] transition-all duration-300 group-hover:w-full" />
+                            </Link>
+                        ),
+                    )}
                 </div>
 
                 {/* Call Us */}
@@ -117,16 +179,59 @@ export default function Navbar() {
 
                     <div className="flex h-full flex-col items-center justify-center px-6">
                         <div className="flex flex-col items-center gap-6 text-center">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    onClick={() => setMenuOpen(false)}
-                                    className="text-2xl font-semibold tracking-wide text-white transition-colors duration-300 hover:text-[#B8DC4F]"
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
+                            {navLinks.map((link) =>
+                                link.dropdown ? (
+                                    <div key={link.name} className="flex flex-col items-center gap-4">
+                                        <button
+                                            type="button"
+                                            onClick={() => setVillasMenuOpen((open) => !open)}
+                                            className="inline-flex items-center gap-2 text-2xl font-semibold tracking-wide text-white transition-colors duration-300 hover:text-[#B8DC4F]"
+                                        >
+                                            {link.name}
+                                            <ChevronDown
+                                                size={18}
+                                                className={`transition-transform duration-300 ${villasMenuOpen ? "rotate-180" : ""}`}
+                                            />
+                                        </button>
+
+                                        <div
+                                            className={`flex flex-col items-center gap-4 overflow-hidden transition-all duration-300 ${
+                                                villasMenuOpen ? "max-h-32 opacity-100" : "max-h-0 opacity-0"
+                                            }`}
+                                        >
+                                            <Link
+                                                href="/villas"
+                                                onClick={() => {
+                                                  setMenuOpen(false);
+                                                  setVillasMenuOpen(false);
+                                                }}
+                                                className="text-xl font-medium tracking-wide text-white/90 transition-colors duration-300 hover:text-[#B8DC4F]"
+                                            >
+                                                Villa
+                                            </Link>
+                                            <Link
+                                                href="/cottages"
+                                                onClick={() => {
+                                                  setMenuOpen(false);
+                                                  setVillasMenuOpen(false);
+                                                }}
+                                                className="text-xl font-medium tracking-wide text-white/90 transition-colors duration-300 hover:text-[#B8DC4F]"
+                                            >
+                                                Cottages
+                                            </Link>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <Link
+                                        key={link.name}
+                                        href={link.href}
+                                        onClick={() => setMenuOpen(false)}
+                                        className="text-2xl font-semibold tracking-wide text-white transition-colors duration-300 hover:text-[#B8DC4F]"
+                                    >
+                                        {link.name}
+                                    </Link>
+                                ),
+                            )}
                         </div>
                     </div>
                 </div>
