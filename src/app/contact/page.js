@@ -21,7 +21,7 @@ export const metadata = {
 const socials = [
   { label: "Instagram", href: "https://instagram.com", icon: faInstagram },
   { label: "Facebook", href: "https://facebook.com", icon: faFacebook },
-  { label: "WhatsApp", href: "https://wa.me/919999999999", icon: faWhatsapp },
+  { label: "WhatsApp", href: "https://wa.me/918237036360", icon: faWhatsapp },
 ];
 
 function InfoCard({ icon: Icon, title, children }) {
@@ -77,8 +77,14 @@ export default function ContactPage() {
               <InfoCard icon={MessageCircle} title="Contact, Mail & Social Media">
                 <p className="flex items-center gap-2">
                   <Phone className="h-4 w-4 text-[#6b8444]" />
-                  <a href="tel:+919999999999" className="hover:text-[#18352a]">
-                    +91 99999 99999
+                  <a href="tel:+918237036360" className="hover:text-[#18352a]">
+                    +91 82370 36360
+                  </a>
+                </p>
+                <p className="mt-3 flex items-center gap-2">
+                  <Phone className="h-4 w-4 text-[#6b8444]" />
+                  <a href="tel:+919370678010" className="hover:text-[#18352a]">
+                    +91 93706 78010
                   </a>
                 </p>
                 <p className="mt-3 flex items-center gap-2">

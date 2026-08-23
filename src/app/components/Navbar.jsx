@@ -117,7 +117,7 @@ export default function Navbar() {
                 {/* Call Us */}
                 <div className="ml-auto hidden items-center lg:flex">
                     <a
-                        href="tel:+919999999999"
+                        href="tel:+918237036360"
                         className="rounded-full bg-[#07552F] px-8 py-3.5 text-[15px] font-medium text-white transition-all duration-300 hover:bg-[#B8DC4F] hover:text-[#18352A]"
                     >
                         <div className="group flex flex-row items-center gap-2">

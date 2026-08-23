@@ -168,7 +168,6 @@ export default function WhyChooseSection() {
 
     const deactivateSection = () => {
       setTextActive(false);
-      setCardsActive(false);
 
       if (cardsTimerRef.current) {
         window.clearTimeout(cardsTimerRef.current);
@@ -233,15 +232,15 @@ export default function WhyChooseSection() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-[#f7f2e4] px-4 py-20 sm:px-6 sm:py-24 lg:px-8 lg:py-28"
+      className="relative isolate overflow-visible bg-[#f7f2e4]"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.9),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(184,220,79,0.16),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(107,132,68,0.12),transparent_28%)]" />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d9cfb7] to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#d9cfb7] to-transparent" />
 
       <div className="relative mx-auto max-w-[1500px]">
-        <div className="relative min-h-[132vh] sm:min-h-[136vh] lg:min-h-[140vh]">
-          <div className="sticky top-0 z-10 flex min-h-screen items-center justify-center px-2 py-10 sm:px-4 lg:px-8">
+        <div className="relative min-h-[160vh] sm:min-h-[165vh] lg:min-h-[175vh]">
+          <div className="sticky top-0 z-10 flex h-screen items-center justify-center px-4 py-10 sm:px-6 lg:px-8">
             <div className="mx-auto flex max-w-[900px] flex-col items-center text-center">
               <div className="w-full max-w-[240px] sm:max-w-[320px] lg:max-w-[360px]">
                 <Image
@@ -271,10 +270,12 @@ export default function WhyChooseSection() {
               </div>
             </div>
           </div>
+
+          <div className="pointer-events-none h-[55vh]" aria-hidden="true" />
         </div>
 
         <div
-          className={`relative z-20 -mt-28 rounded-t-[42px] bg-white px-4 py-12 shadow-[0_-20px_70px_rgba(0,0,0,0.08)] transition-all duration-700 ease-out sm:px-6 sm:py-14 lg:-mt-36 lg:px-8 lg:py-16 ${
+          className={`relative z-30 -mt-[100vh] min-h-screen rounded-t-[42px] bg-white px-4 py-12 shadow-[0_-20px_70px_rgba(0,0,0,0.08)] transition-all duration-700 ease-out sm:px-6 sm:py-14 lg:px-8 lg:py-16 ${
             cardsActive ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
           }`}
         >

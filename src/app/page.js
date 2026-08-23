@@ -3,6 +3,7 @@ import BannerCarousel from "./components/BannerCarousel";
 import FacilitiesSection from "./components/FacilitiesSection";
 import ExperienceSection from "./components/ExperienceSection";
 import WhyChooseSection from "./components/WhyChooseSection";
+import BookingSection from "./components/BookingSection";
 import TestimonialsSection from "./components/TestimonialsSection";
 import IntroSection from "./components/IntroSection";
 import Footer from "./components/Footer";
@@ -19,6 +20,7 @@ export default function Home() {
      <FacilitiesSection />
      <ExperienceSection />
      <WhyChooseSection />
+     <BookingSection />
      <TestimonialsSection />
      <Footer />
   </>;

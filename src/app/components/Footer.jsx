@@ -33,7 +33,7 @@ const policies = [
 const socials = [
   { label: "Instagram", href: "https://instagram.com", icon: faInstagram, type: "fa" },
   { label: "Facebook", href: "https://facebook.com", icon: faFacebook, type: "fa" },
-  { label: "WhatsApp", href: "https://wa.me/919999999999", icon: faWhatsapp, type: "fa" },
+  { label: "WhatsApp", href: "https://wa.me/918237036360", icon: faWhatsapp, type: "fa" },
   ];
 
 function WhatsAppPopup({ open, onClose }) {
@@ -56,7 +56,7 @@ function WhatsAppPopup({ open, onClose }) {
   }, [open]);
 
   const openChat = () => {
-    const whatsappNumber = "919999999999";
+    const whatsappNumber = "918237036360";
     const encodedMessage = encodeURIComponent(message);
     window.open(
       `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
@@ -202,8 +202,14 @@ export default function Footer() {
                 </p>
                 <p className="flex items-center gap-3">
                   <Phone className="h-4 w-4 shrink-0 text-[#b8dc4f]" />
-                  <a href="tel:+919999999999" className="hover:text-white">
-                    +91 99999 99999
+                  <a href="tel:+918237036360" className="hover:text-white">
+                    +91 82370 36360
+                  </a>
+                </p>
+                <p className="flex items-center gap-3">
+                  <Phone className="h-4 w-4 shrink-0 text-[#b8dc4f]" />
+                  <a href="tel:+919370678010" className="hover:text-white">
+                    +91 93706 78010
                   </a>
                 </p>
                 <p className="flex items-center gap-3">

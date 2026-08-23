@@ -2,7 +2,6 @@ import { Allura, Anton, Cormorant_Garamond, DM_Sans, Montserrat } from "next/fon
 import "aos/dist/aos.css";
 import "./globals.css";
 import AOSProvider from "./components/AOSProvider";
-import LenisProvider from "./components/LenisProvider";
 
 const headingFont = Cormorant_Garamond({
   variable: "--font-heading",
@@ -47,7 +46,6 @@ export default function RootLayout({ children }) {
       className={`${headingFont.variable} ${antonFont.variable} ${subheadingFont.variable} ${bodyFont.variable} ${scriptFont.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <LenisProvider />
         <AOSProvider />
         {children}
       </body>
