@@ -118,7 +118,7 @@ function StayBlock({
 
 export default function VillasCottages() {
   return (
-    <section className="bg-[#fbf8ef] px-4 py-14 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+    <section id="stay-with-us" className="bg-[#fbf8ef] px-4 py-14 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-[1400px]">
         <div className="text-center">
           <p className="font-subheading text-[12px] font-semibold uppercase tracking-[0.45em] text-[#6b8444] sm:text-sm">

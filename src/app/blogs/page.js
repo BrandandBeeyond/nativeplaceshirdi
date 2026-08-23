@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, CalendarDays, Clock3, Sparkles, Tag } from "lucide-react";
+import Footer from "../components/Footer";
+import Navbar from "../components/Navbar";
 
 const featuredBlog = {
   title: "Why a nature resort stay feels better than a city weekend",
@@ -142,68 +144,99 @@ export const metadata = {
 
 export default function BlogsPage() {
   return (
-    <main className="bg-[#fbf8ef]">
-      <section className="relative overflow-hidden border-b border-[#e7dfcb] bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.9),transparent_40%),linear-gradient(180deg,#fcfbf5_0%,#fbf8ef_100%)] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-        <div className="mx-auto max-w-[1400px]">
-          <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[#d8dcc9] bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.28em] text-[#6b8444] shadow-sm">
-              <Sparkles className="h-3.5 w-3.5" />
-              Blogs
-            </span>
-            <h1 className="mt-5 font-heading text-[clamp(2.8rem,5vw,5.4rem)] leading-[0.92] text-[#20342b]">
-              Stories, tips and stay inspiration
-            </h1>
-            <p className="mt-5 max-w-2xl text-[1.02rem] leading-8 text-[#5c6258]">
-              Explore simple ideas, resort stories and travel inspiration designed for
-              peaceful getaways, memorable family stays and slower weekends.
-            </p>
+    <>
+      <Navbar />
+      <main className="bg-[#fbf8ef]">
+        <section className="relative overflow-hidden border-b border-[#e7dfcb] bg-[#0f2418]">
+          <div className="absolute inset-0">
+            <Image
+              src="/images/banners/banner4.jpeg"
+              alt="The Native Place blogs banner"
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(7,20,12,0.82)_0%,rgba(7,20,12,0.42)_48%,rgba(7,20,12,0.18)_100%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(184,220,79,0.18),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.12),transparent_26%)]" />
           </div>
-        </div>
-      </section>
 
-      <section className="px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
-        <div className="mx-auto max-w-[1400px]">
-          <div className="mb-6 flex items-end justify-between gap-4">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#6b8444]">
-                Latest blog
+          <div className="relative mx-auto flex min-h-[340px] max-w-[1400px] items-center px-4 py-16 sm:min-h-[400px] sm:px-6 sm:py-20 lg:min-h-[460px] lg:px-8 lg:py-24">
+            <div className="max-w-3xl">
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-[#e8f2d0] backdrop-blur-sm">
+                <Sparkles className="h-3.5 w-3.5" />
+                Blogs
+              </span>
+
+              <h1 className="mt-5 font-heading text-[clamp(2.9rem,5vw,5.7rem)] leading-[0.92] text-white drop-shadow-[0_10px_24px_rgba(0,0,0,0.26)]">
+                Stories, tips and stay inspiration
+              </h1>
+
+              <p className="mt-5 max-w-2xl text-[15px] leading-8 text-white/84 sm:text-lg">
+                Explore simple ideas, resort stories and travel inspiration designed for
+                peaceful getaways, memorable family stays and slower weekends.
               </p>
-              <h2 className="mt-2 font-heading text-[clamp(2rem,3vw,3.25rem)] text-[#20342b]">
-                Featured post
-              </h2>
-            </div>
-            <div className="hidden items-center gap-2 rounded-full border border-[#d9dcc9] bg-white px-4 py-2 text-sm text-[#566155] shadow-sm md:flex">
-              <Tag className="h-4 w-4 text-[#6b8444]" />
-              Recent story at top
+
+              <div className="mt-8 flex flex-wrap gap-3">
+                <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/90 backdrop-blur-sm">
+                  Latest posts
+                </span>
+                <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/90 backdrop-blur-sm">
+                  Resort stories
+                </span>
+                <span className="rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm text-white/90 backdrop-blur-sm">
+                  Travel tips
+                </span>
+              </div>
             </div>
           </div>
+        </section>
 
-          <BlogCard blog={featuredBlog} featured />
-
-          <div className="mt-14 flex items-center justify-between gap-4">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#6b8444]">
-                More reads
-              </p>
-              <h3 className="mt-2 font-heading text-[clamp(1.8rem,2.5vw,2.8rem)] text-[#20342b]">
-                More stories to explore
-              </h3>
+        <section className="px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+          <div className="mx-auto max-w-[1400px]">
+            <div className="mb-6 flex items-end justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#6b8444]">
+                  Latest blog
+                </p>
+                <h2 className="mt-2 font-heading text-[clamp(2rem,3vw,3.25rem)] text-[#20342b]">
+                  Featured post
+                </h2>
+              </div>
+              <div className="hidden items-center gap-2 rounded-full border border-[#d9dcc9] bg-white px-4 py-2 text-sm text-[#566155] shadow-sm md:flex">
+                <Tag className="h-4 w-4 text-[#6b8444]" />
+                Recent story at top
+              </div>
             </div>
-            <Link
-              href="/contact"
-              className="hidden rounded-full border border-[#07552F] px-5 py-3 text-sm font-semibold text-[#07552F] transition-colors duration-300 hover:bg-[#07552F] hover:text-white sm:inline-flex"
-            >
-              Plan a stay
-            </Link>
-          </div>
 
-          <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {blogs.map((blog) => (
-              <BlogCard key={blog.title} blog={blog} />
-            ))}
+            <BlogCard blog={featuredBlog} featured />
+
+            <div className="mt-14 flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#6b8444]">
+                  More reads
+                </p>
+                <h3 className="mt-2 font-heading text-[clamp(1.8rem,2.5vw,2.8rem)] text-[#20342b]">
+                  More stories to explore
+                </h3>
+              </div>
+              <Link
+                href="/contact"
+                className="hidden rounded-full border border-[#07552F] px-5 py-3 text-sm font-semibold text-[#07552F] transition-colors duration-300 hover:bg-[#07552F] hover:text-white sm:inline-flex"
+              >
+                Plan a stay
+              </Link>
+            </div>
+
+            <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+              {blogs.map((blog) => (
+                <BlogCard key={blog.title} blog={blog} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 }

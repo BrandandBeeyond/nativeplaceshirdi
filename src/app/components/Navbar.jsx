@@ -1,4 +1,4 @@
-// components/Navbar.jsx
+﻿// components/Navbar.jsx
 
 "use client";
 
@@ -18,7 +18,10 @@ const navLinks = [
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [villasMenuOpen, setVillasMenuOpen] = useState(false);
+    const [isPinned, setIsPinned] = useState(false);
+    const [isVisible, setIsVisible] = useState(true);
     const villasMenuRef = useRef(null);
+    const previousScrollYRef = useRef(0);
 
     useEffect(() => {
         const handleOutsideClick = (event) => {
@@ -34,8 +37,49 @@ export default function Navbar() {
         };
     }, []);
 
+    useEffect(() => {
+        const threshold = window.innerHeight || 0;
+
+        const handleScroll = () => {
+            const currentScrollY = window.scrollY || 0;
+            const previousScrollY = previousScrollYRef.current;
+            const shouldPin = currentScrollY >= threshold;
+
+            setIsPinned(shouldPin);
+
+            if (!shouldPin) {
+                setIsVisible(true);
+            } else if (currentScrollY < previousScrollY) {
+                setIsVisible(true);
+            } else if (currentScrollY > previousScrollY) {
+                setIsVisible(false);
+            }
+
+            previousScrollYRef.current = currentScrollY;
+        };
+
+        previousScrollYRef.current = window.scrollY || 0;
+        handleScroll();
+
+        window.addEventListener("scroll", handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+        };
+    }, []);
+
     return (
-        <header className="relative z-50 w-full border-t border-[#07552F]/20 bg-[#FCFBF5]">
+        <>
+            {isPinned ? <div aria-hidden="true" className="h-[88px]" /> : null}
+            <header
+                className={`z-50 w-full border-t border-[#07552F]/20 bg-[#FCFBF5]/95 backdrop-blur-md transition-all duration-300 ease-out ${
+                    isPinned
+                        ? `fixed left-0 right-0 top-0 ${
+                            menuOpen || isVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"
+                          }`
+                        : "relative translate-y-0 opacity-100"
+                }`}
+            >
             <nav className="relative z-50 mx-auto flex h-[88px] max-w-[1400px] items-center overflow-visible px-4 sm:px-6 lg:px-8">
 
                 {/* Logo */}
@@ -78,8 +122,10 @@ export default function Navbar() {
                                     <span className="absolute -bottom-2 left-0 h-[2px] w-0 bg-[#B8DC4F] transition-all duration-300 group-hover:w-full" />
                                 </button>
 
+                                <div aria-hidden="true" className="absolute left-1/2 top-full h-3 w-56 -translate-x-1/2" />
+
                                 <div
-                                    className={`absolute left-1/2 top-[calc(100%+0.85rem)] z-[70] w-56 -translate-x-1/2 rounded-2xl border border-white/10 bg-[#05391f]/90 p-2 shadow-[0_22px_48px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-200 ${
+                                    className={`absolute left-1/2 top-[calc(100%+0.5rem)] z-[70] w-56 -translate-x-1/2 rounded-2xl border border-white/10 bg-[#05391f]/90 p-2 shadow-[0_22px_48px_rgba(0,0,0,0.22)] backdrop-blur-md transition-all duration-200 ${
                                         villasMenuOpen
                                             ? "pointer-events-auto translate-y-0 opacity-100"
                                             : "pointer-events-none -translate-y-2 opacity-0"
@@ -236,6 +282,8 @@ export default function Navbar() {
                     </div>
                 </div>
             </div>
-        </header>
+            </header>
+        </>
     );
 }
+

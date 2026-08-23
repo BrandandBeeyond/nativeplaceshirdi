@@ -19,8 +19,16 @@ export const metadata = {
 };
 
 const socials = [
-  { label: "Instagram", href: "https://instagram.com", icon: faInstagram },
-  { label: "Facebook", href: "https://facebook.com", icon: faFacebook },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/thenativeplaceshirdi?igsh=MW91ZGJzazc3YjJjZw%3D%3D&utm_source=qr",
+    icon: faInstagram,
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/share/18vXcmNG7v/?mibextid=wwXIfr",
+    icon: faFacebook,
+  },
   { label: "WhatsApp", href: "https://wa.me/918237036360", icon: faWhatsapp },
 ];
 
@@ -62,7 +70,7 @@ export default function ContactPage() {
             <div className="grid gap-5 lg:grid-cols-2">
               <InfoCard icon={MapPin} title="Location">
                 <p className="text-[16px] leading-7 text-[#56615a]">
-                  The Native Place, Shirdi, Maharashtra, India
+                  At Shahajapur, Shirdi - Surat highway, Near Kolpewadi, kopargaon - Shirdi
                 </p>
                 <p className="mt-3 flex items-center gap-2 text-[#20342b]">
                   <Clock3 className="h-4 w-4 text-[#6b8444]" />

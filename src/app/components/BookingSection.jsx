@@ -216,7 +216,7 @@ export default function BookingSection() {
                     type="submit"
                     className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#203f20] px-7 py-4 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#4f6f1d]"
                   >
-                    Submit Booking
+                    Submit Booking Request
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </button>
                 </form>

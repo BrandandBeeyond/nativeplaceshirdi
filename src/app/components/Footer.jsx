@@ -25,14 +25,26 @@ const quickLinks = [
 ];
 
 const policies = [
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms & Conditions", href: "/terms-conditions" },
-  { label: "Cancellation Policy", href: "/cancellation-policy" },
+  { label: "Policies & Information", href: "/policies" },
+  { label: "Arrival & Departure", href: "/policies#arrival-departure" },
+  { label: "Booking & Payment", href: "/policies#booking-payment" },
+  { label: "Cancellation & Refund", href: "/policies#cancellation-refund" },
+  { label: "Personal Belongings", href: "/policies#personal-belongings" },
 ];
 
 const socials = [
-  { label: "Instagram", href: "https://instagram.com", icon: faInstagram, type: "fa" },
-  { label: "Facebook", href: "https://facebook.com", icon: faFacebook, type: "fa" },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/thenativeplaceshirdi?igsh=MW91ZGJzazc3YjJjZw%3D%3D&utm_source=qr",
+    icon: faInstagram,
+    type: "fa",
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/share/18vXcmNG7v/?mibextid=wwXIfr",
+    icon: faFacebook,
+    type: "fa",
+  },
   { label: "WhatsApp", href: "https://wa.me/918237036360", icon: faWhatsapp, type: "fa" },
   ];
 
@@ -198,7 +210,9 @@ export default function Footer() {
               <div className="mt-5 space-y-4 text-sm text-white/80">
                 <p className="flex items-start gap-3">
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#b8dc4f]" />
-                  <span>Shirdi, Maharashtra, India</span>
+                  <span>
+                    At Shahajapur, Shirdi - Surat highway, Near Kolpewadi, kopargaon - Shirdi
+                  </span>
                 </p>
                 <p className="flex items-center gap-3">
                   <Phone className="h-4 w-4 shrink-0 text-[#b8dc4f]" />
