@@ -21,10 +21,10 @@ const navigation = [
     label: "CMS",
     icon: FileText,
     items: [
-      { href: "/console/nativeplace/cms", label: "Overview" },
-      { href: "/console/nativeplace/cms/pages", label: "Pages" },
+      { href: "/console/nativeplace/cms/pages", label: "Home Page" },
+      { href: "/console/nativeplace/cms/about", label: "About Us" },
       { href: "/console/nativeplace/cms/blogs", label: "Blogs" },
-      { href: "/console/nativeplace/cms/banners", label: "Banners" },
+      { href: "/console/nativeplace/cms/villas-cottages", label: "Villas & Cottages" },
     ],
   },
   { href: "/console/nativeplace/contact-enquiries", label: "Contact Enquiries", icon: Mail },
@@ -98,7 +98,7 @@ export default function ConsoleShell({ children, pageTitle, pageDescription }) {
   return (
     <main className="min-h-screen bg-[#eef3ea]">
       <div className="grid min-h-screen lg:grid-cols-[300px_1fr]">
-        <aside className="bg-[linear-gradient(180deg,#102f24_0%,#183f2f_100%)] text-white lg:sticky lg:top-0 lg:h-screen">
+        <aside className="bg-[linear-gradient(180deg,#102f24_0%,#183f2f_100%)] text-white lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
           <div className="flex h-full flex-col">
             <div className="border-b border-white/10 px-6 py-6">
               <div className="flex items-center gap-3">
@@ -116,7 +116,7 @@ export default function ConsoleShell({ children, pageTitle, pageDescription }) {
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto px-4 py-6">
+            <div className="flex-1 px-4 py-6">
               <p className="px-4 text-xs font-semibold uppercase tracking-[0.3em] text-white/50">
                 Main Menu
               </p>

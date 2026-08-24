@@ -2,7 +2,7 @@
 import ConsoleShell from "../../ConsoleShell.jsx";
 import { requireAdminSession } from "../../auth.js";
 
-export const metadata = { title: "CMS Banners | The Native Place", description: "Manage banners and hero sections." };
+export const metadata = { title: "CMS Banners | The Native Place", description: "Homepage banners are now managed from the Home Page CMS." };
 
 const bannerModules = [
   { title: "Homepage Hero", description: "Update the main visual banner shown first to visitors.", icon: Sparkles },
@@ -15,7 +15,7 @@ export default async function CmsBannersPage() {
   await requireAdminSession("/console/nativeplace/cms/banners");
 
   return (
-    <ConsoleShell pageTitle="CMS Banners" pageDescription="Manage the visual banners and promotional sections used across the site.">
+    <ConsoleShell pageTitle="CMS Banners" pageDescription="Homepage banners are managed from the Home Page CMS. Use this view as a legacy reference.">
       <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
         {bannerModules.map((module) => {
           const Icon = module.icon;

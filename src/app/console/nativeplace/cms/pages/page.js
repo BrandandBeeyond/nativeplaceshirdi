@@ -1,33 +1,54 @@
-﻿import { FileText, Settings2, Sparkles, SquarePen } from "lucide-react";
 import ConsoleShell from "../../ConsoleShell.jsx";
 import { requireAdminSession } from "../../auth.js";
+import dbConnect from "@/app/lib/dbConnect.js";
+import { Banner, Page } from "@/app/lib/models/index.js";
+import HomePageEditor from "../components/HomePageEditor.jsx";
+import { defaultHomeContent, normalizeHomeContent } from "../utils.js";
 
-export const metadata = { title: "CMS Pages | The Native Place", description: "Manage static website pages." };
+export const metadata = {
+  title: "Home Page CMS | The Native Place",
+  description: "Manage homepage slider banners and intro content.",
+};
 
-const pageModules = [
-  { title: "Homepage", description: "Hero, facilities and call-to-action sections.", icon: Sparkles },
-  { title: "About Us", description: "Story, values and resort experience content.", icon: FileText },
-  { title: "Contact Page", description: "Inquiry form copy and contact details.", icon: SquarePen },
-  { title: "Global Settings", description: "Header, footer and shared site content.", icon: Settings2 },
-];
+async function getHomePageData() {
+  try {
+    await dbConnect();
 
-export default async function CmsPagesPage() {
+    const [bannerDocs, homePageDoc] = await Promise.all([
+      Banner.find({}).sort({ sortOrder: 1, createdAt: 1 }).lean(),
+      Page.findOne({ slug: "home" }).lean(),
+    ]);
+
+    return {
+      banners: bannerDocs || [],
+      content: normalizeHomeContent(homePageDoc?.content || defaultHomeContent),
+      warning: "",
+    };
+  } catch (error) {
+    return {
+      banners: [],
+      content: normalizeHomeContent(defaultHomeContent),
+      warning:
+        "MongoDB is unavailable or authentication failed, so the Home Page editor is showing default content for now.",
+      error: error?.message || "Unable to load homepage data.",
+    };
+  }
+}
+
+export default async function CmsHomePage() {
   await requireAdminSession("/console/nativeplace/cms/pages");
+  const { banners, content, warning } = await getHomePageData();
 
   return (
-    <ConsoleShell pageTitle="CMS Pages" pageDescription="Edit the core pages that shape the public website experience.">
-      <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-        {pageModules.map((module) => {
-          const Icon = module.icon;
-          return (
-            <article key={module.title} className="rounded-[26px] border border-[#e7e2d3] bg-white p-6 shadow-[0_14px_40px_rgba(24,53,42,0.08)]">
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#eef4e3] text-[#6b8444]"><Icon className="h-5 w-5" /></span>
-              <h3 className="mt-5 font-heading text-[clamp(1.6rem,2vw,2.2rem)] leading-tight text-[#18352a]">{module.title}</h3>
-              <p className="mt-3 text-sm leading-7 text-[#66716a]">{module.description}</p>
-            </article>
-          );
-        })}
-      </section>
+    <ConsoleShell
+      pageTitle="Home Page"
+      pageDescription="Edit the homepage slider banners and the intro content shown below the banner carousel."
+    >
+      <HomePageEditor
+        initialBanners={banners}
+        initialContent={content}
+        sourceWarning={warning}
+      />
     </ConsoleShell>
   );
 }
