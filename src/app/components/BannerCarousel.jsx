@@ -36,7 +36,7 @@ export default function BannerCarousel() {
 
   return (
     <section className="relative isolate overflow-hidden bg-[#f7f5ec]" data-aos="fade-up">
-      <div className="relative h-[calc(100vh-88px)] min-h-[520px] w-full">
+      <div className="relative h-[64vh] min-h-[360px] w-full sm:h-[72vh] sm:min-h-[440px] lg:h-[calc(100vh-88px)] lg:min-h-[520px]">
         {banners.map((banner, index) => {
           const isActive = index === activeIndex;
 
@@ -67,35 +67,35 @@ export default function BannerCarousel() {
 
         <div className="relative z-30 flex h-full items-center justify-center px-4 text-center sm:px-6 lg:px-8">
           <div key={activeIndex} className="max-w-4xl text-white animate-banner-heading">
-            <p className="mb-4 text-[11px] uppercase tracking-[0.45em] text-[#e4f0cf] sm:text-sm">
+            <p className="mb-3 text-[9px] uppercase tracking-[0.28em] text-[#e4f0cf] sm:mb-4 sm:text-sm sm:tracking-[0.45em]">
               The Native Place Shirdi
             </p>
-            <h1 className="text-4xl font-semibold leading-tight drop-shadow-[0_10px_30px_rgba(0,0,0,0.35)] sm:text-5xl lg:text-7xl">
+            <h1 className="text-[clamp(1.7rem,7vw,4.7rem)] font-semibold leading-[1.08] drop-shadow-[0_10px_30px_rgba(0,0,0,0.35)] sm:text-5xl lg:text-7xl">
               {banners[activeIndex].heading}
             </h1>
 
             <a
               href="/contact"
-              className="group relative mx-auto mt-8 inline-flex items-center gap-3 overflow-hidden rounded-full border border-white/70 bg-white px-7 py-3 text-[13px] font-semibold uppercase tracking-[0.2em] text-[#18352A] shadow-[0_16px_35px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#dff1bf] hover:bg-[#dff1bf] hover:shadow-[0_22px_45px_rgba(0,0,0,0.22)]"
+              className="group relative mx-auto mt-5 inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/70 bg-white px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#18352A] shadow-[0_16px_35px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#dff1bf] hover:bg-[#dff1bf] hover:shadow-[0_22px_45px_rgba(0,0,0,0.22)] sm:mt-8 sm:gap-3 sm:px-7 sm:py-3 sm:text-[13px] sm:tracking-[0.2em]"
             >
               <span className="relative z-10 transition-colors duration-300">
                 Book Now
               </span>
-              <span className="relative z-10 inline-flex h-7 w-7 items-center justify-center rounded-full border border-[#18352A]/20 bg-[#f5f1e4] text-[#18352A] transition-all duration-300 group-hover:translate-x-1 group-hover:bg-white">
+              <span className="relative z-10 inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#18352A]/20 bg-[#f5f1e4] text-[#18352A] transition-all duration-300 group-hover:translate-x-1 group-hover:bg-white sm:h-7 sm:w-7">
                 <ArrowRight className="h-4 w-4" strokeWidth={2.4} />
               </span>
             </a>
           </div>
         </div>
 
-        <div className="absolute bottom-6 left-1/2 z-30 flex -translate-x-1/2 gap-2">
+        <div className="absolute bottom-4 left-1/2 z-30 flex -translate-x-1/2 gap-2 sm:bottom-6">
           {banners.map((_, index) => (
             <button
               key={index}
               type="button"
               aria-label={`Go to banner ${index + 1}`}
               onClick={() => setActiveIndex(index)}
-              className={`h-2.5 rounded-full transition-all duration-300 ${index === activeIndex ? "w-10 bg-[#a3ca65]" : "w-2.5 bg-white/50 hover:bg-white/75"
+              className={`h-1.5 rounded-full transition-all duration-300 sm:h-2.5 ${index === activeIndex ? "w-7 bg-[#a3ca65] sm:w-10" : "w-1.5 bg-white/50 hover:bg-white/75 sm:w-2.5"
                 }`}
             />
           ))}

@@ -90,7 +90,7 @@ export default function Navbar() {
                             alt="The Native Place"
                             width={240}
                             height={130}
-                            className="h-auto w-[190px] object-contain sm:w-[220px] lg:w-[280px]"
+                            className="h-auto w-[170px] object-contain sm:w-[220px] lg:w-[280px]"
                             priority
                         />
                     </Link>

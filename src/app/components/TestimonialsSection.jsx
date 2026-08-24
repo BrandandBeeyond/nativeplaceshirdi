@@ -75,7 +75,7 @@ function TestimonialCard({ testimonial }) {
   const initials = getInitials(testimonial.name);
 
   return (
-    <article className="h-full rounded-[30px] border border-[#f1eadc] bg-[#fffdf8] p-7 shadow-[0_18px_50px_rgba(36,31,21,0.08)] sm:p-8">
+    <article className="h-full rounded-[26px] border border-[#f1eadc] bg-[#fffdf8] p-6 shadow-[0_18px_50px_rgba(36,31,21,0.08)] sm:rounded-[30px] sm:p-8">
       <div className="flex gap-1 text-[#d9ab2b]" aria-label="5 star rating">
         {Array.from({ length: 5 }).map((_, index) => (
           <Star
@@ -87,20 +87,20 @@ function TestimonialCard({ testimonial }) {
         ))}
       </div>
 
-      <p className="mt-5 font-heading text-[1.18rem] leading-[1.38] text-[#39504a] sm:text-[1.28rem]">
+      <p className="mt-4 font-heading text-[1.05rem] leading-[1.34] text-[#39504a] sm:mt-5 sm:text-[1.28rem]">
         <span aria-hidden="true">{'"'}</span>
         {testimonial.quote}
         <span aria-hidden="true">{'"'}</span>
       </p>
 
-      <div className="mt-7 border-t border-[#ebe6d9] pt-5">
+      <div className="mt-6 border-t border-[#ebe6d9] pt-4 sm:mt-7 sm:pt-5">
         <div className="flex items-center gap-4">
-          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#88a24a,#dce7bd)] text-sm font-semibold text-[#173525] shadow-[0_10px_25px_rgba(95,121,45,0.18)]">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[linear-gradient(135deg,#88a24a,#dce7bd)] text-[13px] font-semibold text-[#173525] shadow-[0_10px_25px_rgba(95,121,45,0.18)] sm:h-12 sm:w-12 sm:text-sm">
             {initials}
           </div>
 
           <div>
-            <h3 className="font-heading text-[1.25rem] leading-tight text-[#20342b] sm:text-[1.4rem]">
+            <h3 className="font-heading text-[1.1rem] leading-tight text-[#20342b] sm:text-[1.4rem]">
               {testimonial.name}
             </h3>
             <p className="font-subheading text-[11px] font-medium uppercase tracking-[0.22em] text-[#88906e]">
@@ -178,7 +178,7 @@ export default function TestimonialsSection() {
 
             <div className="flex w-max gap-4 sm:gap-6 animate-testimonial-marquee group-hover:[animation-play-state:paused]">
               {sliderTestimonials.map((testimonial, index) => (
-                <div key={`${testimonial.name}-${index}`} className="w-[86vw] flex-none sm:w-[420px] lg:w-[460px]">
+                <div key={`${testimonial.name}-${index}`} className="w-[82vw] flex-none sm:w-[400px] lg:w-[440px]">
                   <TestimonialCard testimonial={testimonial} />
                 </div>
               ))}
