@@ -3,7 +3,6 @@ import Link from "next/link";
 import {
   CalendarDays,
   ChevronLeft,
-  ChevronRight,
   Grid3x3,
   Home,
   Leaf,
@@ -14,6 +13,7 @@ import {
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import PageBanner from "./PageBanner";
+import FadeCarousel from "./FadeCarousel";
 
 function IconPill({ icon: Icon, label }) {
   return (
@@ -80,47 +80,13 @@ export default function StayDetailPage({
           </div>
 
           <div className="mt-4 grid gap-6 lg:grid-cols-[1.05fr_0.9fr] lg:items-center">
-            <div className="relative">
-              <div className="relative overflow-hidden rounded-[22px] shadow-[0_22px_52px_rgba(44,56,38,0.12)]">
-                <div className="relative aspect-[1.18/1] lg:aspect-[1.12/1]">
-                  <Image src={heroImage} alt={stayTitle} fill priority className="object-cover" />
-                </div>
-
-                <button
-                  type="button"
-                  aria-label="Previous image"
-                  className="absolute left-4 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#20342b] shadow-[0_8px_22px_rgba(20,28,17,0.18)]"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-
-                <button
-                  type="button"
-                  aria-label="Next image"
-                  className="absolute right-4 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#20342b] shadow-[0_8px_22px_rgba(20,28,17,0.18)]"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-              </div>
-
-              <div className="mt-3 grid grid-cols-5 gap-3 sm:gap-4">
-                {heroThumbs.map((thumb, index) => (
-                  <div
-                    key={thumb}
-                    className={`relative aspect-[1.2/0.82] overflow-hidden rounded-[12px] border ${
-                      index === 0 ? "border-[#d8cdb6]" : "border-[#eadfca]"
-                    } bg-white shadow-[0_10px_22px_rgba(44,56,38,0.06)]`}
-                  >
-                    <Image
-                      src={thumb}
-                      alt={`${stayTitle} thumbnail ${index + 1}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
+            <FadeCarousel
+              images={heroThumbs?.length ? heroThumbs : [heroImage]}
+              alt={stayTitle}
+              className="shadow-[0_22px_52px_rgba(44,56,38,0.12)]"
+              aspectClassName="aspect-[1.18/1] lg:aspect-[1.12/1]"
+              containerRoundedClassName="rounded-[22px]"
+            />
 
             <div className="px-2 py-2 lg:px-4 xl:px-8">
               <p className="font-subheading text-[12px] font-semibold uppercase tracking-[0.35em] text-[#6e7d63]">
@@ -218,38 +184,15 @@ export default function StayDetailPage({
             <div className="mx-auto mt-3 h-px w-20 bg-[#d7cfbc]" />
           </div>
 
-          <div className="mt-8 flex items-stretch gap-4">
-            <button
-              type="button"
-              aria-label="Previous gallery image"
-              className="hidden h-14 w-14 shrink-0 items-center justify-center self-center rounded-full bg-white text-[#20342b] shadow-[0_8px_20px_rgba(20,28,17,0.14)] lg:inline-flex"
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </button>
-
-            <div className="grid flex-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {galleryImages.map((image, index) => (
-                <div
-                  key={image}
-                  className="relative aspect-[1.08/0.88] overflow-hidden rounded-[14px] shadow-[0_12px_28px_rgba(44,56,38,0.08)]"
-                >
-                  <Image
-                    src={image}
-                    alt={`${stayTitle} gallery ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              aria-label="Next gallery image"
-              className="hidden h-14 w-14 shrink-0 items-center justify-center self-center rounded-full bg-white text-[#20342b] shadow-[0_8px_20px_rgba(20,28,17,0.14)] lg:inline-flex"
-            >
-              <ChevronRight className="h-6 w-6" />
-            </button>
+          <div className="mt-8 mx-auto max-w-5xl">
+            <FadeCarousel
+              images={galleryImages}
+              alt={`${stayTitle} gallery`}
+              className="shadow-[0_12px_28px_rgba(44,56,38,0.08)]"
+              aspectClassName="aspect-[1.08/0.74] sm:aspect-[1.08/0.62] lg:aspect-[1.08/0.52]"
+              containerRoundedClassName="rounded-[14px]"
+              showThumbs={false}
+            />
           </div>
         </section>
 
