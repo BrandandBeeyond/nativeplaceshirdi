@@ -9,6 +9,7 @@ import {
   BadgeInfo,
 } from "lucide-react";
 import Footer from "../components/Footer";
+import ContactEnquiryForm from "../components/ContactEnquiryForm";
 import Navbar from "../components/Navbar";
 import PageBanner from "../components/PageBanner";
 
@@ -135,100 +136,7 @@ export default function ContactPage() {
                 </h2>
               </div>
 
-              <form className="mt-8 grid gap-5" action="#" method="post">
-                <div className="grid gap-5 lg:grid-cols-2">
-                  <label className="block">
-                    <span className="mb-2 block text-sm font-medium text-[#37433c]">
-                      Your name
-                    </span>
-                    <input
-                      type="text"
-                      name="name"
-                      required
-                      placeholder="Enter your name"
-                      className="w-full rounded-2xl border border-[#d8ded8] bg-[#fcfbf6] px-4 py-4 text-[15px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
-                    />
-                  </label>
-
-                  <label className="block">
-                    <span className="mb-2 block text-sm font-medium text-[#37433c]">
-                      Contact number
-                    </span>
-                    <input
-                      type="tel"
-                      name="contact"
-                      required
-                      inputMode="numeric"
-                      maxLength={10}
-                      pattern="[0-9]{10}"
-                      placeholder="10 digit mobile number"
-                      className="w-full rounded-2xl border border-[#d8ded8] bg-[#fcfbf6] px-4 py-4 text-[15px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
-                    />
-                  </label>
-                </div>
-
-                <div className="grid gap-5 lg:grid-cols-2">
-                  <label className="block">
-                    <span className="mb-2 block text-sm font-medium text-[#37433c]">
-                      Subject
-                    </span>
-                    <select
-                      name="subject"
-                      required
-                      defaultValue=""
-                      className="w-full rounded-2xl border border-[#d8ded8] bg-[#fcfbf6] px-4 py-4 text-[15px] outline-none transition-colors duration-300 focus:border-[#6b8444]"
-                    >
-                      <option value="" disabled>
-                        Select subject
-                      </option>
-                      <option value="Booking">Booking</option>
-                      <option value="Need info">Need info</option>
-                    </select>
-                  </label>
-
-                  <label className="block">
-                    <span className="mb-2 block text-sm font-medium text-[#37433c]">
-                      Enquiry type
-                    </span>
-                    <select
-                      name="enquiryType"
-                      required
-                      defaultValue=""
-                      className="w-full rounded-2xl border border-[#d8ded8] bg-[#fcfbf6] px-4 py-4 text-[15px] outline-none transition-colors duration-300 focus:border-[#6b8444]"
-                    >
-                      <option value="" disabled>
-                        Select enquiry type
-                      </option>
-                      <option value="URGENT">URGENT</option>
-                      <option value="REGULAR">REGULAR</option>
-                    </select>
-                  </label>
-                </div>
-
-                <label className="block">
-                  <span className="mb-2 block text-sm font-medium text-[#37433c]">
-                    Message
-                  </span>
-                  <textarea
-                    name="message"
-                    required
-                    rows={6}
-                    placeholder="Write your message here"
-                    className="w-full rounded-2xl border border-[#d8ded8] bg-[#fcfbf6] px-4 py-4 text-[15px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
-                  />
-                </label>
-
-                <div className="flex flex-wrap items-center gap-4 pt-2">
-                  <button
-                    type="submit"
-                    className="inline-flex items-center gap-3 rounded-full bg-[#18352A] px-8 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-white transition-all duration-300 hover:bg-[#2c4b38]"
-                  >
-                    Send Enquiry
-                    <span className="text-lg leading-none">-&gt;</span>
-                  </button>
-                  <p className="text-sm text-[#67716a]">All fields are required.</p>
-                </div>
-              </form>
+              <ContactEnquiryForm />
             </div>
           </div>
         </section>

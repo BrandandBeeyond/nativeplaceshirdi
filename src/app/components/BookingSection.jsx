@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { ArrowRight, Leaf, PhoneCall, Sparkles, Users, UtensilsCrossed } from "lucide-react";
 
@@ -27,6 +28,59 @@ const perks = [
 ];
 
 export default function BookingSection() {
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    checkIn: "",
+    checkOut: "",
+    message: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState({ type: "", message: "" });
+
+  const updateField = (field, value) => {
+    setForm((current) => ({ ...current, [field]: value }));
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+    setStatus({ type: "", message: "" });
+
+    try {
+      const response = await fetch("/api/booking-enquiries", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+
+      const payload = await response.json();
+
+      if (!response.ok || !payload.success) {
+        throw new Error(payload.message || "Failed to submit booking enquiry.");
+      }
+
+      setForm({
+        firstName: "",
+        lastName: "",
+        phone: "",
+        email: "",
+        checkIn: "",
+        checkOut: "",
+        message: "",
+      });
+      setStatus({ type: "success", message: payload.message || "Booking enquiry submitted." });
+    } catch (error) {
+      setStatus({ type: "error", message: error.message || "Failed to submit booking enquiry." });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <section className="bg-[#f7f2e4] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-[1500px]">
@@ -126,7 +180,7 @@ export default function BookingSection() {
                   </p>
                 </div>
 
-                <form className="mt-8 space-y-5" action="#" method="post">
+                <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
                   <div className="grid gap-5 sm:grid-cols-2">
                     <label className="block">
                       <span className="mb-2 block text-sm font-medium text-[#37433c]">
@@ -135,6 +189,9 @@ export default function BookingSection() {
                       <input
                         type="text"
                         name="firstName"
+                        required
+                        value={form.firstName}
+                        onChange={(event) => updateField("firstName", event.target.value)}
                         placeholder="Enter first name"
                         className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
                       />
@@ -146,6 +203,9 @@ export default function BookingSection() {
                       <input
                         type="text"
                         name="lastName"
+                        required
+                        value={form.lastName}
+                        onChange={(event) => updateField("lastName", event.target.value)}
                         placeholder="Enter last name"
                         className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
                       />
@@ -160,6 +220,9 @@ export default function BookingSection() {
                       <input
                         type="tel"
                         name="phone"
+                        required
+                        value={form.phone}
+                        onChange={(event) => updateField("phone", event.target.value)}
                         placeholder="Enter phone number"
                         className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
                       />
@@ -171,6 +234,9 @@ export default function BookingSection() {
                       <input
                         type="email"
                         name="email"
+                        required
+                        value={form.email}
+                        onChange={(event) => updateField("email", event.target.value)}
                         placeholder="Enter email address"
                         className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
                       />
@@ -185,6 +251,9 @@ export default function BookingSection() {
                       <input
                         type="date"
                         name="checkIn"
+                        required
+                        value={form.checkIn}
+                        onChange={(event) => updateField("checkIn", event.target.value)}
                         className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 focus:border-[#6b8444]"
                       />
                     </label>
@@ -195,6 +264,9 @@ export default function BookingSection() {
                       <input
                         type="date"
                         name="checkOut"
+                        required
+                        value={form.checkOut}
+                        onChange={(event) => updateField("checkOut", event.target.value)}
                         className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 focus:border-[#6b8444]"
                       />
                     </label>
@@ -207,6 +279,8 @@ export default function BookingSection() {
                     <textarea
                       name="message"
                       rows={5}
+                      value={form.message}
+                      onChange={(event) => updateField("message", event.target.value)}
                       placeholder="Your message or any special request..."
                       className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
                     />
@@ -214,12 +288,24 @@ export default function BookingSection() {
 
                   <button
                     type="submit"
+                    disabled={loading}
                     className="group inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#203f20] px-7 py-4 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#4f6f1d]"
                   >
-                    Submit Booking Request
+                    {loading ? "Submitting..." : "Submit Booking Request"}
                     <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </button>
                 </form>
+                {status.message ? (
+                  <p
+                    className={`mt-4 rounded-2xl px-4 py-3 text-sm ${
+                      status.type === "error"
+                        ? "border border-red-200 bg-red-50 text-red-800"
+                        : "border border-emerald-200 bg-emerald-50 text-emerald-800"
+                    }`}
+                  >
+                    {status.message}
+                  </p>
+                ) : null}
               </div>
             </div>
           </div>

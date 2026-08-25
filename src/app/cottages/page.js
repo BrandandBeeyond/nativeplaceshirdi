@@ -1,10 +1,15 @@
 import { Armchair, Coffee, Leaf, Package, Trees, Wifi, Zap } from "lucide-react";
 import StayDetailPage from "../components/StayDetailPage.jsx";
+import dbConnect from "../lib/dbConnect.js";
+import { Page } from "../lib/models/index.js";
+import { getDefaultStayContent, normalizeStayContent } from "../lib/stay-content.js";
 
 export const metadata = {
   title: "Cottages | The Native Place Shirdi",
   description: "Explore the cottages at The Native Place Shirdi.",
 };
+
+export const dynamic = "force-dynamic";
 
 const cottageAmenities = [
   { icon: Armchair, label: "Cozy Sit-out" },
@@ -22,33 +27,31 @@ const cottageHighlights = [
   { icon: Leaf, label: "Nature Feel" },
 ];
 
-const heroThumbs = [
-  "/images/cottages/cottage1.jpeg",
-  "/images/cottages/ambience.WEBP",
-  "/images/cottages/IMG_0085.WEBP",
-  "/images/cottages/IMG_0083.WEBP",
-  "/images/cottages/IMG_0081.WEBP",
-];
+async function getCottagesPageContent() {
+  try {
+    await dbConnect();
+    const page = await Page.findOne({ slug: "cottages" }).lean();
 
-const galleryImages = [
-  "/images/cottages/IMG_0084.JPG.jpeg",
-  "/images/cottages/IMG_0082.JPG.jpeg",
-  "/images/cottages/IMG_0076.JPG.jpeg",
-  "/images/cottages/ambience.WEBP",
-];
+    return normalizeStayContent("cottages", page?.content || getDefaultStayContent("cottages"));
+  } catch (_error) {
+    return getDefaultStayContent("cottages");
+  }
+}
 
-export default function CottagesPage() {
+export default async function CottagesPage() {
+  const stayContent = await getCottagesPageContent();
+
   return (
     <StayDetailPage
       stayLabel="All Cottages"
       stayTitle="Cottages"
       bannerTitle="Cottages"
       bannerDescription="Cozy stays surrounded by greenery, calm spaces, and a slower pace of living."
-      bannerImage="/images/banners/banner2.jpeg"
-      heroImage="/images/cottages/cottage1.jpeg"
-      heroThumbs={heroThumbs}
-      introImage="/images/cottages/ambience.WEBP"
-      galleryImages={galleryImages}
+      bannerImage={stayContent.bannerImage}
+      heroImage={stayContent.heroImages?.[0] || stayContent.bannerImage}
+      heroThumbs={stayContent.heroImages}
+      introImage={stayContent.introImage}
+      galleryImages={stayContent.galleryImages}
       amenities={cottageAmenities}
       highlights={cottageHighlights}
     />

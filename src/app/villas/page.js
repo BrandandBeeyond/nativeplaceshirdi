@@ -1,10 +1,15 @@
 import { Armchair, BedDouble, Coffee, Package, Trees, Wifi, Zap } from "lucide-react";
 import StayDetailPage from "../components/StayDetailPage.jsx";
+import dbConnect from "../lib/dbConnect.js";
+import { Page } from "../lib/models/index.js";
+import { getDefaultStayContent, normalizeStayContent } from "../lib/stay-content.js";
 
 export const metadata = {
   title: "2 BHK Villas | The Native Place Shirdi",
   description: "Explore the 2 BHK Villas at The Native Place Shirdi.",
 };
+
+export const dynamic = "force-dynamic";
 
 const villaAmenities = [
   { icon: BedDouble, label: "2 Bedrooms" },
@@ -22,33 +27,31 @@ const villaHighlights = [
   { icon: Trees, label: "Garden Views" },
 ];
 
-const heroThumbs = [
-  "/images/villas/villa1.jpeg",
-  "/images/villas/villa2.WEBP",
-  "/images/common/IMG_9118.JPG.jpeg",
-  "/images/common/IMG_9115.JPG.jpeg",
-  "/images/common/IMG_9116.JPG.jpeg",
-];
+async function getVillasPageContent() {
+  try {
+    await dbConnect();
+    const page = await Page.findOne({ slug: "villas" }).lean();
 
-const galleryImages = [
-  "/images/common/IMG_9115.JPG.jpeg",
-  "/images/common/IMG_9116.JPG.jpeg",
-  "/images/common/IMG_0074.JPG.jpeg",
-  "/images/common/IMG_0073.JPG.jpeg",
-];
+    return normalizeStayContent("villas", page?.content || getDefaultStayContent("villas"));
+  } catch (_error) {
+    return getDefaultStayContent("villas");
+  }
+}
 
-export default function VillasPage() {
+export default async function VillasPage() {
+  const stayContent = await getVillasPageContent();
+
   return (
     <StayDetailPage
       stayLabel="All Villas"
       stayTitle="2 BHK Villas"
       bannerTitle="2 BHK Villas"
       bannerDescription="Spacious villas designed for relaxed family stays, private gatherings, and peaceful weekends."
-      bannerImage="/images/banners/banner1.jpeg"
-      heroImage="/images/villas/villa1.jpeg"
-      heroThumbs={heroThumbs}
-      introImage="/images/common/IMG_9118.JPG.jpeg"
-      galleryImages={galleryImages}
+      bannerImage={stayContent.bannerImage}
+      heroImage={stayContent.heroImages?.[0] || stayContent.bannerImage}
+      heroThumbs={stayContent.heroImages}
+      introImage={stayContent.introImage}
+      galleryImages={stayContent.galleryImages}
       amenities={villaAmenities}
       highlights={villaHighlights}
     />
