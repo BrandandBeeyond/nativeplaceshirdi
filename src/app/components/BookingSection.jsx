@@ -145,7 +145,7 @@ export default function BookingSection() {
                     <p className="font-subheading text-[11px] font-semibold uppercase tracking-[0.45em] text-[#d8e29f]">
                       Nature. Comfort. Memories.
                     </p>
-                    <h2 className="mt-5 font-heading text-[clamp(3.1rem,4.9vw,5.8rem)] leading-[0.95] text-white drop-shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
+                    <h2 className="mt-5 font-heading text-[clamp(2.35rem,10vw,5.8rem)] leading-[0.95] text-white drop-shadow-[0_8px_24px_rgba(0,0,0,0.25)] sm:text-[clamp(3.1rem,4.9vw,5.8rem)]">
                       Your Escape Awaits.
                     </h2>
                     <p className="mt-6 max-w-[340px] text-[15px] leading-7 text-white/88 sm:text-[1rem]">
@@ -164,7 +164,7 @@ export default function BookingSection() {
                         <p className="text-sm text-white/70">We’re here to help!</p>
                         <a
                           href="tel:+918237036360"
-                          className="mt-1 block text-[1.25rem] font-semibold text-[#d8f184]"
+                          className="mt-1 block text-[1.05rem] font-semibold text-[#d8f184] sm:text-[1.25rem]"
                         >
                           +91 82370 36360
                         </a>
@@ -174,7 +174,7 @@ export default function BookingSection() {
                   </div>
                 </div>
 
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="hidden gap-3 sm:grid sm:grid-cols-2">
                   {perks.map((item) => {
                     const Icon = item.icon;
 

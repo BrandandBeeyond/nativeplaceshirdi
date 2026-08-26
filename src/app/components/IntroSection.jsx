@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { ArrowRight, ChevronRight, Coffee, Mountain, Sprout, Users } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 const stats = [
   {
@@ -32,6 +32,16 @@ export default function IntroSection() {
   const statsRef = useRef(null);
   const [counts, setCounts] = useState(stats.map(() => 0));
   const [hasAnimated, setHasAnimated] = useState(false);
+  const isMobile = useSyncExternalStore(
+    (onStoreChange) => {
+      const mediaQuery = window.matchMedia("(max-width: 767px)");
+      mediaQuery.addEventListener("change", onStoreChange);
+
+      return () => mediaQuery.removeEventListener("change", onStoreChange);
+    },
+    () => window.matchMedia("(max-width: 767px)").matches,
+    () => false,
+  );
 
   useEffect(() => {
     const node = statsRef.current;
@@ -87,7 +97,10 @@ export default function IntroSection() {
     <section className="bg-[#fff] px-4 py-10 sm:px-6 sm:py-14 lg:px-10 lg:py-24">
       <div className="mx-auto max-w-[1300px]">
         <div className="grid items-start gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-16">
-          <div className="relative min-h-[360px] sm:min-h-[520px] lg:min-h-[760px]" data-aos="fade-right">
+          <div
+            className="relative min-h-[360px] sm:min-h-[520px] lg:min-h-[760px]"
+            data-aos={isMobile ? undefined : "fade-right"}
+          >
             <div className="absolute left-0 top-0 h-[60%] w-[86%] overflow-hidden rounded-[1.65rem] shadow-[0_28px_70px_rgba(45,54,38,0.16)] sm:h-[72%] sm:w-[78%] sm:rounded-[2.5rem]">
               <Image
                 src="/images/cottages/ambience.WEBP"
@@ -139,7 +152,7 @@ export default function IntroSection() {
             </div>
           </div>
 
-          <div className="px-1 lg:px-6" data-aos="fade-left">
+          <div className="px-1 lg:px-6" data-aos={isMobile ? undefined : "fade-left"}>
             <div className="flex items-center justify-center gap-3 text-[#6b8444]">
               <span className="h-px w-8 bg-[#d9d2bc] sm:w-10" />
               <span className="font-subheading text-[9px] font-semibold uppercase tracking-[0.24em] text-[#6b8444] sm:text-[12px] sm:tracking-[0.45em] sm:text-sm">

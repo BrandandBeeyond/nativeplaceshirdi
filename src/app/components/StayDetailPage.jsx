@@ -24,6 +24,23 @@ function BulletItem({ children }) {
   );
 }
 
+function StayTitle({ title }) {
+  const match = String(title || "").trim().match(/^(\d+)\s*(.*)$/);
+
+  if (!match) {
+    return title;
+  }
+
+  const [, leadingNumber, remainingTitle] = match;
+
+  return (
+    <>
+      <span className="text-[1.15em]">{leadingNumber}</span>
+      <span>{remainingTitle ? ` ${remainingTitle}` : ""}</span>
+    </>
+  );
+}
+
 const amenityDescriptions = {
   "2 Bedrooms": "Comfortable sleeping spaces for families and close groups.",
   "Private Sit-out": "A private place to relax and enjoy the surroundings.",
@@ -148,7 +165,7 @@ export default function StayDetailPage({
               </p>
 
               <h1 className="mt-4 max-w-xl font-heading text-[clamp(3.2rem,5vw,5.2rem)] leading-[0.92] text-[#2b4532]">
-                {stayTitle}
+                <StayTitle title={stayTitle} />
               </h1>
 
               <div className="mt-5 h-px w-28 bg-[#d8d0be]" />

@@ -28,19 +28,21 @@ export default function Preloader() {
     <div
       className={`fixed inset-0 z-[100] flex items-center justify-center bg-[#022514] transition-opacity duration-500 ${
         isFadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
-      }`}
+      } overflow-hidden`}
     >
-      <video
-        ref={videoRef}
-        autoPlay
-        muted
-        playsInline
-        preload="auto"
-        onEnded={handleVideoEnd}
-        className="block h-auto w-[min(72vw,240px)] object-contain object-center sm:w-full sm:max-w-[470px] sm:max-h-[360px]"
-      >
-        <source src="/preloader/preloader.webm" type="video/webm" />
-      </video>
+      <div className="flex w-full justify-center px-4">
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          playsInline
+          preload="auto"
+          onEnded={handleVideoEnd}
+          className="block h-auto w-full max-w-[240px] object-contain object-center sm:max-w-[470px] sm:max-h-[360px]"
+        >
+          <source src="/preloader/preloader.webm" type="video/webm" />
+        </video>
+      </div>
     </div>
   );
 }

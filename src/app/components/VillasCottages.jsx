@@ -39,6 +39,23 @@ function FeatureRow({ items }) {
   );
 }
 
+function EmphasizedTitle({ title }) {
+  const match = String(title || "").trim().match(/^(\d+)\s*(.*)$/);
+
+  if (!match) {
+    return title;
+  }
+
+  const [, leadingNumber, rest] = match;
+
+  return (
+    <>
+      <span className="text-[1.22em]">{leadingNumber}</span>
+      <span>{rest ? ` ${rest}` : ""}</span>
+    </>
+  );
+}
+
 function StayBlock({
   number,
   title,
@@ -78,7 +95,7 @@ function StayBlock({
       >
         <div className="w-full max-w-[520px]">
           <h3 className="mt-2 font-heading font-[500] text-[clamp(2.2rem,6vw,3.6rem)] uppercase leading-[1.02] text-[#18352A] sm:text-[2.7rem]">
-            {title}
+            <EmphasizedTitle title={title} />
           </h3>
 
           <div className="mt-4 h-px w-12 bg-[#d9d2c4]" />

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
   Coffee,
   Pause,
@@ -45,6 +45,16 @@ export default function ExperienceSection() {
   const [isPlaying, setIsPlaying] = useState(true);
   const [counts, setCounts] = useState(stats.map(() => 0));
   const [hasCounted, setHasCounted] = useState(false);
+  const isMobile = useSyncExternalStore(
+    (onStoreChange) => {
+      const mediaQuery = window.matchMedia("(max-width: 767px)");
+      mediaQuery.addEventListener("change", onStoreChange);
+
+      return () => mediaQuery.removeEventListener("change", onStoreChange);
+    },
+    () => window.matchMedia("(max-width: 767px)").matches,
+    () => false,
+  );
 
   const closeVideo = () => {
     videoRef.current?.pause();
@@ -155,7 +165,10 @@ export default function ExperienceSection() {
   return (
     <section className="relative isolate min-h-screen overflow-hidden bg-[#fbf8ef] px-4 py-12 sm:px-6 sm:py-16 lg:px-0 lg:py-0">
       <div className="mx-auto grid min-h-screen max-w-[1600px] items-stretch lg:grid-cols-[0.92fr_1.08fr]">
-        <div className="relative z-10 flex flex-col justify-center px-2 py-6 sm:px-6 lg:px-16 xl:px-20" data-aos="fade-right">
+        <div
+          className="relative z-10 flex flex-col justify-center px-2 py-6 sm:px-6 lg:px-16 xl:px-20"
+          data-aos={isMobile ? undefined : "fade-right"}
+        >
           <div className="max-w-[650px]">
             <div className="flex items-center gap-4 text-[#6b8444]">
               <span className="h-px w-10 bg-[#d9d2c4]" />
@@ -191,7 +204,10 @@ export default function ExperienceSection() {
           </div>
         </div>
 
-        <div className="relative min-h-[420px] sm:min-h-[560px] lg:min-h-screen" data-aos="fade-left">
+        <div
+          className="relative min-h-[420px] sm:min-h-[560px] lg:min-h-screen"
+          data-aos={isMobile ? undefined : "fade-left"}
+        >
           <Image
             src="/images/amenities/pool2.jpeg"
             alt="Resort experience"

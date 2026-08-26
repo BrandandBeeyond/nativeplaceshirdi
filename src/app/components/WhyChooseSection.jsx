@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 const highlights = [
   {
@@ -70,7 +71,57 @@ function HighlightCard({ item }) {
   );
 }
 
+function AnimatedTitle({ text, isVisible }) {
+  return (
+    <span aria-label={text} className="inline-block">
+      {text.split("").map((character, index) => (
+        <span
+          key={`${character}-${index}`}
+          className={`inline-block transition-all duration-700 ease-out ${
+            character === " "
+              ? "w-[0.5em]"
+              : isVisible
+                ? "translate-y-0 opacity-100"
+                : "translate-y-4 opacity-0"
+          }`}
+          style={{ transitionDelay: `${index * 38}ms` }}
+        >
+          {character === " " ? "\u00A0" : character}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 export default function WhyChooseSection() {
+  const titleRef = useRef(null);
+  const [isTitleVisible, setIsTitleVisible] = useState(false);
+
+  useEffect(() => {
+    const node = titleRef.current;
+
+    if (!node) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsTitleVisible(true);
+          observer.disconnect();
+        }
+      },
+      {
+        threshold: 0.35,
+        rootMargin: "0px 0px -12% 0px",
+      },
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="relative isolate overflow-visible bg-[#f7f2e4]">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.9),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(184,220,79,0.16),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(107,132,68,0.12),transparent_28%)]" />
@@ -90,13 +141,13 @@ export default function WhyChooseSection() {
             />
           </div>
 
-          <div className="mt-12 max-w-[1250px] sm:mt-14">
+          <div ref={titleRef} className="mt-12 max-w-[1250px] sm:mt-14">
             <p className="mb-10 font-heading text-[clamp(2.05rem,4vw,3.35rem)] leading-none font-normal tracking-[-0.03em] text-[#6b8444] sm:mb-12">
               Why Choose
             </p>
 
             <h2 className="font-anton text-[clamp(2.15rem,5.6vw,5.1rem)] leading-[0.9] tracking-[0.18em] text-[#4f6f1d] drop-shadow-[0_8px_22px_rgba(61,80,31,0.12)] lg:text-[5.5rem]">
-              THE NATIVE PLACE
+              <AnimatedTitle text="THE NATIVE PLACE" isVisible={isTitleVisible} />
             </h2>
           </div>
         </div>
