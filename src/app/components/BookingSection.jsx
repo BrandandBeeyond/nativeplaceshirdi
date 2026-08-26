@@ -118,7 +118,7 @@ export default function BookingSection() {
   };
 
   return (
-    <section className="bg-[#f7f2e4] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+    <section id="booking-section" className="bg-[#f7f2e4] px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
       <div className="mx-auto max-w-[1500px]">
         <div className="rounded-[34px] border border-[#eadfca] bg-[#f3ecdb] p-4 shadow-[0_18px_60px_rgba(33,40,28,0.08)] sm:p-5">
           <div className="grid overflow-hidden rounded-[28px] bg-[#f7f1e2] lg:grid-cols-[1.05fr_1fr]">

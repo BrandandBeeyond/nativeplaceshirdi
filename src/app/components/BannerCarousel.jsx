@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
@@ -74,8 +75,8 @@ export default function BannerCarousel() {
               {banners[activeIndex].heading}
             </h1>
 
-            <a
-              href="/contact"
+            <Link
+              href="/#booking-section"
               className="group relative mx-auto mt-5 inline-flex items-center gap-2 overflow-hidden rounded-full border border-white/70 bg-white px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.14em] text-[#18352A] shadow-[0_16px_35px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#dff1bf] hover:bg-[#dff1bf] hover:shadow-[0_22px_45px_rgba(0,0,0,0.22)] sm:mt-8 sm:gap-3 sm:px-7 sm:py-3 sm:text-[13px] sm:tracking-[0.2em]"
             >
               <span className="relative z-10 transition-colors duration-300">
@@ -84,7 +85,7 @@ export default function BannerCarousel() {
               <span className="relative z-10 inline-flex h-5 w-5 items-center justify-center rounded-full border border-[#18352A]/20 bg-[#f5f1e4] text-[#18352A] transition-all duration-300 group-hover:translate-x-1 group-hover:bg-white sm:h-7 sm:w-7">
                 <ArrowRight className="h-4 w-4" strokeWidth={2.4} />
               </span>
-            </a>
+            </Link>
           </div>
         </div>
 
