@@ -1,4 +1,4 @@
-import { Armchair, Coffee, Leaf, Package, Trees, Wifi, Zap } from "lucide-react";
+import { Armchair, BedDouble, Coffee, Home, Leaf, Package, Trees, Wifi, Zap } from "lucide-react";
 import StayDetailPage from "../components/StayDetailPage.jsx";
 import dbConnect from "../lib/dbConnect.js";
 import { Page } from "../lib/models/index.js";
@@ -17,8 +17,11 @@ const cottageAmenities = [
   { icon: Leaf, label: "Nature Feel" },
   { icon: Wifi, label: "Wi-Fi Access" },
   { icon: Coffee, label: "Tea / Coffee Maker" },
+  { icon: BedDouble, label: "Comfortable Rooms" },
+  { icon: Package, label: "Mini Fridge" },
   { icon: Package, label: "Compact Storage" },
   { icon: Zap, label: "Power Backup" },
+  { icon: Home, label: "Housekeeping" },
 ];
 
 const cottageHighlights = [
@@ -54,6 +57,9 @@ export default async function CottagesPage() {
       galleryImages={stayContent.galleryImages}
       amenities={cottageAmenities}
       highlights={cottageHighlights}
+      amenityEyebrow="Cottage Amenities"
+      amenityTitle="Comfort. Calm. Every Detail."
+      amenityDescription="Thoughtfully curated amenities to make your cottage stay relaxing, comfortable and truly memorable."
     />
   );
 }

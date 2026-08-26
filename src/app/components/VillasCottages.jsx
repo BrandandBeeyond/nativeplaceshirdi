@@ -24,10 +24,10 @@ function FeatureRow({ items }) {
         return (
           <div
             key={item.label}
-          className={`flex items-center gap-2.5 py-1 sm:px-6 ${
+            className={`flex items-center gap-2.5 py-1 sm:px-6 ${
               index < items.length - 1 ? "sm:border-r sm:border-[#e0dccf]" : ""
             }`}
-        >
+          >
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#eef1df] text-[#768f54] sm:h-10 sm:w-10">
               <Icon className="h-4 w-4 sm:h-5 sm:w-5" strokeWidth={1.7} />
             </span>
@@ -77,7 +77,6 @@ function StayBlock({
         }`}
       >
         <div className="w-full max-w-[520px]">
-          
           <h3 className="mt-2 font-heading font-[500] text-[clamp(2.2rem,6vw,3.6rem)] uppercase leading-[1.02] text-[#18352A] sm:text-[2.7rem]">
             {title}
           </h3>

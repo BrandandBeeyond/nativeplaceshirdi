@@ -53,6 +53,8 @@ function WhatsAppPopup({ open, onClose }) {
   const [message, setMessage] = useState(
     "Hi, I would like to enquire about The Native Place."
   );
+  const [error, setError] = useState("");
+  const [sending, setSending] = useState(false);
 
   useEffect(() => {
     if (!open) {
@@ -67,15 +69,71 @@ function WhatsAppPopup({ open, onClose }) {
     };
   }, [open]);
 
-  const openChat = () => {
+  const openChat = (chatWindow = null) => {
     const whatsappNumber = "918237036360";
     const encodedMessage = encodeURIComponent(message);
+    const targetUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+    if (chatWindow && !chatWindow.closed) {
+      chatWindow.location.href = targetUrl;
+      return;
+    }
+
     window.open(
-      `https://wa.me/${whatsappNumber}?text=${encodedMessage}`,
+      targetUrl,
       "_blank",
       "noopener,noreferrer"
     );
     onClose();
+  };
+
+  const handleSubmit = async () => {
+    const cleanedNumber = String(number || "").replace(/\D/g, "");
+
+    if (!cleanedNumber) {
+      setError("Enter mobile number.");
+      return;
+    }
+
+    if (cleanedNumber.length !== 10) {
+      setError("Enter 10 digit mobile number.");
+      return;
+    }
+
+    setSending(true);
+    setError("");
+    const chatWindow = window.open("about:blank", "_blank");
+
+    try {
+      const response = await fetch("/api/leads", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: "WhatsApp Lead",
+          phone: cleanedNumber,
+          notes: message,
+          source: "whatsapp",
+        }),
+      });
+
+      const payload = await response.json();
+
+      if (!response.ok || !payload.success) {
+        throw new Error(payload.message || "Failed to save lead.");
+      }
+
+      openChat(chatWindow);
+      onClose();
+    } catch (submitError) {
+      if (chatWindow && !chatWindow.closed) {
+        chatWindow.close();
+      }
+      setError(submitError.message || "Failed to save lead.");
+    } finally {
+      setSending(false);
+    }
   };
 
   if (!open) {
@@ -114,10 +172,14 @@ function WhatsAppPopup({ open, onClose }) {
 
           <div className="mt-5 space-y-4">
             <input
-              type="text"
+              type="tel"
               value={number}
-              onChange={(event) => setNumber(event.target.value)}
-              placeholder="Enter your number"
+              inputMode="numeric"
+              maxLength={10}
+              onChange={(event) =>
+                setNumber(event.target.value.replace(/\D/g, "").slice(0, 10))
+              }
+              placeholder="Enter your 10 digit number"
               className="w-full rounded-2xl border border-[#d7dfd4] px-4 py-4 text-sm outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
             />
 
@@ -130,12 +192,19 @@ function WhatsAppPopup({ open, onClose }) {
 
             <button
               type="button"
-              onClick={openChat}
+              onClick={handleSubmit}
+              disabled={sending}
               className="inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-[#3b79e0] px-4 py-4 text-sm font-semibold text-white transition-colors duration-300 hover:bg-[#2f68c9]"
             >
-              Start a chat
+              {sending ? "Sending..." : "Start a chat"}
               <Send className="h-4 w-4" />
             </button>
+
+            {error ? (
+              <p className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
+                {error}
+              </p>
+            ) : null}
           </div>
         </div>
       </div>

@@ -3,6 +3,14 @@ import dbConnect from "@/app/lib/dbConnect.js";
 import { BookingEnquiry } from "@/app/lib/models/index.js";
 
 const clean = (value) => String(value || "").trim();
+const today = (() => {
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+})();
 
 export async function POST(request) {
   try {
@@ -18,6 +26,26 @@ export async function POST(request) {
     if (!firstName || !lastName || !phone || !email || !checkIn || !checkOut) {
       return NextResponse.json(
         { success: false, message: "Please fill in all required fields." },
+        { status: 400 },
+      );
+    }
+
+    if (checkIn < today || checkOut < today) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Check-in and check-out dates must be today or a future date.",
+        },
+        { status: 400 },
+      );
+    }
+
+    if (checkOut <= checkIn) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Check-out date must be after the check-in date.",
+        },
         { status: 400 },
       );
     }

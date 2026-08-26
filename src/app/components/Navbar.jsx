@@ -18,6 +18,7 @@ const navLinks = [
 export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [villasMenuOpen, setVillasMenuOpen] = useState(false);
+    const [mobileMenuView, setMobileMenuView] = useState("main");
     const [isPinned, setIsPinned] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
     const villasMenuRef = useRef(null);
@@ -36,6 +37,19 @@ export default function Navbar() {
             document.removeEventListener("mousedown", handleOutsideClick);
         };
     }, []);
+
+    useEffect(() => {
+        document.body.style.overflow = menuOpen ? "hidden" : "";
+
+        if (!menuOpen) {
+            setVillasMenuOpen(false);
+            setMobileMenuView("main");
+        }
+
+        return () => {
+            document.body.style.overflow = "";
+        };
+    }, [menuOpen]);
 
     useEffect(() => {
         const threshold = window.innerHeight || 0;
@@ -194,12 +208,12 @@ export default function Navbar() {
 
             {/* Mobile Overlay Menu */}
             <div
-                className={`fixed inset-0 z-50 lg:hidden transition-all duration-500 ease-out ${
+                className={`fixed inset-0 z-[999] lg:hidden transition-opacity duration-300 ease-out ${
                     menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
                 }`}
             >
                 <div
-                    className={`absolute inset-0 bg-[#05391f]/70 backdrop-blur-sm transition-opacity duration-500 ease-out ${
+                    className={`absolute inset-0 bg-[#043b25]/85 backdrop-blur-md transition-opacity duration-300 ease-out ${
                         menuOpen ? "opacity-100" : "opacity-0"
                     }`}
                     onClick={() => setMenuOpen(false)}
@@ -207,78 +221,86 @@ export default function Navbar() {
                 />
 
                 <div
-                    className={`absolute right-3 top-3 h-[calc(100%-1.5rem)] w-[calc(100%-1.5rem)] origin-top-right overflow-hidden rounded-[2.5rem] border border-white/10 bg-[#05391f]/92 shadow-[0_30px_80px_rgba(0,0,0,0.35)] transition-all duration-500 ease-out sm:right-6 sm:top-6 sm:h-[calc(100%-3rem)] sm:w-[calc(100%-3rem)] ${
-                        menuOpen ? "scale-100 opacity-100" : "scale-0 opacity-0"
+                    className={`absolute inset-0 flex min-h-[100dvh] flex-col overflow-y-auto bg-[#05391f]/95 shadow-[0_30px_80px_rgba(0,0,0,0.35)] transition-transform duration-300 ease-out ${
+                        menuOpen ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0"
                     }`}
                 >
-                    <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-white/8 blur-2xl" />
-                    <div className="absolute -bottom-12 -left-10 h-44 w-44 rounded-full bg-[#B8DC4F]/10 blur-3xl" />
+                    <div className="flex items-center justify-between border-b border-white/10 px-5 py-4 sm:px-6">
+                        <Link href="/" onClick={() => setMenuOpen(false)} className="block">
+                            <Image
+                                src="/images/logonativeplaceshirdi.png"
+                                alt="The Native Place"
+                                width={200}
+                                height={90}
+                                className="h-auto w-[150px] object-contain sm:w-[180px]"
+                            />
+                        </Link>
 
-                    <button
-                        type="button"
-                        aria-label="Close menu"
-                        onClick={() => setMenuOpen(false)}
-                        className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-colors duration-300 hover:bg-white/20 sm:right-6 sm:top-6"
-                    >
-                        <X size={22} />
-                    </button>
+                        <button
+                            type="button"
+                            aria-label="Close menu"
+                            onClick={() => setMenuOpen(false)}
+                            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white backdrop-blur-md transition-colors duration-300 hover:bg-white/20"
+                        >
+                            <X size={22} />
+                        </button>
+                    </div>
 
-                    <div className="flex h-full flex-col items-center justify-center px-6">
-                        <div className="flex flex-col items-center gap-6 text-center">
-                            {navLinks.map((link) =>
-                                link.dropdown ? (
-                                    <div key={link.name} className="flex flex-col items-center gap-4">
+                    <div className="flex flex-1 items-center justify-center px-6 py-8 sm:px-8">
+                        {mobileMenuView === "main" ? (
+                            <div className="flex w-full max-w-sm flex-col items-center gap-6 text-center">
+                                {navLinks.map((link) =>
+                                    link.dropdown ? (
                                         <button
+                                            key={link.name}
                                             type="button"
-                                            onClick={() => setVillasMenuOpen((open) => !open)}
-                                            className="inline-flex items-center gap-2 text-2xl font-semibold tracking-wide text-white transition-colors duration-300 hover:text-[#B8DC4F]"
+                                            onClick={() => setMobileMenuView("stays")}
+                                            className="inline-flex items-center justify-center gap-2 text-[24px] font-semibold tracking-wide text-white transition-colors duration-300 hover:text-[#B8DC4F]"
+                                        >
+                                            <span>{link.name}</span>
+                                            <ChevronDown size={18} />
+                                        </button>
+                                    ) : (
+                                        <Link
+                                            key={link.name}
+                                            href={link.href}
+                                            onClick={() => setMenuOpen(false)}
+                                            className="text-[24px] font-semibold tracking-wide text-white transition-colors duration-300 hover:text-[#B8DC4F]"
                                         >
                                             {link.name}
-                                            <ChevronDown
-                                                size={18}
-                                                className={`transition-transform duration-300 ${villasMenuOpen ? "rotate-180" : ""}`}
-                                            />
-                                        </button>
+                                        </Link>
+                                    ),
+                                )}
+                            </div>
+                        ) : (
+                            <div className="flex w-full max-w-sm flex-col items-center gap-6 text-center">
+                                <button
+                                    type="button"
+                                    onClick={() => setMobileMenuView("main")}
+                                    className="inline-flex items-center gap-2 text-[18px] font-medium tracking-wide text-white/80 transition-colors duration-300 hover:text-[#B8DC4F]"
+                                >
+                                    <ChevronDown size={16} className="rotate-90" />
+                                    Back
+                                </button>
 
-                                        <div
-                                            className={`flex flex-col items-center gap-4 overflow-hidden transition-all duration-300 ${
-                                                villasMenuOpen ? "max-h-32 opacity-100" : "max-h-0 opacity-0"
-                                            }`}
-                                        >
-                                            <Link
-                                                href="/villas"
-                                                onClick={() => {
-                                                  setMenuOpen(false);
-                                                  setVillasMenuOpen(false);
-                                                }}
-                                                className="text-xl font-medium tracking-wide text-white/90 transition-colors duration-300 hover:text-[#B8DC4F]"
-                                            >
-                                                Villa
-                                            </Link>
-                                            <Link
-                                                href="/cottages"
-                                                onClick={() => {
-                                                  setMenuOpen(false);
-                                                  setVillasMenuOpen(false);
-                                                }}
-                                                className="text-xl font-medium tracking-wide text-white/90 transition-colors duration-300 hover:text-[#B8DC4F]"
-                                            >
-                                                Cottages
-                                            </Link>
-                                        </div>
-                                    </div>
-                                ) : (
+                                <div className="flex flex-col items-center gap-5">
                                     <Link
-                                        key={link.name}
-                                        href={link.href}
+                                        href="/villas"
                                         onClick={() => setMenuOpen(false)}
-                                        className="text-2xl font-semibold tracking-wide text-white transition-colors duration-300 hover:text-[#B8DC4F]"
+                                        className="text-[24px] font-semibold tracking-wide text-white transition-colors duration-300 hover:text-[#B8DC4F]"
                                     >
-                                        {link.name}
+                                        Villa
                                     </Link>
-                                ),
-                            )}
-                        </div>
+                                    <Link
+                                        href="/cottages"
+                                        onClick={() => setMenuOpen(false)}
+                                        className="text-[24px] font-semibold tracking-wide text-white transition-colors duration-300 hover:text-[#B8DC4F]"
+                                    >
+                                        Cottages
+                                    </Link>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

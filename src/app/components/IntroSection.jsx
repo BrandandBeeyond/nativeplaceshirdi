@@ -4,26 +4,6 @@ import Image from "next/image";
 import { ArrowRight, ChevronRight, Coffee, Mountain, Sprout, Users } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
-const features = [
-  {
-    icon: Sprout,
-    title: "Surrounded by Nature",
-  },
-  {
-    
-    icon: Mountain,
-    title: "Scenic Views of Shirdi",
-  },
-  {
-    icon: Coffee,
-    title: "Amidst Coffee Plantations",
-  },
-  {
-    icon: Users,
-    title: "Peace, Tranquility & Rejuvenation",
-  },
-];
-
 const stats = [
   {
     target: 19,
@@ -130,23 +110,31 @@ export default function IntroSection() {
             </div>
 
             <div className="absolute bottom-0 left-0 z-10 w-[94%] rounded-[1.25rem] bg-[#f5f1e4] px-3 py-3 shadow-[0_20px_50px_rgba(50,58,46,0.08)] sm:w-[78%] sm:rounded-[2rem] sm:px-5 sm:py-5">
-              <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-2">
-                {features.map((feature, index) => {
-                  const Icon = feature.icon;
-
-                  return (
-                    <div
-                      key={feature.title}
-                      className={`flex flex-col items-center gap-1.5 text-center ${index < features.length - 1 ? "sm:border-r sm:border-[#d9d2bc]" : ""
-                        }`}
-                    >
-                      <Icon className="h-6 w-6 text-[#6b8444] sm:h-8 sm:w-8" strokeWidth={1.7} />
-                      <p className="max-w-[140px] text-[11px] leading-snug text-[#334039] sm:text-sm">
-                        {feature.title}
-                      </p>
-                    </div>
-                  );
-                })}
+              <div className="hidden grid-cols-2 gap-2 sm:grid sm:grid-cols-4 sm:gap-2">
+                <div className="flex flex-col items-center gap-1.5 text-center sm:border-r sm:border-[#d9d2bc]">
+                  <Sprout className="h-6 w-6 text-[#6b8444] sm:h-8 sm:w-8" strokeWidth={1.7} />
+                  <p className="max-w-[140px] text-[11px] leading-snug text-[#334039] sm:text-sm">
+                    Surrounded by Nature
+                  </p>
+                </div>
+                <div className="flex flex-col items-center gap-1.5 text-center sm:border-r sm:border-[#d9d2bc]">
+                  <Mountain className="h-6 w-6 text-[#6b8444] sm:h-8 sm:w-8" strokeWidth={1.7} />
+                  <p className="max-w-[140px] text-[11px] leading-snug text-[#334039] sm:text-sm">
+                    Scenic Views of Shirdi
+                  </p>
+                </div>
+                <div className="flex flex-col items-center gap-1.5 text-center sm:border-r sm:border-[#d9d2bc]">
+                  <Coffee className="h-6 w-6 text-[#6b8444] sm:h-8 sm:w-8" strokeWidth={1.7} />
+                  <p className="max-w-[140px] text-[11px] leading-snug text-[#334039] sm:text-sm">
+                    Amidst Coffee Plantations
+                  </p>
+                </div>
+                <div className="flex flex-col items-center gap-1.5 text-center">
+                  <Users className="h-6 w-6 text-[#6b8444] sm:h-8 sm:w-8" strokeWidth={1.7} />
+                  <p className="max-w-[140px] text-[11px] leading-snug text-[#334039] sm:text-sm">
+                    Peace, Tranquility & Rejuvenation
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -194,7 +182,7 @@ export default function IntroSection() {
 
             <div
               ref={statsRef}
-              className="mx-auto mt-7 grid max-w-[920px] grid-cols-2 gap-2.5 sm:mt-10 sm:gap-4 sm:grid-cols-4"
+              className="mx-auto mt-7 hidden max-w-[920px] grid-cols-2 gap-2.5 sm:mt-10 sm:grid sm:gap-4 sm:grid-cols-4"
               data-aos="fade-up"
             >
               {stats.map((stat, index) => (

@@ -1,4 +1,14 @@
-import { Armchair, BedDouble, Coffee, Package, Trees, Wifi, Zap } from "lucide-react";
+import {
+  Armchair,
+  BedDouble,
+  Coffee,
+  Home,
+  Leaf,
+  Package,
+  Trees,
+  Wifi,
+  Zap,
+} from "lucide-react";
 import StayDetailPage from "../components/StayDetailPage.jsx";
 import dbConnect from "../lib/dbConnect.js";
 import { Page } from "../lib/models/index.js";
@@ -12,13 +22,16 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 const villaAmenities = [
-  { icon: BedDouble, label: "2 Bedrooms" },
-  { icon: Armchair, label: "Private Sit-out" },
-  { icon: Trees, label: "Garden Views" },
+  { icon: Armchair, label: "Cozy Sit-out" },
+  { icon: Trees, label: "Green Surroundings" },
+  { icon: Leaf, label: "Nature Feel" },
   { icon: Wifi, label: "Wi-Fi Access" },
   { icon: Coffee, label: "Tea / Coffee Maker" },
-  { icon: Package, label: "Mini Storage" },
-  { icon: Zap, label: "24x7 Power Backup" },
+  { icon: BedDouble, label: "Wardrobe Space" },
+  { icon: Package, label: "Mini Fridge" },
+  { icon: Package, label: "Compact Storage" },
+  { icon: Zap, label: "Power Backup" },
+  { icon: Home, label: "Housekeeping" },
 ];
 
 const villaHighlights = [
@@ -54,6 +67,9 @@ export default async function VillasPage() {
       galleryImages={stayContent.galleryImages}
       amenities={villaAmenities}
       highlights={villaHighlights}
+      amenityEyebrow="Villa Amenities"
+      amenityTitle="Comfort. Nature. Every Detail."
+      amenityDescription="Thoughtfully curated amenities to make your villa stay relaxing, comfortable and truly memorable."
     />
   );
 }

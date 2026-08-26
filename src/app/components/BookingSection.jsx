@@ -27,6 +27,14 @@ const perks = [
   },
 ];
 
+const formatLocalDate = (date = new Date()) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+};
+
 export default function BookingSection() {
   const [form, setForm] = useState({
     firstName: "",
@@ -39,15 +47,43 @@ export default function BookingSection() {
   });
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState({ type: "", message: "" });
+  const today = formatLocalDate();
+  const checkOutMin = form.checkIn && form.checkIn > today ? form.checkIn : today;
 
   const updateField = (field, value) => {
-    setForm((current) => ({ ...current, [field]: value }));
+    setForm((current) => {
+      const next = { ...current, [field]: value };
+
+      if (field === "checkIn" && next.checkOut && next.checkOut <= value) {
+        next.checkOut = "";
+      }
+
+      return next;
+    });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     setStatus({ type: "", message: "" });
+
+    if (form.checkIn < today || form.checkOut < today) {
+      setStatus({
+        type: "error",
+        message: "Please select today or a future date for check-in and check-out.",
+      });
+      setLoading(false);
+      return;
+    }
+
+    if (form.checkOut <= form.checkIn) {
+      setStatus({
+        type: "error",
+        message: "Check-out date must be after the check-in date.",
+      });
+      setLoading(false);
+      return;
+    }
 
     try {
       const response = await fetch("/api/booking-enquiries", {
@@ -252,6 +288,7 @@ export default function BookingSection() {
                         type="date"
                         name="checkIn"
                         required
+                        min={today}
                         value={form.checkIn}
                         onChange={(event) => updateField("checkIn", event.target.value)}
                         className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 focus:border-[#6b8444]"
@@ -265,6 +302,7 @@ export default function BookingSection() {
                         type="date"
                         name="checkOut"
                         required
+                        min={checkOutMin}
                         value={form.checkOut}
                         onChange={(event) => updateField("checkOut", event.target.value)}
                         className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 focus:border-[#6b8444]"

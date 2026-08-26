@@ -3,57 +3,15 @@ import Link from "next/link";
 import { ArrowRight, CalendarDays, Clock3, Sparkles, Tag } from "lucide-react";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import dbConnect from "../lib/dbConnect.js";
+import { Blog } from "../lib/models/index.js";
+import {
+  fallbackBlogPosts,
+  formatBlogDate,
+  normalizeBlogRecord,
+} from "../lib/blog-utils.js";
 
-const featuredBlog = {
-  title: "Why a nature resort stay feels better than a city weekend",
-  excerpt:
-    "If you’re planning a reset, a quieter setting can do more than a packed itinerary. Fresh air, open spaces and slower mornings create the kind of break people actually remember.",
-  image: "/images/banners/banner2.jpeg",
-  category: "Resort Experience",
-  date: "22 Aug 2026",
-  readTime: "5 min read",
-  author: "Team Native Place",
-  href: "#",
-};
-
-const blogs = [
-  {
-    title: "How to plan a relaxing family getaway near Shirdi",
-    excerpt:
-      "A short checklist to help families choose the right stay, balance comfort and keep the trip stress-free.",
-    image: "/images/villas/villa1.jpeg",
-    category: "Travel Tips",
-    date: "20 Aug 2026",
-    readTime: "4 min read",
-  },
-  {
-    title: "Best ways to enjoy a peaceful cottage vacation",
-    excerpt:
-      "Small details like sit-outs, open lawns and slow mornings can make a cottage stay feel special.",
-    image: "/images/cottages/cottage1.jpeg",
-    category: "Stay Guide",
-    date: "18 Aug 2026",
-    readTime: "6 min read",
-  },
-  {
-    title: "What makes a resort perfect for celebrations",
-    excerpt:
-      "From birthdays to intimate gatherings, the right ambience can make any celebration feel effortless.",
-    image: "/images/amenities/pool2.jpeg",
-    category: "Celebrations",
-    date: "15 Aug 2026",
-    readTime: "4 min read",
-  },
-  {
-    title: "Simple weekend routines for a true digital detox",
-    excerpt:
-      "A slower stay works best when you let go of the screen and focus on the surroundings around you.",
-    image: "/images/common/IMG_9118.JPG.jpeg",
-    category: "Wellness",
-    date: "12 Aug 2026",
-    readTime: "3 min read",
-  },
-];
+export const dynamic = "force-dynamic";
 
 function BlogMeta({ icon: Icon, label }) {
   return (
@@ -73,8 +31,8 @@ function BlogCard({ blog, featured = false }) {
     >
       <div className={`relative ${featured ? "min-h-[340px] lg:min-h-[520px]" : "aspect-[16/10]"}`}>
         <Image
-          src={blog.image}
-          alt={blog.title}
+          src={blog.thumbnail || "/images/banners/banner2.jpeg"}
+          alt={blog.name || blog.title}
           fill
           sizes={featured ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 1024px) 100vw, 25vw"}
           className="object-cover"
@@ -82,15 +40,15 @@ function BlogCard({ blog, featured = false }) {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
         <div className="absolute left-5 top-5">
-          <BlogMeta icon={Tag} label={blog.category} />
+          <BlogMeta icon={Tag} label={blog.keywords?.[0] || "Blog post"} />
         </div>
       </div>
 
       <div className={`flex items-center ${featured ? "p-6 sm:p-8 lg:p-12" : "p-6"}`}>
         <div className="w-full">
           <div className="flex flex-wrap items-center gap-3">
-            <BlogMeta icon={CalendarDays} label={blog.date} />
-            <BlogMeta icon={Clock3} label={blog.readTime} />
+            <BlogMeta icon={CalendarDays} label={blog.publishedAt ? formatBlogDate(blog.publishedAt) : "Latest"} />
+            <BlogMeta icon={Clock3} label="Read now" />
           </div>
 
           <h2
@@ -98,7 +56,7 @@ function BlogCard({ blog, featured = false }) {
               featured ? "text-[clamp(2.2rem,4vw,4.1rem)]" : "text-[clamp(1.65rem,2.5vw,2.2rem)]"
             }`}
           >
-            {blog.title}
+            {blog.name || blog.title}
           </h2>
 
           <p
@@ -106,16 +64,16 @@ function BlogCard({ blog, featured = false }) {
               featured ? "max-w-2xl text-[1.05rem] leading-8" : "text-sm leading-7"
             }`}
           >
-            {blog.excerpt}
+            {blog.description}
           </p>
 
           {featured ? (
             <div className="mt-6 flex flex-wrap items-center gap-4">
               <span className="text-sm font-medium text-[#6b8444]">
-                By {blog.author}
+                Published from CMS
               </span>
               <Link
-                href={blog.href}
+                href={`/blogs/${blog.slug}`}
                 className="inline-flex items-center gap-2 rounded-full bg-[#07552F] px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#4f6f1d]"
               >
                 Read full story
@@ -124,7 +82,7 @@ function BlogCard({ blog, featured = false }) {
             </div>
           ) : (
             <Link
-              href="#"
+              href={`/blogs/${blog.slug}`}
               className="mt-6 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.16em] text-[#07552F] transition-colors duration-300 hover:text-[#4f6f1d]"
             >
               Read more
@@ -137,12 +95,38 @@ function BlogCard({ blog, featured = false }) {
   );
 }
 
+async function getPublishedBlogs() {
+  try {
+    await dbConnect();
+    const posts = await Blog.find({ isPublished: true })
+      .sort({ publishedAt: -1, updatedAt: -1 })
+      .lean();
+
+    const normalized = posts.map((post) => normalizeBlogRecord(post));
+
+    return {
+      posts: normalized.length ? normalized : fallbackBlogPosts,
+      warning: normalized.length ? "" : "",
+    };
+  } catch (error) {
+    return {
+      posts: fallbackBlogPosts,
+      warning:
+        "MongoDB is unavailable, so the blog feed is showing the default sample posts for now.",
+      error: error?.message || "Unable to load blog posts.",
+    };
+  }
+}
+
 export const metadata = {
   title: "Blogs | The Native Place Shirdi",
   description: "Read the latest travel stories, resort tips and stay ideas from The Native Place.",
 };
 
-export default function BlogsPage() {
+export default async function BlogsPage() {
+  const { posts, warning } = await getPublishedBlogs();
+  const [featuredBlog, ...otherBlogs] = posts;
+
   return (
     <>
       <Navbar />
@@ -150,7 +134,7 @@ export default function BlogsPage() {
         <section className="relative overflow-hidden border-b border-[#e7dfcb] bg-[#0f2418]">
           <div className="absolute inset-0">
             <Image
-              src="/images/banners/banner4.jpeg"
+              src={featuredBlog?.thumbnail || "/images/banners/banner4.jpeg"}
               alt="The Native Place blogs banner"
               fill
               priority
@@ -173,7 +157,7 @@ export default function BlogsPage() {
               </h1>
 
               <p className="mt-5 max-w-2xl text-[15px] leading-8 text-white/84 sm:text-lg">
-                Explore simple ideas, resort stories and travel inspiration designed for
+                Explore live blog posts, resort stories and travel inspiration designed for
                 peaceful getaways, memorable family stays and slower weekends.
               </p>
 
@@ -192,6 +176,14 @@ export default function BlogsPage() {
           </div>
         </section>
 
+        {warning ? (
+          <section className="mx-auto max-w-[1400px] px-4 pt-6 sm:px-6 lg:px-8">
+            <div className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm leading-6 text-amber-900">
+              {warning}
+            </div>
+          </section>
+        ) : null}
+
         <section className="px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
           <div className="mx-auto max-w-[1400px]">
             <div className="mb-6 flex items-end justify-between gap-4">
@@ -209,30 +201,34 @@ export default function BlogsPage() {
               </div>
             </div>
 
-            <BlogCard blog={featuredBlog} featured />
+            {featuredBlog ? <BlogCard blog={featuredBlog} featured /> : null}
 
-            <div className="mt-14 flex items-center justify-between gap-4">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#6b8444]">
-                  More reads
-                </p>
-                <h3 className="mt-2 font-heading text-[clamp(1.8rem,2.5vw,2.8rem)] text-[#20342b]">
-                  More stories to explore
-                </h3>
-              </div>
-              <Link
-                href="/contact"
-                className="hidden rounded-full border border-[#07552F] px-5 py-3 text-sm font-semibold text-[#07552F] transition-colors duration-300 hover:bg-[#07552F] hover:text-white sm:inline-flex"
-              >
-                Plan a stay
-              </Link>
-            </div>
+            {otherBlogs.length ? (
+              <>
+                <div className="mt-14 flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#6b8444]">
+                      More reads
+                    </p>
+                    <h3 className="mt-2 font-heading text-[clamp(1.8rem,2.5vw,2.8rem)] text-[#20342b]">
+                      More stories to explore
+                    </h3>
+                  </div>
+                  <Link
+                    href="/contact"
+                    className="hidden rounded-full border border-[#07552F] px-5 py-3 text-sm font-semibold text-[#07552F] transition-colors duration-300 hover:bg-[#07552F] hover:text-white sm:inline-flex"
+                  >
+                    Plan a stay
+                  </Link>
+                </div>
 
-            <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-              {blogs.map((blog) => (
-                <BlogCard key={blog.title} blog={blog} />
-              ))}
-            </div>
+                <div className="mt-8 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+                  {otherBlogs.map((blog) => (
+                    <BlogCard key={blog.slug} blog={blog} />
+                  ))}
+                </div>
+              </>
+            ) : null}
           </div>
         </section>
       </main>

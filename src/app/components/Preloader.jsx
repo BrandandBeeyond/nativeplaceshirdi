@@ -37,8 +37,8 @@ export default function Preloader() {
         playsInline
         preload="auto"
         onEnded={handleVideoEnd}
-          className="mx-4 h-auto w-full max-w-[470px] max-h-[200px] object-contain sm:max-h-[360px]"
-        >
+        className="block h-auto w-[min(72vw,240px)] object-contain object-center sm:w-full sm:max-w-[470px] sm:max-h-[360px]"
+      >
         <source src="/preloader/preloader.webm" type="video/webm" />
       </video>
     </div>

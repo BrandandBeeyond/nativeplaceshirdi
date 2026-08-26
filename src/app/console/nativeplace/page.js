@@ -1,4 +1,4 @@
-import { BarChart3, CalendarDays, CheckCircle2, MessageSquareText, TrendingUp, Users } from "lucide-react";
+import { BarChart3, CalendarDays, MessageSquareText, TrendingUp, Users } from "lucide-react";
 import ConsoleShell from "./ConsoleShell.jsx";
 import { requireAdminSession } from "./auth.js";
 import { getConsoleLiveStats } from "../../lib/console-stats.js";
@@ -45,7 +45,6 @@ export default async function AdminDashboardPage() {
     { label: "Total Bookings", value: dashboard.totalBookings, note: "Live MongoDB count", icon: CalendarDays },
     { label: "Contact Enquiries", value: dashboard.contactEnquiries, note: "Messages from website forms", icon: MessageSquareText },
     { label: "Website Leads", value: dashboard.websiteLeads, note: "Prospects captured from the site", icon: Users },
-    { label: "System Health", value: dashboard.systemHealth, note: "Protected and active", icon: CheckCircle2 },
   ];
 
   return (
