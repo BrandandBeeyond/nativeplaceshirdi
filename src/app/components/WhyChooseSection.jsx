@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const highlights = [
@@ -46,9 +47,9 @@ const highlights = [
   },
 ];
 
-function HighlightCard({ item }) {
+function HighlightCard({ item, onNext }) {
   return (
-    <article className="w-[88vw] shrink-0 snap-center overflow-hidden rounded-[26px] border border-[#e8dfcb] bg-[#fffdf6] shadow-[0_12px_28px_rgba(40,55,35,0.08)] sm:w-auto sm:min-w-0">
+    <article className="relative w-[88vw] shrink-0 snap-center overflow-hidden rounded-[26px] border border-[#e8dfcb] bg-[#fffdf6] shadow-[0_12px_28px_rgba(40,55,35,0.08)] sm:w-auto sm:min-w-0">
       <div className="relative aspect-[16/10] w-full">
         <Image
           src={item.image}
@@ -67,6 +68,17 @@ function HighlightCard({ item }) {
           {item.description}
         </p>
       </div>
+
+      {onNext ? (
+        <button
+          type="button"
+          onClick={onNext}
+          aria-label="Show next highlight"
+          className="absolute bottom-4 right-4 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#d8cfb8] bg-white text-[#20342b] shadow-[0_10px_24px_rgba(40,55,35,0.16)] transition-transform duration-300 hover:scale-105 active:scale-95 sm:hidden"
+        >
+          <ArrowRight className="h-5 w-5" />
+        </button>
+      ) : null}
     </article>
   );
 }
@@ -78,6 +90,10 @@ export default function WhyChooseSection() {
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const mobileSlideWidth = useMemo(() => "88vw", []);
+
+  const goToNext = () => {
+    setActiveIndex((current) => (current + 1) % highlights.length);
+  };
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(max-width: 639px)");
@@ -102,7 +118,7 @@ export default function WhyChooseSection() {
     }
 
     const intervalId = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % highlights.length);
+      goToNext();
     }, 3200);
 
     return () => window.clearInterval(intervalId);
@@ -168,34 +184,34 @@ export default function WhyChooseSection() {
 
       <div className="relative mx-auto max-w-[1500px] px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
         <div
-          className={`pointer-events-none absolute left-[-2rem] top-0 z-10 hidden md:block lg:left-[-3rem] ${
+          className={`pointer-events-none absolute left-[-1rem] top-2 z-10 sm:left-[-1.5rem] lg:left-[-3rem] ${
             leavesInView ? "animate-leaf-rise-left" : "opacity-0 translate-y-10"
           }`}
         >
-          <div className="relative h-[330px] w-[240px] lg:h-[450px] lg:w-[320px]">
+          <div className="relative h-[150px] w-[108px] sm:h-[220px] sm:w-[160px] lg:h-[450px] lg:w-[320px]">
             <Image
               src="/images/svg/leftleaft1.png"
               alt=""
               fill
               aria-hidden="true"
-              sizes="(max-width: 1024px) 240px, 320px"
+              sizes="(max-width: 640px) 108px, (max-width: 1024px) 160px, 320px"
               className="object-contain object-left-top opacity-85"
             />
           </div>
         </div>
 
         <div
-          className={`pointer-events-none absolute right-[-2rem] top-6 z-10 hidden md:block lg:right-[-3rem] ${
+          className={`pointer-events-none absolute right-[-1rem] top-8 z-10 sm:right-[-1.5rem] lg:right-[-3rem] ${
             leavesInView ? "animate-leaf-rise-right" : "opacity-0 translate-y-10"
           }`}
         >
-          <div className="relative h-[300px] w-[230px] lg:h-[420px] lg:w-[310px]">
+          <div className="relative h-[138px] w-[104px] sm:h-[210px] sm:w-[156px] lg:h-[420px] lg:w-[310px]">
             <Image
               src="/images/svg/rightleaf.png"
               alt=""
               fill
               aria-hidden="true"
-              sizes="(max-width: 1024px) 230px, 310px"
+              sizes="(max-width: 640px) 104px, (max-width: 1024px) 156px, 310px"
               className="object-contain object-right-top opacity-85"
             />
           </div>
@@ -242,7 +258,7 @@ export default function WhyChooseSection() {
               }}
             >
               {highlights.map((item) => (
-                <HighlightCard key={item.title} item={item} />
+                <HighlightCard key={item.title} item={item} onNext={goToNext} />
               ))}
             </div>
           </div>

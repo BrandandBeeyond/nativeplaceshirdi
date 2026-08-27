@@ -44,6 +44,7 @@ function NavLink({ href, label, icon: Icon, active, nested = false, collapsed = 
   return (
     <Link
       href={href}
+      prefetch={false}
       title={collapsed ? label : undefined}
       className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-[15px] font-medium transition-colors duration-300 ${
         active
@@ -201,6 +202,7 @@ export default function ConsoleShell({ children, pageTitle, pageDescription }) {
                 ) : null}
                 <Link
                   href="/api/console/nativeplace/logout"
+                  prefetch={false}
                   title={sidebarCollapsed ? "Logout" : undefined}
                   className={`mt-4 inline-flex items-center gap-2 rounded-full bg-[#b8dc4f] px-4 py-3 text-sm font-semibold text-[#18352a] transition-colors duration-300 hover:bg-white ${
                     sidebarCollapsed ? "justify-center px-3" : ""
