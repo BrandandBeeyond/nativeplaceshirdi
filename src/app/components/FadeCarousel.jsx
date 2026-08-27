@@ -54,7 +54,7 @@ export default function FadeCarousel({
   };
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative w-full min-w-0 max-w-full ${className}`}>
       <div className={`relative overflow-hidden ${containerRoundedClassName}`}>
         <div className={`relative ${aspectClassName}`}>
           {slides.map((src, index) => {
@@ -85,7 +85,7 @@ export default function FadeCarousel({
               type="button"
               aria-label="Previous image"
               onClick={handlePrevious}
-              className={`absolute left-4 top-1/2 z-20 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#20342b] shadow-[0_8px_22px_rgba(20,28,17,0.18)] transition-transform duration-300 hover:scale-105 ${controlsClassName} ${controlButtonClassName}`}
+              className={`absolute left-4 top-1/2 z-20 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#20342b] shadow-[0_8px_22px_rgba(20,28,17,0.18)] transition-transform duration-300 hover:scale-105 max-[380px]:left-2 max-[380px]:h-9 max-[380px]:w-9 ${controlsClassName} ${controlButtonClassName}`}
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
@@ -94,7 +94,7 @@ export default function FadeCarousel({
               type="button"
               aria-label="Next image"
               onClick={handleNext}
-              className={`absolute right-4 top-1/2 z-20 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#20342b] shadow-[0_8px_22px_rgba(20,28,17,0.18)] transition-transform duration-300 hover:scale-105 ${controlsClassName} ${controlButtonClassName}`}
+              className={`absolute right-4 top-1/2 z-20 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white text-[#20342b] shadow-[0_8px_22px_rgba(20,28,17,0.18)] transition-transform duration-300 hover:scale-105 max-[380px]:right-2 max-[380px]:h-9 max-[380px]:w-9 ${controlsClassName} ${controlButtonClassName}`}
             >
               <ChevronRight className="h-5 w-5" />
             </button>
@@ -103,7 +103,7 @@ export default function FadeCarousel({
       </div>
 
       {showThumbs && slides.length > 1 ? (
-        <div className="mt-3 flex gap-3 overflow-x-auto pb-1">
+        <div className="mt-3 flex max-w-full gap-3 overflow-x-auto pb-1 max-[380px]:mt-2 max-[380px]:gap-2">
           {slides.map((src, index) => {
             const isActive = index === currentIndex;
 
@@ -113,7 +113,7 @@ export default function FadeCarousel({
                 type="button"
                 aria-label={`Show image ${index + 1}`}
                 onClick={() => goToSlide(index)}
-                className={`relative w-[84px] flex-none overflow-hidden rounded-[12px] border bg-white shadow-[0_10px_22px_rgba(44,56,38,0.06)] sm:w-[96px] ${thumbAspectClassName} ${
+                className={`relative w-[84px] flex-none overflow-hidden rounded-[12px] border bg-white shadow-[0_10px_22px_rgba(44,56,38,0.06)] sm:w-[96px] max-[380px]:w-[68px] ${thumbAspectClassName} ${
                   isActive ? thumbActiveClassName : thumbInactiveClassName
                 } ${thumbClassName}`}
               >

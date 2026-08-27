@@ -6,8 +6,13 @@ import { useEffect } from "react";
 
 export default function LenisProvider() {
   const pathname = usePathname();
+  const isAdminRoute = pathname?.startsWith("/console/nativeplace");
 
   useEffect(() => {
+    if (isAdminRoute) {
+      return undefined;
+    }
+
     const lenis = new Lenis({
       duration: 1.1,
       smoothWheel: true,
@@ -29,11 +34,15 @@ export default function LenisProvider() {
       window.cancelAnimationFrame(frameId);
       lenis.destroy();
     };
-  }, []);
+  }, [isAdminRoute]);
 
   useEffect(() => {
+    if (isAdminRoute) {
+      return;
+    }
+
     window.scrollTo({ top: 0, behavior: "instant" });
-  }, [pathname]);
+  }, [pathname, isAdminRoute]);
 
   return null;
 }

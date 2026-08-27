@@ -69,9 +69,6 @@ function BlogCard({ blog, featured = false }) {
 
           {featured ? (
             <div className="mt-6 flex flex-wrap items-center gap-4">
-              <span className="text-sm font-medium text-[#6b8444]">
-                Published from CMS
-              </span>
               <Link
                 href={`/blogs/${blog.slug}`}
                 className="inline-flex items-center gap-2 rounded-full bg-[#07552F] px-5 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#4f6f1d]"

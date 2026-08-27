@@ -1,4 +1,4 @@
-import { FileText, Image, LayoutDashboard, Sparkles } from "lucide-react";
+import { FileText, Image, LayoutDashboard, Sparkles, Users } from "lucide-react";
 import ConsoleShell from "../ConsoleShell.jsx";
 import { requireAdminSession } from "../auth.js";
 
@@ -22,6 +22,11 @@ const cmsCards = [
     title: "Blogs",
     description: "Create featured posts and updates.",
     icon: FileText,
+  },
+  {
+    title: "Testimonials",
+    description: "Manage guest reviews and live testimonials.",
+    icon: Users,
   },
   {
     title: "Villas & Cottages",
@@ -70,7 +75,7 @@ export default async function CmsOverviewPage() {
             Content modules ready to manage
           </h3>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
-            {["Homepage banners", "About vision & mission", "Blog feature cards", "Villa image galleries"].map(
+            {["Homepage banners", "About vision & mission", "Blog feature cards", "Guest testimonials", "Villa image galleries"].map(
               (item) => (
                 <div
                   key={item}
@@ -89,7 +94,7 @@ export default async function CmsOverviewPage() {
             Ready for updates
           </h3>
           <p className="mt-4 text-sm leading-7 text-[#66716a]">
-            Home Page includes slider banners and intro content, About Us includes story, vision and mission, and Villas & Cottages focuses on images.
+            Home Page includes slider banners and intro content, About Us includes story, vision and mission, Blogs handles live posts, Testimonials manages guest reviews, and Villas & Cottages focuses on images.
           </p>
         </article>
       </section>

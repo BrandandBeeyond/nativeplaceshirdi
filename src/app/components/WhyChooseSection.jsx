@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 const highlights = [
   {
@@ -48,13 +48,13 @@ const highlights = [
 
 function HighlightCard({ item }) {
   return (
-    <article className="overflow-hidden rounded-[26px] border border-[#e8dfcb] bg-[#fffdf6] shadow-[0_12px_28px_rgba(40,55,35,0.08)]">
+    <article className="w-[88vw] shrink-0 snap-center overflow-hidden rounded-[26px] border border-[#e8dfcb] bg-[#fffdf6] shadow-[0_12px_28px_rgba(40,55,35,0.08)] sm:w-auto sm:min-w-0">
       <div className="relative aspect-[16/10] w-full">
         <Image
           src={item.image}
           alt={item.title}
           fill
-          sizes="(max-width: 1280px) 100vw, 25vw"
+          sizes="(max-width: 640px) 88vw, (max-width: 1280px) 50vw, 25vw"
           className="object-cover"
         />
       </div>
@@ -71,59 +71,44 @@ function HighlightCard({ item }) {
   );
 }
 
-function AnimatedTitle({ text, isVisible }) {
-  return (
-    <span aria-label={text} className="inline-block">
-      {text.split("").map((character, index) => (
-        <span
-          key={`${character}-${index}`}
-          className={`inline-block transition-all duration-700 ease-out ${
-            character === " "
-              ? "w-[0.5em]"
-              : isVisible
-                ? "translate-y-0 opacity-100"
-                : "translate-y-4 opacity-0"
-          }`}
-          style={{ transitionDelay: `${index * 38}ms` }}
-        >
-          {character === " " ? "\u00A0" : character}
-        </span>
-      ))}
-    </span>
-  );
-}
-
 export default function WhyChooseSection() {
-  const titleRef = useRef(null);
-  const [isTitleVisible, setIsTitleVisible] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const mobileSlideWidth = useMemo(() => "88vw", []);
 
   useEffect(() => {
-    const node = titleRef.current;
+    const mediaQuery = window.matchMedia("(max-width: 639px)");
 
-    if (!node) {
+    const handleChange = () => {
+      if (!mediaQuery.matches) {
+        setActiveIndex(0);
+      }
+    };
+
+    handleChange();
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => mediaQuery.removeEventListener("change", handleChange);
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 639px)");
+
+    if (!mediaQuery.matches || highlights.length <= 1) {
       return undefined;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsTitleVisible(true);
-          observer.disconnect();
-        }
-      },
-      {
-        threshold: 0.35,
-        rootMargin: "0px 0px -12% 0px",
-      },
-    );
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((current) => (current + 1) % highlights.length);
+    }, 3200);
 
-    observer.observe(node);
-
-    return () => observer.disconnect();
+    return () => window.clearInterval(intervalId);
   }, []);
 
   return (
-    <section className="relative isolate overflow-visible bg-[#f7f2e4]">
+    <section
+      id="why-native-place"
+      className="relative isolate overflow-visible bg-[#f7f2e4] scroll-mt-24"
+    >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.9),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(184,220,79,0.16),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(107,132,68,0.12),transparent_28%)]" />
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#d9cfb7] to-transparent" />
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#d9cfb7] to-transparent" />
@@ -141,21 +126,31 @@ export default function WhyChooseSection() {
             />
           </div>
 
-          <div ref={titleRef} className="mt-12 max-w-[1250px] sm:mt-14">
+          <div className="mt-12 max-w-[1250px] sm:mt-14">
             <p className="mb-10 font-heading text-[clamp(2.05rem,4vw,3.35rem)] leading-none font-normal tracking-[-0.03em] text-[#6b8444] sm:mb-12">
               Why Choose
             </p>
 
             <h2 className="font-anton text-[clamp(2.15rem,5.6vw,5.1rem)] leading-[0.9] tracking-[0.18em] text-[#4f6f1d] drop-shadow-[0_8px_22px_rgba(61,80,31,0.12)] lg:text-[5.5rem]">
-              <AnimatedTitle text="THE NATIVE PLACE" isVisible={isTitleVisible} />
+              THE NATIVE PLACE
             </h2>
           </div>
         </div>
 
-        <div className="mx-auto mt-12 grid gap-5 sm:mt-14 sm:grid-cols-2 xl:grid-cols-4">
-          {highlights.map((item) => (
-            <HighlightCard key={item.title} item={item} />
-          ))}
+        <div className="mt-12 sm:mt-14">
+          <div className="flex gap-4 overflow-x-auto pb-3 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:grid sm:overflow-visible sm:pb-0 sm:gap-5 sm:grid-cols-2 xl:grid-cols-4">
+            <div
+              className="flex gap-4 transition-transform duration-700 ease-out sm:contents"
+              style={{
+                width: `calc(${mobileSlideWidth} * ${highlights.length} + 1rem * ${highlights.length - 1})`,
+                transform: `translateX(calc(-1 * ${activeIndex} * (88vw + 1rem)))`,
+              }}
+            >
+              {highlights.map((item) => (
+                <HighlightCard key={item.title} item={item} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

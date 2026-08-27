@@ -172,7 +172,7 @@ export default function BlogPostEditor({ initialBlogs = [], sourceWarning = "" }
 
   useEffect(() => {
     if (editorRef.current) {
-      editorRef.current.innerHTML = form.content || "<p>Start writing your blog content here...</p>";
+      editorRef.current.innerHTML = form.content || "<p>Start writing your resort blog content here...</p>";
     }
   }, [form._id]);
 
@@ -201,7 +201,7 @@ export default function BlogPostEditor({ initialBlogs = [], sourceWarning = "" }
     setError("");
     setTimeout(() => {
       if (editorRef.current) {
-        editorRef.current.innerHTML = "<p>Start writing your blog content here...</p>";
+        editorRef.current.innerHTML = "<p>Start writing your resort blog content here...</p>";
       }
     }, 0);
   };
@@ -285,7 +285,7 @@ export default function BlogPostEditor({ initialBlogs = [], sourceWarning = "" }
 
       setForm(blogToFormState(nextBlog));
       if (editorRef.current) {
-        editorRef.current.innerHTML = nextBlog.content || "<p>Start writing your blog content here...</p>";
+        editorRef.current.innerHTML = nextBlog.content || "<p>Start writing your resort blog content here...</p>";
       }
 
       setNotice(result.message || "Blog saved successfully.");
@@ -412,7 +412,7 @@ export default function BlogPostEditor({ initialBlogs = [], sourceWarning = "" }
                 value={form.name}
                 onChange={(event) => setField("name", event.target.value)}
                 className="w-full rounded-2xl border border-[#d9d4bf] bg-white px-4 py-3 text-sm text-[#18352a] outline-none transition focus:border-[#a3ca65]"
-                placeholder="Best Website Design Company in Nashik"
+                placeholder="Best Resort in Shirdi"
               />
             </label>
 
@@ -424,7 +424,7 @@ export default function BlogPostEditor({ initialBlogs = [], sourceWarning = "" }
                 value={form.title}
                 onChange={(event) => setField("title", event.target.value)}
                 className="w-full rounded-2xl border border-[#d9d4bf] bg-white px-4 py-3 text-sm text-[#18352a] outline-none transition focus:border-[#a3ca65]"
-                placeholder="Best Website Design Company in Nashik: Why Businesses Need a High-Converting Website in 2026"
+                placeholder="Best Resort in Shirdi: Why Guests Choose The Native Place for a Peaceful Stay"
               />
             </label>
 
@@ -436,7 +436,7 @@ export default function BlogPostEditor({ initialBlogs = [], sourceWarning = "" }
                 value={form.keywords}
                 onChange={(event) => setField("keywords", event.target.value)}
                 className="w-full rounded-2xl border border-[#d9d4bf] bg-white px-4 py-3 text-sm text-[#18352a] outline-none transition focus:border-[#a3ca65]"
-                placeholder="website design company in Nashik, web development, SEO, Nashik"
+                placeholder="best resort in Shirdi, nature resort, villas and cottages, peaceful stay"
               />
             </label>
 
@@ -449,7 +449,7 @@ export default function BlogPostEditor({ initialBlogs = [], sourceWarning = "" }
                 value={form.description}
                 onChange={(event) => setField("description", event.target.value)}
                 className="w-full rounded-2xl border border-[#d9d4bf] bg-white px-4 py-3 text-sm leading-7 text-[#18352a] outline-none transition focus:border-[#a3ca65]"
-                placeholder="Short meta description and blog summary."
+                placeholder="Short resort meta description and blog summary."
               />
             </label>
 

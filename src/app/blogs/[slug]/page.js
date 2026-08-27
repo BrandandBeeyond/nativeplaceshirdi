@@ -7,29 +7,43 @@ import dbConnect from "../../lib/dbConnect.js";
 import { Blog } from "../../lib/models/index.js";
 import {
   fallbackBlogPosts,
-  formatBlogDate,
   normalizeBlogRecord,
+  slugifyBlog,
 } from "../../lib/blog-utils.js";
 
 export const dynamic = "force-dynamic";
 
+async function resolveSlug(params) {
+  const resolvedParams = await params;
+
+  return String(resolvedParams?.slug || "").trim();
+}
+
 async function getBlogBySlug(slug) {
+  const normalizedSlug = slugifyBlog(slug);
+
   try {
     await dbConnect();
-    const blog = await Blog.findOne({ slug, isPublished: true }).lean();
+    const blogs = await Blog.find({ isPublished: true }).lean();
+    const matchedBlog = blogs
+      .map((blog) => normalizeBlogRecord(blog))
+      .find((blog) => blog.slug === normalizedSlug);
 
-    if (blog) {
-      return normalizeBlogRecord(blog);
+    if (matchedBlog) {
+      return matchedBlog;
     }
   } catch (_error) {
     // Fall back to sample content below.
   }
 
-  return fallbackBlogPosts.find((post) => post.slug === slug) || null;
+  return (
+    fallbackBlogPosts.map((post) => normalizeBlogRecord(post)).find((post) => post.slug === normalizedSlug) ||
+    null
+  );
 }
 
 export async function generateMetadata({ params }) {
-  const blog = await getBlogBySlug(params.slug);
+  const blog = await getBlogBySlug(await resolveSlug(params));
 
   if (!blog) {
     return {
@@ -60,7 +74,7 @@ function InfoPill({ icon: Icon, label }) {
 }
 
 export default async function BlogDetailPage({ params }) {
-  const blog = await getBlogBySlug(params.slug);
+  const blog = await getBlogBySlug(await resolveSlug(params));
 
   if (!blog) {
     notFound();
@@ -84,8 +98,8 @@ export default async function BlogDetailPage({ params }) {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(184,220,79,0.18),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(255,255,255,0.12),transparent_26%)]" />
           </div>
 
-          <div className="relative mx-auto flex min-h-[320px] max-w-[1400px] items-center px-4 py-16 sm:min-h-[380px] sm:px-6 sm:py-20 lg:min-h-[420px] lg:px-8 lg:py-24">
-            <div className="max-w-4xl">
+          <div className="relative mx-auto flex min-h-[420px] max-w-[1400px] items-end px-4 py-14 sm:min-h-[500px] sm:px-6 sm:py-16 lg:min-h-[620px] lg:px-8 lg:py-20">
+            <div className="max-w-4xl pb-4 sm:pb-6 lg:pb-10">
               <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-[#e8f2d0] backdrop-blur-sm">
                 <Sparkles className="h-3.5 w-3.5" />
                 Blog Post
@@ -96,51 +110,33 @@ export default async function BlogDetailPage({ params }) {
               </h1>
 
               <div className="mt-6 flex flex-wrap gap-3">
-                <InfoPill icon={CalendarDays} label={blog.publishedAt ? formatBlogDate(blog.publishedAt) : "Published"} />
-                <InfoPill icon={Tag} label={blog.keywords?.[0] || "Insights"} />
-                <InfoPill icon={Clock3} label="Read at your pace" />
+                <InfoPill icon={CalendarDays} label="Read at your pace" />
+                <InfoPill icon={Clock3} label="Resort story" />
               </div>
             </div>
           </div>
         </section>
 
-        <section className="mx-auto max-w-[1140px] px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+        <section className="mx-auto max-w-[1024px] px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
           <article className="overflow-hidden rounded-[30px] border border-[#e7e2d3] bg-white shadow-[0_16px_45px_rgba(36,48,38,0.08)]">
-            <div className="grid gap-0 lg:grid-cols-[1.05fr_0.95fr]">
-              <div className="relative min-h-[300px] lg:min-h-full">
-                <Image
-                  src={blog.thumbnail || "/images/banners/banner2.jpeg"}
-                  alt={blog.name || blog.title}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover"
-                />
-              </div>
-
-              <div className="p-6 sm:p-8 lg:p-10">
+            <div className="p-6 sm:p-8 lg:p-12">
+              <div className="mb-8 border-b border-[#ece4d2] pb-5">
                 <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#6b8444]">
-                  SEO Description
+                  {blog.publishedAt ? new Date(blog.publishedAt).toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  }) : "Latest Story"}
                 </p>
-                <p className="mt-4 text-[16px] leading-8 text-[#566155]">
-                  {blog.description}
-                </p>
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {blog.keywords?.map((keyword) => (
-                    <span
-                      key={keyword}
-                      className="rounded-full border border-[#d9dcc9] bg-[#fbf8ef] px-3 py-1 text-xs font-medium text-[#53604b]"
-                    >
-                      {keyword}
-                    </span>
-                  ))}
-                </div>
-
-                <div
-                  className="prose prose-lg mt-8 max-w-none prose-headings:font-heading prose-headings:text-[#18352a] prose-p:text-[#566155] prose-li:text-[#566155]"
-                  dangerouslySetInnerHTML={{ __html: blog.content || "<p></p>" }}
-                />
+                <h2 className="mt-3 font-heading text-[clamp(1.8rem,3vw,3.1rem)] leading-[1.08] text-[#18352a]">
+                  {blog.title || blog.name}
+                </h2>
               </div>
+
+              <div
+                className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-[#18352a] prose-headings:leading-tight prose-p:text-[#44524a] prose-p:leading-8 prose-li:text-[#44524a] prose-a:text-[#07552F] prose-a:no-underline hover:prose-a:underline"
+                dangerouslySetInnerHTML={{ __html: blog.content || "<p></p>" }}
+              />
             </div>
           </article>
         </section>

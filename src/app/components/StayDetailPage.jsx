@@ -60,12 +60,14 @@ const amenityDescriptions = {
 
 function AmenityCard({ icon: Icon, label, text }) {
   return (
-    <div className="group rounded-[22px] border border-[#ece1d1] bg-white/90 p-5 text-center shadow-[0_12px_30px_rgba(36,46,32,0.05)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(36,46,32,0.08)]">
-      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-[#eef1df] text-[#758e54] transition-transform duration-300 group-hover:scale-105">
-        <Icon className="h-6 w-6" strokeWidth={1.7} />
+    <div className="group rounded-[22px] border border-[#ece1d1] bg-white/90 p-4 text-center shadow-[0_12px_30px_rgba(36,46,32,0.05)] transition-transform duration-300 hover:-translate-y-1 hover:shadow-[0_16px_36px_rgba(36,46,32,0.08)] sm:p-5">
+      <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#eef1df] text-[#758e54] transition-transform duration-300 group-hover:scale-105 sm:h-14 sm:w-14">
+        <Icon className="h-5 w-5 sm:h-6 sm:w-6" strokeWidth={1.7} />
       </div>
-      <h4 className="mt-4 text-[15px] font-semibold text-[#2f4c3d]">{label}</h4>
-      <p className="mt-2 text-[13px] leading-6 text-[#667168]">
+      <h4 className="mt-3 text-[14px] font-semibold leading-5 text-[#2f4c3d] sm:mt-4 sm:text-[15px]">
+        {label}
+      </h4>
+      <p className="mt-2 text-[12px] leading-5 text-[#667168] sm:text-[13px] sm:leading-6">
         {text || amenityDescriptions[label] || "Thoughtfully included for a better stay."}
       </p>
     </div>
@@ -91,7 +93,7 @@ function AmenitiesSection({ eyebrow, title, description, amenities }) {
         <div className="mx-auto mt-5 h-px w-28 bg-[#d9d2c4]" />
       </div>
 
-      <div className="relative mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+      <div className="relative mt-8 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-5">
         {amenities.map((item) => {
           const Icon = item.icon;
 
@@ -154,7 +156,7 @@ export default function StayDetailPage({
               images={heroThumbs?.length ? heroThumbs : [heroImage]}
               alt={stayTitle}
               className="bg-[#fbf8ef] shadow-[0_22px_52px_rgba(44,56,38,0.12)]"
-              aspectClassName="aspect-[1.18/0.84] lg:aspect-[1.12/0.8]"
+              aspectClassName="aspect-[1.18/0.84] max-[380px]:aspect-[1.18/0.68] lg:aspect-[1.12/0.8]"
               imageClassName="object-contain bg-[#fbf8ef]"
               containerRoundedClassName="rounded-[22px]"
             />

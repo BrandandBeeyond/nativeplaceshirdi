@@ -4,6 +4,13 @@ import Image from "next/image";
 import { ArrowRight, ChevronRight, Coffee, Mountain, Sprout, Users } from "lucide-react";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
+const features = [
+  { icon: Sprout, title: "Surrounded by Nature" },
+  { icon: Mountain, title: "Scenic Views of Shirdi" },
+  { icon: Coffee, title: "Amidst Coffee Plantations" },
+  { icon: Users, title: "Peace, Tranquility & Rejuvenation" },
+];
+
 const stats = [
   {
     target: 19,
@@ -112,7 +119,7 @@ export default function IntroSection() {
               />
             </div>
 
-            <div className="absolute bottom-[5%] right-[3%] h-[28%] w-[42%] overflow-hidden rounded-[1.4rem] border-4 border-[#fbf8ef] shadow-[0_24px_60px_rgba(45,54,38,0.18)] sm:bottom-[8%] sm:right-[8%] sm:h-[40%] sm:w-[46%] sm:rounded-[2.25rem]">
+            <div className="absolute bottom-[7%] right-[2%] h-[34%] w-[50%] overflow-hidden rounded-[1.55rem] border-4 border-[#fbf8ef] shadow-[0_24px_60px_rgba(45,54,38,0.18)] sm:bottom-[8%] sm:right-[8%] sm:h-[40%] sm:w-[46%] sm:rounded-[2.25rem]">
               <Image
                 src="/images/common/IMG_9115.JPG.jpeg"
                 alt="Walkway view"
@@ -122,32 +129,23 @@ export default function IntroSection() {
               />
             </div>
 
-            <div className="absolute bottom-0 left-0 z-10 w-[94%] rounded-[1.25rem] bg-[#f5f1e4] px-3 py-3 shadow-[0_20px_50px_rgba(50,58,46,0.08)] sm:w-[78%] sm:rounded-[2rem] sm:px-5 sm:py-5">
-              <div className="hidden grid-cols-2 gap-2 sm:grid sm:grid-cols-4 sm:gap-2">
-                <div className="flex flex-col items-center gap-1.5 text-center sm:border-r sm:border-[#d9d2bc]">
-                  <Sprout className="h-6 w-6 text-[#6b8444] sm:h-8 sm:w-8" strokeWidth={1.7} />
-                  <p className="max-w-[140px] text-[11px] leading-snug text-[#334039] sm:text-sm">
-                    Surrounded by Nature
-                  </p>
-                </div>
-                <div className="flex flex-col items-center gap-1.5 text-center sm:border-r sm:border-[#d9d2bc]">
-                  <Mountain className="h-6 w-6 text-[#6b8444] sm:h-8 sm:w-8" strokeWidth={1.7} />
-                  <p className="max-w-[140px] text-[11px] leading-snug text-[#334039] sm:text-sm">
-                    Scenic Views of Shirdi
-                  </p>
-                </div>
-                <div className="flex flex-col items-center gap-1.5 text-center sm:border-r sm:border-[#d9d2bc]">
-                  <Coffee className="h-6 w-6 text-[#6b8444] sm:h-8 sm:w-8" strokeWidth={1.7} />
-                  <p className="max-w-[140px] text-[11px] leading-snug text-[#334039] sm:text-sm">
-                    Amidst Coffee Plantations
-                  </p>
-                </div>
-                <div className="flex flex-col items-center gap-1.5 text-center">
-                  <Users className="h-6 w-6 text-[#6b8444] sm:h-8 sm:w-8" strokeWidth={1.7} />
-                  <p className="max-w-[140px] text-[11px] leading-snug text-[#334039] sm:text-sm">
-                    Peace, Tranquility & Rejuvenation
-                  </p>
-                </div>
+            <div className="absolute bottom-0 left-0 z-10 hidden w-[94%] rounded-[1.25rem] bg-[#f5f1e4] px-3 py-3 shadow-[0_20px_50px_rgba(50,58,46,0.08)] sm:block sm:w-[78%] sm:rounded-[2rem] sm:px-5 sm:py-5">
+              <div className="grid grid-cols-2 gap-2 sm:grid sm:grid-cols-4 sm:gap-2">
+                {features.map((feature, index) => {
+                  const Icon = feature.icon;
+
+                  return (
+                    <div
+                      key={feature.title}
+                      className={`flex flex-col items-center gap-1.5 text-center ${index < features.length - 1 ? "sm:border-r sm:border-[#d9d2bc]" : ""}`}
+                    >
+                      <Icon className="h-6 w-6 text-[#6b8444] sm:h-8 sm:w-8" strokeWidth={1.7} />
+                      <p className="max-w-[140px] text-[11px] leading-snug text-[#334039] sm:text-sm">
+                        {feature.title}
+                      </p>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -168,7 +166,7 @@ export default function IntroSection() {
             </h2>
 
             <div className="mx-auto mt-3 flex items-center justify-center gap-4">
-            <div className="w-[120px] sm:w-[170px]">
+              <div className="w-[120px] sm:w-[170px]">
                 <Image
                   src="/images/svg/nativeplacevector.png"
                   width={220}
@@ -195,27 +193,45 @@ export default function IntroSection() {
 
             <div
               ref={statsRef}
-              className="mx-auto mt-7 hidden max-w-[920px] grid-cols-2 gap-2.5 sm:mt-10 sm:grid sm:gap-4 sm:grid-cols-4"
+              className="mx-auto mt-7 max-w-[920px] sm:mt-10"
               data-aos="fade-up"
             >
-              {stats.map((stat, index) => (
-                <div
-                  key={stat.label}
-                  className="counter-card flex min-h-[132px] flex-col items-center justify-center rounded-[22px] bg-[#fbf8ef]/95 px-3 py-4 text-center shadow-[0_12px_30px_rgba(56,64,50,0.05)] sm:min-h-[230px] sm:rounded-[28px] sm:px-6 sm:py-8"
-                >
-                  <div className="text-[clamp(1.55rem,4.5vw,2.4rem)] font-semibold tracking-[-0.04em] text-[#23312a] sm:text-[3.1rem]">
-                    {formatCount(counts[index], stat)}
+              <div className="hidden grid-cols-2 gap-2.5 sm:grid sm:grid-cols-4 sm:gap-4">
+                {stats.map((stat, index) => (
+                  <div
+                    key={stat.label}
+                    className="counter-card flex min-h-[132px] flex-col items-center justify-center rounded-[22px] bg-[#fbf8ef]/95 px-3 py-4 text-center shadow-[0_12px_30px_rgba(56,64,50,0.05)] sm:min-h-[230px] sm:rounded-[28px] sm:px-6 sm:py-8"
+                  >
+                    <div className="text-[clamp(1.55rem,4.5vw,2.4rem)] font-semibold tracking-[-0.04em] text-[#23312a] sm:text-[3.1rem]">
+                      {formatCount(counts[index], stat)}
+                    </div>
+                    <div className="mt-2 max-w-[10ch] text-[12px] leading-5 text-[#5c6b64] sm:mt-3 sm:text-[1.1rem] sm:leading-7">
+                      {stat.label}
+                    </div>
                   </div>
-                  <div className="mt-2 max-w-[10ch] text-[12px] leading-5 text-[#5c6b64] sm:mt-3 sm:text-[1.1rem] sm:leading-7">
-                    {stat.label}
+                ))}
+              </div>
+
+              <div className="grid grid-cols-2 gap-3 sm:hidden">
+                {stats.map((stat, index) => (
+                  <div
+                    key={stat.label}
+                    className="counter-card flex min-h-[112px] flex-col items-center justify-center rounded-[18px] bg-[#fbf8ef]/95 px-3 py-4 text-center shadow-[0_12px_30px_rgba(56,64,50,0.05)]"
+                  >
+                    <div className="text-[clamp(1.15rem,5.4vw,1.7rem)] font-semibold tracking-[-0.04em] text-[#23312a]">
+                      {formatCount(counts[index], stat)}
+                    </div>
+                    <div className="mt-1 max-w-[12ch] text-[10.5px] leading-4 text-[#5c6b64]">
+                      {stat.label}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
 
             <div className="mt-7 flex justify-center sm:mt-10">
               <a
-                href="/contact"
+                href="#why-native-place"
                 className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#154725] to-[#184826] px-5 py-2.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-white shadow-[0_18px_40px_rgba(34,88,49,0.28)] transition-transform duration-300 hover:-translate-y-0.5 sm:gap-3 sm:px-8 sm:py-4 sm:text-sm sm:tracking-[0.18em]"
               >
                 Why Native place
@@ -223,6 +239,23 @@ export default function IntroSection() {
                   <ChevronRight className="h-3.5 w-3.5 text-white sm:h-4 sm:w-4" strokeWidth={2.4} />
                 </span>
               </a>
+            </div>
+
+            <div className="mt-7 sm:hidden">
+              <div className="rounded-[1.35rem] bg-[#f5f1e4] px-3 py-3 shadow-[0_12px_30px_rgba(50,58,46,0.08)]">
+                <div className="grid grid-cols-2 gap-2">
+                  {features.map((feature) => {
+                    const Icon = feature.icon;
+
+                    return (
+                      <div key={feature.title} className="flex flex-col items-center gap-2 px-2 py-2 text-center">
+                        <Icon className="h-6 w-6 text-[#6b8444]" strokeWidth={1.7} />
+                        <p className="text-[12px] leading-5 text-[#334039]">{feature.title}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -123,7 +123,7 @@ export const createEmptyBlogForm = () => ({
   title: "",
   keywords: "",
   description: "",
-  content: "<p>Start writing your blog content here...</p>",
+  content: "<p>Start writing your resort blog content here...</p>",
   thumbnail: "",
   slug: "",
   isPublished: false,

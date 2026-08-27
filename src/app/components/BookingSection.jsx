@@ -217,9 +217,9 @@ export default function BookingSection() {
                 </div>
 
                 <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
-                  <div className="grid gap-5 sm:grid-cols-2">
+                  <div className="grid grid-cols-2 gap-3 sm:gap-5">
                     <label className="block">
-                      <span className="mb-2 block text-sm font-medium text-[#37433c]">
+                      <span className="mb-1.5 block text-[12px] font-medium text-[#37433c] sm:mb-2 sm:text-sm">
                         First Name
                       </span>
                       <input
@@ -229,11 +229,11 @@ export default function BookingSection() {
                         value={form.firstName}
                         onChange={(event) => updateField("firstName", event.target.value)}
                         placeholder="Enter first name"
-                        className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
+                        className="w-full rounded-xl border border-[#d8ded8] bg-white px-3 py-3 text-[13px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444] sm:rounded-2xl sm:px-4 sm:py-4 sm:text-[15px]"
                       />
                     </label>
                     <label className="block">
-                      <span className="mb-2 block text-sm font-medium text-[#37433c]">
+                      <span className="mb-1.5 block text-[12px] font-medium text-[#37433c] sm:mb-2 sm:text-sm">
                         Last Name
                       </span>
                       <input
@@ -243,14 +243,14 @@ export default function BookingSection() {
                         value={form.lastName}
                         onChange={(event) => updateField("lastName", event.target.value)}
                         placeholder="Enter last name"
-                        className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
+                        className="w-full rounded-xl border border-[#d8ded8] bg-white px-3 py-3 text-[13px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444] sm:rounded-2xl sm:px-4 sm:py-4 sm:text-[15px]"
                       />
                     </label>
                   </div>
 
-                  <div className="grid gap-5 sm:grid-cols-2">
+                  <div className="grid grid-cols-2 gap-3 sm:gap-5">
                     <label className="block">
-                      <span className="mb-2 block text-sm font-medium text-[#37433c]">
+                      <span className="mb-1.5 block text-[12px] font-medium text-[#37433c] sm:mb-2 sm:text-sm">
                         Phone
                       </span>
                       <input
@@ -260,11 +260,11 @@ export default function BookingSection() {
                         value={form.phone}
                         onChange={(event) => updateField("phone", event.target.value)}
                         placeholder="Enter phone number"
-                        className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
+                        className="w-full rounded-xl border border-[#d8ded8] bg-white px-3 py-3 text-[13px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444] sm:rounded-2xl sm:px-4 sm:py-4 sm:text-[15px]"
                       />
                     </label>
                     <label className="block">
-                      <span className="mb-2 block text-sm font-medium text-[#37433c]">
+                      <span className="mb-1.5 block text-[12px] font-medium text-[#37433c] sm:mb-2 sm:text-sm">
                         Email
                       </span>
                       <input
@@ -274,14 +274,14 @@ export default function BookingSection() {
                         value={form.email}
                         onChange={(event) => updateField("email", event.target.value)}
                         placeholder="Enter email address"
-                        className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
+                        className="w-full rounded-xl border border-[#d8ded8] bg-white px-3 py-3 text-[13px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444] sm:rounded-2xl sm:px-4 sm:py-4 sm:text-[15px]"
                       />
                     </label>
                   </div>
 
-                  <div className="grid gap-5 sm:grid-cols-2">
+                  <div className="grid grid-cols-2 gap-3 sm:gap-5">
                     <label className="block">
-                      <span className="mb-2 block text-sm font-medium text-[#37433c]">
+                      <span className="mb-1.5 block text-[12px] font-medium text-[#37433c] sm:mb-2 sm:text-sm">
                         Check-in Date
                       </span>
                       <input
@@ -291,11 +291,11 @@ export default function BookingSection() {
                         min={today}
                         value={form.checkIn}
                         onChange={(event) => updateField("checkIn", event.target.value)}
-                        className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 focus:border-[#6b8444]"
+                        className="w-full rounded-xl border border-[#d8ded8] bg-white px-3 py-3 text-[13px] outline-none transition-colors duration-300 focus:border-[#6b8444] sm:rounded-2xl sm:px-4 sm:py-4 sm:text-[15px]"
                       />
                     </label>
                     <label className="block">
-                      <span className="mb-2 block text-sm font-medium text-[#37433c]">
+                      <span className="mb-1.5 block text-[12px] font-medium text-[#37433c] sm:mb-2 sm:text-sm">
                         Check-out Date
                       </span>
                       <input
@@ -305,13 +305,13 @@ export default function BookingSection() {
                         min={checkOutMin}
                         value={form.checkOut}
                         onChange={(event) => updateField("checkOut", event.target.value)}
-                        className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 focus:border-[#6b8444]"
+                        className="w-full rounded-xl border border-[#d8ded8] bg-white px-3 py-3 text-[13px] outline-none transition-colors duration-300 focus:border-[#6b8444] sm:rounded-2xl sm:px-4 sm:py-4 sm:text-[15px]"
                       />
                     </label>
                   </div>
 
                   <label className="block">
-                    <span className="mb-2 block text-sm font-medium text-[#37433c]">
+                    <span className="mb-1.5 block text-[12px] font-medium text-[#37433c] sm:mb-2 sm:text-sm">
                       Message <span className="text-[#8c948f]">(Optional)</span>
                     </span>
                     <textarea
@@ -320,7 +320,7 @@ export default function BookingSection() {
                       value={form.message}
                       onChange={(event) => updateField("message", event.target.value)}
                       placeholder="Your message or any special request..."
-                      className="w-full rounded-2xl border border-[#d8ded8] bg-white px-4 py-4 text-[15px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444]"
+                      className="w-full rounded-xl border border-[#d8ded8] bg-white px-3 py-3 text-[13px] outline-none transition-colors duration-300 placeholder:text-[#8a8f89] focus:border-[#6b8444] sm:rounded-2xl sm:px-4 sm:py-4 sm:text-[15px]"
                     />
                   </label>
 

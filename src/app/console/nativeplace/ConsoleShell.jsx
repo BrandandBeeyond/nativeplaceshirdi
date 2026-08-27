@@ -1,11 +1,14 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { AdminToastProvider } from "./AdminToast.jsx";
 import {
   CalendarDays,
   ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   FileText,
   Image,
   LayoutDashboard,
@@ -24,6 +27,7 @@ const navigation = [
       { href: "/console/nativeplace/cms/pages", label: "Home Page" },
       { href: "/console/nativeplace/cms/about", label: "About Us" },
       { href: "/console/nativeplace/cms/blogs", label: "Blogs" },
+      { href: "/console/nativeplace/cms/testimonials", label: "Testimonials" },
       { href: "/console/nativeplace/cms/villas-cottages", label: "Villas & Cottages" },
     ],
   },
@@ -36,23 +40,30 @@ function isActive(pathname, href) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-function NavLink({ href, label, icon: Icon, active, nested = false }) {
+function NavLink({ href, label, icon: Icon, active, nested = false, collapsed = false }) {
   return (
     <Link
       href={href}
-      className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-[15px] font-medium transition-colors duration-300 ${active ? "bg-white/12 text-white" : "text-white/78 hover:bg-white/8 hover:text-white"} ${nested ? "pl-12" : ""}`}
+      title={collapsed ? label : undefined}
+      className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-[15px] font-medium transition-colors duration-300 ${
+        active
+          ? "bg-white text-[#183f2f] shadow-[0_8px_18px_rgba(24,63,47,0.08)]"
+          : "text-[#5f6c64] hover:bg-white/70 hover:text-[#183f2f]"
+      } ${nested ? "pl-12" : ""} ${collapsed ? "justify-center px-3" : ""}`}
     >
       <span
-        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${active ? "border-white/16 bg-white/14" : "border-white/12 bg-white/8"} ${nested ? "h-9 w-9" : ""}`}
+        className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${
+          active ? "border-[#d9e6dd] bg-[#f4faf6]" : "border-[#d8e0d7] bg-white"
+        } ${nested ? "h-9 w-9" : ""} ${collapsed ? "mx-auto" : ""}`}
       >
         <Icon className="h-5 w-5" />
       </span>
-      <span className="flex-1">{label}</span>
+      {!collapsed ? <span className="flex-1">{label}</span> : null}
     </Link>
   );
 }
 
-function NavGroup({ label, icon: Icon, items }) {
+function NavGroup({ label, icon: Icon, items, collapsed = false }) {
   const pathname = usePathname();
   const active = items.some((item) => isActive(pathname, item.href));
   const [userOpen, setUserOpen] = useState(active);
@@ -63,18 +74,27 @@ function NavGroup({ label, icon: Icon, items }) {
       <button
         type="button"
         onClick={() => setUserOpen((value) => !value)}
-        className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-[15px] font-medium transition-colors duration-300 ${active ? "bg-white/12 text-white" : "text-white/78 hover:bg-white/8 hover:text-white"}`}
+        title={collapsed ? label : undefined}
+        className={`flex w-full items-center gap-3 rounded-2xl px-4 py-3 text-left text-[15px] font-medium transition-colors duration-300 ${
+          active
+            ? "bg-white text-[#183f2f] shadow-[0_8px_18px_rgba(24,63,47,0.08)]"
+            : "text-[#5f6c64] hover:bg-white/70 hover:text-[#183f2f]"
+        } ${collapsed ? "justify-center px-3" : ""}`}
       >
         <span
-          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${active ? "border-white/16 bg-white/14" : "border-white/12 bg-white/8"}`}
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border ${
+            active ? "border-[#d9e6dd] bg-[#f4faf6]" : "border-[#d8e0d7] bg-white"
+          } ${collapsed ? "mx-auto" : ""}`}
         >
           <Icon className="h-5 w-5" />
         </span>
-        <span className="flex-1">{label}</span>
-        <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+        {!collapsed ? <span className="flex-1">{label}</span> : null}
+        {!collapsed ? (
+          <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`} />
+        ) : null}
       </button>
 
-      {open ? (
+      {open && !collapsed ? (
         <div className="space-y-2 border-l border-white/10 pl-3">
           {items.map((item) => (
             <NavLink
@@ -84,6 +104,7 @@ function NavGroup({ label, icon: Icon, items }) {
               icon={item.icon || Image}
               active={isActive(pathname, item.href)}
               nested
+              collapsed={collapsed}
             />
           ))}
         </div>
@@ -94,32 +115,52 @@ function NavGroup({ label, icon: Icon, items }) {
 
 export default function ConsoleShell({ children, pageTitle, pageDescription }) {
   const pathname = usePathname();
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
-    <main className="min-h-screen bg-[#eef3ea]">
-      <div className="grid min-h-screen lg:grid-cols-[300px_1fr]">
-        <aside className="bg-[linear-gradient(180deg,#102f24_0%,#183f2f_100%)] text-white lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
+    <AdminToastProvider>
+      <main className="min-h-screen bg-[#eef3ea]">
+        <div
+          className={`grid min-h-screen transition-[grid-template-columns] duration-300 ease-out ${
+            sidebarCollapsed ? "lg:grid-cols-[88px_1fr]" : "lg:grid-cols-[300px_1fr]"
+          }`}
+        >
+          <aside className="relative border-r border-[#dce5dc] bg-[linear-gradient(180deg,#fbfcf8_0%,#f3f7ef_100%)] text-[#183f2f] lg:sticky lg:top-0 lg:h-screen lg:overflow-y-auto">
+          <button
+            type="button"
+            onClick={() => setSidebarCollapsed((value) => !value)}
+            className="absolute right-[-13px] top-6 z-20 hidden h-7 w-7 items-center justify-center rounded-full border border-[#cfe0ea] bg-white text-[#2465d0] shadow-[0_10px_22px_rgba(0,0,0,0.12)] transition-transform duration-300 hover:scale-105 lg:inline-flex"
+            aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {sidebarCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
+          </button>
+
           <div className="flex h-full flex-col">
             <div className="border-b border-white/10 px-6 py-6">
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-[#d8f184]">
+              <div className={`flex items-center gap-3 ${sidebarCollapsed ? "justify-center" : ""}`}>
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#eff6ff] text-[#2465d0]">
                   <Sparkles className="h-5 w-5" />
                 </div>
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#cfe0a4]">
-                    Business
-                  </p>
-                  <h1 className="mt-1 text-2xl font-semibold leading-none text-white">
-                    The Native Place
-                  </h1>
-                </div>
+                {!sidebarCollapsed ? (
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.34em] text-[#7b8a92]">
+                      Business
+                    </p>
+                    <h1 className="mt-1 text-2xl font-semibold leading-none text-[#183f2f]">
+                      The Native Place
+                    </h1>
+                  </div>
+                ) : null}
               </div>
             </div>
 
-            <div className="flex-1 px-4 py-6">
-              <p className="px-4 text-xs font-semibold uppercase tracking-[0.3em] text-white/50">
-                Main Menu
-              </p>
+            <div className={`flex-1 px-4 py-6 ${sidebarCollapsed ? "px-2" : ""}`}>
+              {!sidebarCollapsed ? (
+                <p className="px-4 text-xs font-semibold uppercase tracking-[0.3em] text-[#8a97a7]">
+                  Main Menu
+                </p>
+              ) : null}
+
               <div className="mt-4 space-y-2">
                 {navigation.map((item) => {
                   if (item.items) {
@@ -129,6 +170,7 @@ export default function ConsoleShell({ children, pageTitle, pageDescription }) {
                         label={item.label}
                         icon={item.icon}
                         items={item.items}
+                        collapsed={sidebarCollapsed}
                       />
                     );
                   }
@@ -140,24 +182,32 @@ export default function ConsoleShell({ children, pageTitle, pageDescription }) {
                       label={item.label}
                       icon={item.icon}
                       active={isActive(pathname, item.href)}
+                      collapsed={sidebarCollapsed}
                     />
                   );
                 })}
               </div>
             </div>
 
-            <div className="border-t border-white/10 p-4">
-              <div className="rounded-[24px] border border-white/12 bg-white/8 p-4">
-                <p className="text-sm font-semibold text-white">Owner Access</p>
-                <p className="mt-1 text-sm leading-6 text-white/72">
-                  Signed in as admin with protected route access.
-                </p>
+            <div className={`border-t border-[#dce5dc] p-4 ${sidebarCollapsed ? "px-2" : ""}`}>
+              <div className="rounded-[24px] border border-[#dce5dc] bg-white p-4">
+                {!sidebarCollapsed ? (
+                  <>
+                    <p className="text-sm font-semibold text-[#183f2f]">Owner Access</p>
+                    <p className="mt-1 text-sm leading-6 text-[#6b7b74]">
+                      Signed in as admin with protected route access.
+                    </p>
+                  </>
+                ) : null}
                 <Link
                   href="/api/console/nativeplace/logout"
-                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-[#b8dc4f] px-4 py-3 text-sm font-semibold text-[#18352a] transition-colors duration-300 hover:bg-white"
+                  title={sidebarCollapsed ? "Logout" : undefined}
+                  className={`mt-4 inline-flex items-center gap-2 rounded-full bg-[#b8dc4f] px-4 py-3 text-sm font-semibold text-[#18352a] transition-colors duration-300 hover:bg-white ${
+                    sidebarCollapsed ? "justify-center px-3" : ""
+                  }`}
                 >
                   <LogOut className="h-4 w-4" />
-                  Logout
+                  {!sidebarCollapsed ? "Logout" : null}
                 </Link>
               </div>
             </div>
@@ -186,8 +236,9 @@ export default function ConsoleShell({ children, pageTitle, pageDescription }) {
           </div>
 
           <div className="mt-6">{children}</div>
-        </section>
-      </div>
-    </main>
+          </section>
+        </div>
+      </main>
+    </AdminToastProvider>
   );
 }
