@@ -144,3 +144,45 @@ button {
   z-index: -1;
 }
 
+@keyframes leaf-rise-left {
+  0% {
+    opacity: 0;
+    transform: translate3d(-2.5rem, 4rem, 0) rotate(-10deg) scale(0.95);
+  }
+  55% {
+    opacity: 1;
+    transform: translate3d(-0.75rem, -0.35rem, 0) rotate(3deg) scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes leaf-rise-right {
+  0% {
+    opacity: 0;
+    transform: translate3d(2.5rem, 4rem, 0) rotate(10deg) scale(0.95);
+  }
+  55% {
+    opacity: 1;
+    transform: translate3d(0.75rem, -0.35rem, 0) rotate(-3deg) scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  }
+}
+
+.animate-leaf-rise-left {
+  animation: leaf-rise-left 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: left center;
+  will-change: transform, opacity;
+}
+
+.animate-leaf-rise-right {
+  animation: leaf-rise-right 1.15s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: right center;
+  will-change: transform, opacity;
+}
+

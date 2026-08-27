@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const highlights = [
   {
@@ -73,6 +73,10 @@ function HighlightCard({ item }) {
 
 export default function WhyChooseSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [leavesInView, setLeavesInView] = useState(false);
+  const [headingInView, setHeadingInView] = useState(false);
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
   const mobileSlideWidth = useMemo(() => "88vw", []);
 
   useEffect(() => {
@@ -104,9 +108,58 @@ export default function WhyChooseSection() {
     return () => window.clearInterval(intervalId);
   }, []);
 
+  useEffect(() => {
+    const node = sectionRef.current;
+
+    if (!node) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setLeavesInView(true);
+        }
+      },
+      {
+        threshold: 0.35,
+        rootMargin: "0px 0px -10% 0px",
+      },
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const node = headingRef.current;
+
+    if (!node) {
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHeadingInView(true);
+        }
+      },
+      {
+        threshold: 0.5,
+        rootMargin: "0px 0px -15% 0px",
+      },
+    );
+
+    observer.observe(node);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
       id="why-native-place"
+      ref={sectionRef}
       className="relative isolate overflow-visible bg-[#f7f2e4] scroll-mt-24"
     >
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.9),transparent_45%),radial-gradient(circle_at_bottom_left,rgba(184,220,79,0.16),transparent_30%),radial-gradient(circle_at_bottom_right,rgba(107,132,68,0.12),transparent_28%)]" />
@@ -114,6 +167,40 @@ export default function WhyChooseSection() {
       <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-[#d9cfb7] to-transparent" />
 
       <div className="relative mx-auto max-w-[1500px] px-4 py-12 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+        <div
+          className={`pointer-events-none absolute left-[-2rem] top-0 z-10 hidden md:block lg:left-[-3rem] ${
+            leavesInView ? "animate-leaf-rise-left" : "opacity-0 translate-y-10"
+          }`}
+        >
+          <div className="relative h-[330px] w-[240px] lg:h-[450px] lg:w-[320px]">
+            <Image
+              src="/images/svg/leftleaft1.png"
+              alt=""
+              fill
+              aria-hidden="true"
+              sizes="(max-width: 1024px) 240px, 320px"
+              className="object-contain object-left-top opacity-85"
+            />
+          </div>
+        </div>
+
+        <div
+          className={`pointer-events-none absolute right-[-2rem] top-6 z-10 hidden md:block lg:right-[-3rem] ${
+            leavesInView ? "animate-leaf-rise-right" : "opacity-0 translate-y-10"
+          }`}
+        >
+          <div className="relative h-[300px] w-[230px] lg:h-[420px] lg:w-[310px]">
+            <Image
+              src="/images/svg/rightleaf.png"
+              alt=""
+              fill
+              aria-hidden="true"
+              sizes="(max-width: 1024px) 230px, 310px"
+              className="object-contain object-right-top opacity-85"
+            />
+          </div>
+        </div>
+
         <div className="mx-auto flex max-w-[900px] flex-col items-center text-center">
           <div className="w-full max-w-[240px] sm:max-w-[320px] lg:max-w-[360px]">
             <Image
@@ -126,12 +213,20 @@ export default function WhyChooseSection() {
             />
           </div>
 
-          <div className="mt-12 max-w-[1250px] sm:mt-14">
-            <p className="mb-10 font-heading text-[clamp(2.05rem,4vw,3.35rem)] leading-none font-normal tracking-[-0.03em] text-[#6b8444] sm:mb-12">
+          <div ref={headingRef} className="mt-12 max-w-[1250px] sm:mt-14">
+            <p
+              className={`mb-10 font-heading text-[clamp(2.05rem,4vw,3.35rem)] leading-none font-normal tracking-[-0.03em] text-[#6b8444] sm:mb-12 ${
+                headingInView ? "animate-banner-heading" : "opacity-0 translate-y-4"
+              }`}
+            >
               Why Choose
             </p>
 
-            <h2 className="font-anton text-[clamp(2.15rem,5.6vw,5.1rem)] leading-[0.9] tracking-[0.18em] text-[#4f6f1d] drop-shadow-[0_8px_22px_rgba(61,80,31,0.12)] lg:text-[5.5rem]">
+            <h2
+              className={`font-anton text-[clamp(2.15rem,5.6vw,5.1rem)] leading-[0.9] tracking-[0.18em] text-[#4f6f1d] drop-shadow-[0_8px_22px_rgba(61,80,31,0.12)] lg:text-[5.5rem] ${
+                headingInView ? "animate-banner-heading" : "opacity-0 translate-y-6"
+              }`}
+            >
               THE NATIVE PLACE
             </h2>
           </div>
