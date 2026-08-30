@@ -34,10 +34,71 @@ const scriptFont = Allura({
   weight: "400",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://thenativeplaceshirdi.com";
+
 export const metadata = {
-  title: "The Native Place Shirdi | The Boutique Nature Resort",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "The Native Place Shirdi",
+    template: "%s | The Native Place Shirdi",
+  },
   description:
-    "Experience nature, comfort and tranquility at The Native Place.",
+    "The Native Place Shirdi is a nature resort near Shirdi with villas, cottages, swimming pool stays, peaceful greenery and family-friendly experiences.",
+  keywords: [
+    "The Native Place Shirdi",
+    "resort near Shirdi",
+    "villas near Shirdi",
+    "cottages near Shirdi",
+    "swimming pool resort Shirdi",
+    "nature resort near Shirdi",
+    "family resort Shirdi",
+    "luxury stay in Shirdi",
+  ],
+  authors: [{ name: "The Native Place Shirdi" }],
+  creator: "The Native Place Shirdi",
+  applicationName: "The Native Place Shirdi",
+  alternates: {
+    canonical: "/",
+  },
+  icons: {
+    icon: "/images/favicon.png",
+    shortcut: "/images/favicon.png",
+    apple: "/images/favicon.png",
+  },
+  openGraph: {
+    type: "website",
+    url: "/",
+    siteName: "The Native Place Shirdi",
+    title: "The Native Place Shirdi",
+    description:
+      "Nature resort near Shirdi with villas, cottages, swimming pool stays and peaceful greenery.",
+    images: [
+      {
+        url: "/images/favicon.png",
+        width: 512,
+        height: 512,
+        alt: "The Native Place Shirdi",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Native Place Shirdi",
+    description:
+      "Nature resort near Shirdi with villas, cottages, swimming pool stays and peaceful greenery.",
+    images: ["/images/favicon.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export default function RootLayout({ children }) {
