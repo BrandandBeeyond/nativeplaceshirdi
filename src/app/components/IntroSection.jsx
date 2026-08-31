@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, ChevronRight, Coffee, Mountain, Sprout, Users } from "lucide-react";
+import { ArrowRight, ChevronRight, Mountain, Sprout, UtensilsCrossed, Users } from "lucide-react";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 const features = [
   { icon: Sprout, title: "Surrounded by Nature" },
-  { icon: Mountain, title: "Scenic Views of Shirdi" },
-  { icon: Coffee, title: "Amidst Coffee Plantations" },
+  { icon: Mountain, title: "Scenic Views Near Shirdi" },
+  { icon: UtensilsCrossed, title: "Pure Veg Dining" },
   { icon: Users, title: "Peace, Tranquility & Rejuvenation" },
 ];
 

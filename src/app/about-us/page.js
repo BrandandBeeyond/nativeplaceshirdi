@@ -3,6 +3,7 @@ import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PageBanner from "../components/PageBanner";
+import AboutFaqs from "../components/AboutFaqs";
 
 export const metadata = {
   title: "About Us | The Native Place Shirdi",
@@ -119,12 +120,9 @@ export default function AboutPage() {
               <p className="font-subheading text-[12px] font-semibold uppercase tracking-[0.4em] text-[#6b8444]">
                 Vision
               </p>
-              <h2 className="mt-4 font-heading text-4xl leading-tight text-[#20342b] sm:text-5xl">
-                To become one of the most preferred nature stays near Shirdi.
-              </h2>
-              <p className="mt-5 max-w-2xl text-[16px] leading-8 text-[#56615a] sm:text-lg">
-                Known for peaceful surroundings, warm hospitality and memorable guest
-                experiences.
+              <p className="mt-4 max-w-3xl text-[18px] leading-8 text-[#20342b] sm:text-[18px]">
+                To become one of the most preferred nature stays near Shirdi, known for peaceful
+                surroundings, warm hospitality and memorable guest experiences.
               </p>
             </article>
 
@@ -136,17 +134,16 @@ export default function AboutPage() {
               <p className="font-subheading text-[12px] font-semibold uppercase tracking-[0.4em] text-[#6b8444]">
                 Mission
               </p>
-              <h2 className="mt-4 font-heading text-4xl leading-tight text-[#20342b] sm:text-5xl">
-                Comfortable stays. Genuine hospitality. Peaceful memories.
-              </h2>
-              <p className="mt-5 max-w-2xl text-[16px] leading-8 text-[#56615a] sm:text-lg">
+              <p className="mt-4 max-w-3xl text-[18px] leading-8 text-[#20342b] sm:text-[18px]">
                 To provide comfortable stays and genuine hospitality while creating a peaceful
-                environment where families, friends and travellers can relax, connect and
-                create lasting memories.
+                environment where families, friends and travellers can relax, connect and create
+                lasting memories.
               </p>
             </article>
           </div>
         </section>
+
+        <AboutFaqs />
       </main>
 
       <Footer />

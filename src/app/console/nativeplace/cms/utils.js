@@ -58,14 +58,13 @@ export const defaultAboutContent = {
   },
   vision: {
     eyebrow: "Vision",
-    title: "To become one of the most preferred nature stays near Shirdi.",
-    description: "Known for peaceful surroundings, warm hospitality and memorable guest experiences.",
+    title: "To become one of the most preferred nature stays near Shirdi, known for peaceful surroundings, warm hospitality and memorable guest experiences.",
+    description: "",
   },
   mission: {
     eyebrow: "Mission",
-    title: "Comfortable stays. Genuine hospitality. Peaceful memories.",
-    description:
-      "To provide comfortable stays and genuine hospitality while creating a peaceful environment where families, friends and travellers can relax, connect and create lasting memories.",
+    title: "To provide comfortable stays and genuine hospitality while creating a peaceful environment where families, friends and travellers can relax, connect and create lasting memories.",
+    description: "",
   },
 };
 
