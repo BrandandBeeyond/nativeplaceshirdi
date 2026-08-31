@@ -234,33 +234,7 @@ export default function ExperienceSection() {
         </div>
       </div>
 
-      <div
-        ref={statsRef}
-        className="relative z-10 mx-auto mt-6 max-w-[1600px] px-4 pb-4 sm:mt-8 sm:px-6 sm:pb-6 lg:px-8 lg:pb-8"
-        data-aos="fade-up"
-      >
-        <div className="rounded-[20px] bg-white/82 p-3.5 shadow-[0_12px_32px_rgba(36,46,32,0.06)] sm:p-5">
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-            {stats.map((stat, index) => {
-              const Icon = stat.icon;
-
-              return (
-                <div key={stat.label} className="flex items-center gap-3 rounded-2xl px-2 py-2 sm:gap-4 sm:px-3">
-                  <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#f3f0e3] text-[#7b8f58] sm:h-14 sm:w-14">
-                    <Icon className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={1.6} />
-                  </span>
-                  <div>
-                    <div className="font-heading text-[2.2rem] leading-none text-[#20342b] sm:text-4xl">
-                      {formatCount(counts[index], stat)}
-                    </div>
-                    <div className="text-[12px] leading-5 text-[#5a645d] sm:text-[13px]">{stat.label}</div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+    
 
       {isVideoOpen && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center bg-black/75 px-4 py-4">

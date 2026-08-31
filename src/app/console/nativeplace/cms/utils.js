@@ -39,7 +39,7 @@ export const defaultHomeBanners = [
 
 export const defaultHomeContent = {
   eyebrow: "Welcome to The Native Place",
-  title: "A Sanctuary of Serenity in the Heart of Shirdi",
+  title: "a Resort Near Shirdi",
   descriptionOne:
     "Tucked away in the calm surroundings of Shirdi, The Native Place is more than just a stay - it is an experience of nature, comfort, and mindful living. Surrounded by peaceful greenery, soft silence, and a restful atmosphere, our boutique resort offers the perfect escape for those seeking peace, connection, and rejuvenation.",
   descriptionTwo:

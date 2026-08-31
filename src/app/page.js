@@ -2,6 +2,7 @@ import Navbar from "./components/Navbar";
 import BannerCarousel from "./components/BannerCarousel";
 import FacilitiesSection from "./components/FacilitiesSection";
 import ExperienceSection from "./components/ExperienceSection";
+import ResortFacilities from "./components/ResortFacilities";
 import WhyChooseSection from "./components/WhyChooseSection";
 import BookingSection from "./components/BookingSection";
 import TestimonialsSection from "./components/TestimonialsSection";
@@ -20,6 +21,7 @@ export default function Home() {
       <VillasCottages />
       <FacilitiesSection />
       <ExperienceSection />
+      <ResortFacilities />
       <WhyChooseSection />
       <BookingSection />
       <TestimonialsSection />

@@ -160,9 +160,9 @@ export default function IntroSection() {
             </div>
 
             <h2 className="mt-5 text-center font-heading text-[clamp(1.8rem,6vw,3rem)] leading-tight text-[#22302a] sm:mt-7 sm:text-5xl lg:text-[3rem] lg:leading-[1.05]">
-              A Sanctuary of Serenity
+              Comfort, Nature & Serenity
               <br />
-              in the Heart of Shirdi
+              at a Resort Near Shirdi
             </h2>
 
             <div className="mx-auto mt-3 flex items-center justify-center gap-4">
@@ -179,15 +179,10 @@ export default function IntroSection() {
 
             <div className="mx-auto mt-3 max-w-[680px] space-y-4 text-[14px] leading-7 text-[#5c6b64] sm:mt-4 sm:space-y-6 sm:text-lg sm:leading-8">
               <p>
-                Tucked away in the calm surroundings of Shirdi, The Native Place is more than
-                just a stay - it is an experience of nature, comfort, and mindful living.
-                Surrounded by peaceful greenery, soft silence, and a restful atmosphere, our
-                boutique resort offers the perfect escape for those seeking peace, connection,
-                and rejuvenation.
+                Looking for a peaceful resort near Shirdi? The Native Place offers a relaxing stay surrounded by greenery, open spaces, and the tranquillity of nature. Our boutique resort combines modern comfort with a serene atmosphere, making it an ideal choice for families, couples, and travellers visiting Shirdi.
               </p>
               <p>
-                Whether you are here to unwind, explore, or simply be - every moment at The
-                Native Place is designed to help you slow down and soak in the beauty of nature.
+                Conveniently located near Shirdi, The Native Place is perfect for those who want to explore the spiritual destination while enjoying a quiet retreat away from the crowds. From relaxing in nature to spending quality time with loved ones.
               </p>
             </div>
 

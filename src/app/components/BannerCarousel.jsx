@@ -6,22 +6,22 @@ import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 
 const banners = [
-  {
-    src: "/images/banners/banner1.jpeg",
-    heading: "Wake Up to Quiet, Green Luxury",
-  },
-  {
-    src: "/images/banners/banner2.jpeg",
-    heading: "A Calm Escape Surrounded by Nature",
-  },
-  {
-    src: "/images/banners/banner3.jpeg",
-    heading: "Where Comfort Meets Open Skies",
-  },
-  {
-    src: "/images/banners/banner4.jpeg",
-    heading: "Your Next Peaceful Getaway Awaits",
-  },
+{
+  src: "/images/banners/banner1.jpeg",
+  heading: "A Serene Resort Near Shirdi for a Peaceful Stay",
+},
+{
+  src: "/images/banners/banner2.jpeg",
+  heading: "Experience Nature and Comfort Near Shirdi",
+},
+{
+  src: "/images/banners/banner3.jpeg",
+  heading: "A Peaceful Getaway Near Shirdi",
+},
+{
+  src: "/images/banners/banner4.jpeg",
+  heading: "Your Perfect Stay Near Shirdi Awaits",
+},
 ];
 
 export default function BannerCarousel() {
