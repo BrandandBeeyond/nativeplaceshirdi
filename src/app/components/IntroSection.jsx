@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, ChevronRight, Mountain, Sprout, UtensilsCrossed, Users } from "lucide-react";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { ChevronRight, Leaf, MapPin, Mountain, PartyPopper, Sprout, UtensilsCrossed, Users } from "lucide-react";
+import { useSyncExternalStore } from "react";
 
 const features = [
   { icon: Sprout, title: "Surrounded by Nature" },
@@ -11,34 +11,14 @@ const features = [
   { icon: Users, title: "Peace, Tranquility & Rejuvenation" },
 ];
 
-const stats = [
-  {
-    target: 19,
-    label: "Years of Hospitality",
-    suffix: "+",
-  },
-  {
-    target: 15,
-    label: "Acres of Lush Greenery",
-    suffix: "+",
-  },
-  {
-    target: 20,
-    label: "Comfortable Stays",
-    suffix: "+",
-  },
-  {
-    target: 10000,
-    label: "Happy Guests",
-    suffix: "+",
-    format: "compact",
-  },
+const highlights = [
+  { icon: MapPin, title: "Resort Near Shirdi" },
+  { icon: Leaf, title: "Nature-Focused Stay" },
+  { icon: Users, title: "Family-Friendly Resort" },
+  { icon: PartyPopper, title: "Events & Celebrations" },
 ];
 
 export default function IntroSection() {
-  const statsRef = useRef(null);
-  const [counts, setCounts] = useState(stats.map(() => 0));
-  const [hasAnimated, setHasAnimated] = useState(false);
   const isMobile = useSyncExternalStore(
     (onStoreChange) => {
       const mediaQuery = window.matchMedia("(max-width: 767px)");
@@ -49,56 +29,6 @@ export default function IntroSection() {
     () => window.matchMedia("(max-width: 767px)").matches,
     () => false,
   );
-
-  useEffect(() => {
-    const node = statsRef.current;
-
-    if (!node || hasAnimated) {
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) {
-          return;
-        }
-
-        setHasAnimated(true);
-
-        const startTime = performance.now();
-        const duration = 1800;
-
-        const animate = (now) => {
-          const progress = Math.min((now - startTime) / duration, 1);
-          const eased = 1 - Math.pow(1 - progress, 3);
-
-          setCounts(stats.map((stat) => Math.round(stat.target * eased)));
-
-          if (progress < 1) {
-            requestAnimationFrame(animate);
-          }
-        };
-
-        requestAnimationFrame(animate);
-        observer.disconnect();
-      },
-      {
-        threshold: 0.35,
-      }
-    );
-
-    observer.observe(node);
-
-    return () => observer.disconnect();
-  }, [hasAnimated]);
-
-  const formatCount = (value, stat) => {
-    if (stat.format === "compact") {
-      return `${Math.round(value / 1000)}K${stat.suffix ?? ""}`;
-    }
-
-    return `${value}${stat.suffix ?? ""}`;
-  };
 
   return (
     <section className="bg-[#fff] px-4 py-10 sm:px-6 sm:py-14 lg:px-10 lg:py-24">
@@ -186,42 +116,24 @@ export default function IntroSection() {
               </p>
             </div>
 
-            <div
-              ref={statsRef}
-              className="mx-auto mt-7 max-w-[920px] sm:mt-10"
-              data-aos="fade-up"
-            >
-              <div className="hidden grid-cols-2 gap-2.5 sm:grid sm:grid-cols-4 sm:gap-4">
-                {stats.map((stat, index) => (
-                  <div
-                    key={stat.label}
-                    className="counter-card flex min-h-[132px] flex-col items-center justify-center rounded-[22px] bg-[#fbf8ef]/95 px-3 py-4 text-center shadow-[0_12px_30px_rgba(56,64,50,0.05)] sm:min-h-[230px] sm:rounded-[28px] sm:px-6 sm:py-8"
-                  >
-                    <div className="text-[clamp(1.55rem,4.5vw,2.4rem)] font-semibold tracking-[-0.04em] text-[#23312a] sm:text-[3.1rem]">
-                      {formatCount(counts[index], stat)}
-                    </div>
-                    <div className="mt-2 max-w-[10ch] text-[12px] leading-5 text-[#5c6b64] sm:mt-3 sm:text-[1.1rem] sm:leading-7">
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="mx-auto mt-7 grid max-w-[920px] grid-cols-2 gap-3 sm:mt-10 sm:gap-5">
+              {highlights.map((highlight) => {
+                const Icon = highlight.icon;
 
-              <div className="grid grid-cols-2 gap-3 sm:hidden">
-                {stats.map((stat, index) => (
+                return (
                   <div
-                    key={stat.label}
-                    className="counter-card flex min-h-[112px] flex-col items-center justify-center rounded-[18px] bg-[#fbf8ef]/95 px-3 py-4 text-center shadow-[0_12px_30px_rgba(56,64,50,0.05)]"
+                    key={highlight.title}
+                    className="flex min-h-[108px] flex-col items-center justify-center gap-2 rounded-[16px] border border-[#dce7bb] bg-[#fbfaf4] px-3 py-3 text-center shadow-[0_10px_28px_rgba(56,64,50,0.04)] sm:min-h-[116px] sm:flex-row sm:justify-start sm:gap-4 sm:rounded-[16px] sm:px-5 sm:text-left"
                   >
-                    <div className="text-[clamp(1.15rem,5.4vw,1.7rem)] font-semibold tracking-[-0.04em] text-[#23312a]">
-                      {formatCount(counts[index], stat)}
-                    </div>
-                    <div className="mt-1 max-w-[12ch] text-[10.5px] leading-4 text-[#5c6b64]">
-                      {stat.label}
-                    </div>
+                    <span className="flex h-[48px] w-[48px] shrink-0 items-center justify-center rounded-full bg-[#e9f2c9] text-[#315c2c] sm:h-[58px] sm:w-[58px]">
+                      <Icon className="h-6 w-6 sm:h-7 sm:w-7" strokeWidth={1.8} />
+                    </span>
+                    <span className="font-heading text-[15px] leading-[1.08] text-[#20342b] sm:text-[19px]">
+                      {highlight.title}
+                    </span>
                   </div>
-                ))}
-              </div>
+                );
+              })}
             </div>
 
             <div className="mt-7 flex justify-center sm:mt-10">
