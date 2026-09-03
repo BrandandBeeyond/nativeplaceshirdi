@@ -98,8 +98,8 @@ export default function ContactPage() {
                 </p>
                 <p className="mt-3 flex items-center gap-2">
                   <Mail className="h-4 w-4 text-[#6b8444]" />
-                  <a href="mailto:stay@thenativeplaceshirdi.com" className="hover:text-[#18352a]">
-                    stay@thenativeplaceshirdi.com
+                  <a href="mailto:grapeberry20@gmail.com" className="hover:text-[#18352a]">
+                    grapeberry20@gmail.com
                   </a>
                 </p>
 
