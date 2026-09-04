@@ -40,7 +40,7 @@ export default function IntroSection() {
           >
             <div className="absolute left-0 top-0 h-[60%] w-[86%] overflow-hidden rounded-[1.65rem] shadow-[0_28px_70px_rgba(45,54,38,0.16)] sm:h-[72%] sm:w-[78%] sm:rounded-[2.5rem]">
               <Image
-                src="/images/cottages/ambience.WEBP"
+                src="/images/banners/newbanner.jpeg"
                 alt="Resort exterior"
                 fill
                 sizes="(max-width: 1024px) 100vw, 58vw"
@@ -51,7 +51,7 @@ export default function IntroSection() {
 
             <div className="absolute bottom-[7%] right-[2%] h-[34%] w-[50%] overflow-hidden rounded-[1.55rem] border-4 border-[#fbf8ef] shadow-[0_24px_60px_rgba(45,54,38,0.18)] sm:bottom-[8%] sm:right-[8%] sm:h-[40%] sm:w-[46%] sm:rounded-[2.25rem]">
               <Image
-                src="/images/common/IMG_9115.JPG.jpeg"
+                src="/images/common/pool.jpeg"
                 alt="Walkway view"
                 fill
                 sizes="(max-width: 1024px) 100vw, 26vw"

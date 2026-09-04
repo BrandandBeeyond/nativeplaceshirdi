@@ -8,7 +8,7 @@ const highlights = [
   {
     title: "Peaceful natural surroundings",
     description: "Lush greenery, fresh air and pure tranquility around every stay.",
-    image: "/images/common/IMG_9119.JPG.jpeg",
+    image: "/images/banners/banner2.jpeg",
   },
   {
     title: "Comfortable villas and cottages",
@@ -26,9 +26,9 @@ const highlights = [
     image: "/images/amenities/kidsplayarea.jpeg",
   },
   {
-    title: "Spacious open areas",
-    description: "Wide lawns and open spaces to relax, play and reconnect.",
-    image: "/images/common/IMG_9118.JPG.jpeg",
+    title: "Authentic Maharashtrian Dining",
+    description: "Enjoy authentic Maharashtrian flavours and wholesome pure-veg dining at our resort near Shirdi.",
+    image: "/images/common/dining.PNG",
   },
   {
     title: "Approx. 18 km from Shirdi",

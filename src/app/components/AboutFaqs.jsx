@@ -27,7 +27,7 @@ export default function AboutFaqs() {
   return (
     <section className="overflow-hidden px-4 pb-16 sm:px-6 sm:pb-20 lg:px-8 lg:pb-24">
       <div className="mx-auto max-w-[1400px]">
-        <div className="mb-6 flex items-center justify-between">
+        <div className="mb-6 text-center">
           <div>
             <p className="font-subheading text-[12px] font-semibold uppercase tracking-[0.4em] text-[#6b8444]">
               FAQs

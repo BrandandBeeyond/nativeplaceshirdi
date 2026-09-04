@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import PageBanner from "../components/PageBanner";
 import AboutFaqs from "../components/AboutFaqs";
+import AboutGallery from "../components/AboutGallery";
 
 export const metadata = {
   title: "About Us | The Native Place Shirdi",
@@ -142,6 +143,8 @@ export default function AboutPage() {
             </article>
           </div>
         </section>
+
+        <AboutGallery />
 
         <AboutFaqs />
       </main>
